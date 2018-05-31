@@ -3,7 +3,6 @@
     "pages/welcome/welcome",
     "pages/post/post",
     "pages/world/world",
-    "pages/sing/sing",
     "pages/me/me",
     "pages/world/world-detail/world-detail"
   ],
@@ -13,19 +12,13 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/post/post",
-        "text": "首页",
-        "iconPath": "/images/icon/hot.png",
-        "selectedIconPath": "/images/icon/hot_selected.png"
-      },
-      {
         "pagePath": "pages/world/world",
         "text": "世界",
         "iconPath": "/images/icon/hot.png",
         "selectedIconPath": "/images/icon/hot_selected.png"
       },
       {
-        "pagePath": "pages/sing/sing",
+        "pagePath": "pages/post/post",
         "text": "唱歌",
         "iconPath": "/images/icon/sing.png",
         "selectedIconPath": "/images/icon/sing_selected.png"
