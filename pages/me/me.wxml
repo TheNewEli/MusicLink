@@ -14,7 +14,7 @@
     <block wx:for="{{menuitems}}" wx:for-item="item" wx:for-index="index">
       <block wx:if="{{index%3==0 && index!=0}}">
         <view class='me-menuitems-interval'catchtap='onTapToDetail'data-menuitem-id='{{item.menuitemsId}}'>
-          <text class='menuitems-text'>{{item.text}}</text>
+          <text  class='menuitems-text'>{{item.text}}</text>
           <image class='menuitems-image' src='/images/icon/more_icon.png'></image>
         </view>
       </block>
