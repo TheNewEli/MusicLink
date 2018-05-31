@@ -12,15 +12,12 @@
   "tabBar": {
     "list": [
       {
-<<<<<<< HEAD
         "pagePath": "pages/post/post",
         "text": "首页",
         "iconPath": "/images/icon/home_icon.png",
         "selectedIconPath": "/images/icon/home_selected_icon.png"
       },
       {
-=======
->>>>>>> origin/test
         "pagePath": "pages/world/world",
         "text": "世界",
         "iconPath": "/images/icon/hot.png",
