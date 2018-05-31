@@ -136,10 +136,9 @@ Page({
 
   enterPostPage: function (event) {
     wx.switchTab({
-      url: '../world/world',
+      url: '../post/post',
     })
   }
-
 })
 
 
