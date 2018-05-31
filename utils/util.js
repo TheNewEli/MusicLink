@@ -84,6 +84,30 @@ function getDiffTime(recordTime, yearsFlag) {
   };
 })()
 
+
+//将返回的分数转换为五个元素的数组
+function convertToStarsArray(score){
+  var stars_num =Math.ceil(score/2);
+
+  var array = [];
+
+  for(var i=0;i<5;i++){
+    if(i<stars_num-1)
+      array[i]=1;
+    else if(i>=stars_num)
+      array[i]=0;
+    else if(score/2<stars_num)
+      array[i]=0.5;
+    else
+      array[i]=1;
+  }
+
+  return array;
+}
+
+
 module.exports = {
   getDiffTime: getDiffTime,
+  convertToStarsArray: convertToStarsArray,
 }
+

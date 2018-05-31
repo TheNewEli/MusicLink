@@ -1,4 +1,6 @@
 // pages/post.js
+
+var util = require('../../utils/util');
 var app = getApp();
 Page({
 
@@ -81,9 +83,9 @@ Page({
     
 
     var temp={
-      stars: [1,1,1,1,0.5],
+      stars: util.convertToStarsArray(song.stars),
       title: title,
-      avarage:9,
+      avarage:song.stars,
       coverageUrl:song.cover_url,
       songId: song.song_id
     };
