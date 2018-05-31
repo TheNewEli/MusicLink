@@ -1,28 +1,10 @@
-.world-title{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0px 0 0px 10px;
-  border-bottom: 1px solid #cdcdcd;
-  padding: 10px 0 10px 10px;
-}
-
-.world-title text{
-  font-size: 20px;
-  font-family: Microsoft YaHei;
-  color: #696969;
-}
-
-.world-title image{
-  height: 16px;
-  width: 16px;
-  margin-left: 10px;
+page{
+  padding-bottom: 40rpx;
 }
 
 .world-container{
   display: flex;
   flex-direction: column;
-  padding: 0px 0px 0px 15px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touth;
 }
@@ -30,29 +12,19 @@
 .world-item{
   display: flex;
   flex-direction: row;
-  border-bottom: 1px solid #ededed;  
+  border-bottom: 10px solid #F5F5F5;  
 }
 
-.world-initiator-nick{
+.world-initiator{
   display: flex;
   flex-direction: column;
   margin-top: 10px;
 }
 
-.world-initiator-nick image{
+.world-initiator image{
   width: 100rpx;
   height: 100rpx;
-}
-
-.world-initiator-nick text{
-  font-size: 26rpx;
-  color: #666;
-  margin: 5px 0 3px 0px;
-  width:50px;
-  text-align:center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-left: 15px;
 }
 
 .world-detail{
@@ -66,7 +38,7 @@
   flex-direction: row;
 }
 
-.title{
+.nick{
   font-size: 16px;
   font-family: Microsoft YaHei;
   white-space: nowrap;
@@ -87,4 +59,42 @@
 .world-detail progress{
   margin-top: 20rpx;
   color: #ccc;
+}
+
+.comment{
+  font-size: 13px;
+  font-family: Microsoft YaHei;
+  color: #666;
+}
+
+.music-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #F5F5F5;
+  width: 95%;
+  margin-top: 10px;
+}
+
+.music-box image{
+  height: 150rpx;
+  width: 150rpx;
+}
+
+.music-detail{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.music-detail text{
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #666;
+  font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300rpx;
 }

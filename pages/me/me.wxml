@@ -11,7 +11,7 @@
   </view>
 
   <view class='me-settings'>
-    <block wx:for="{{menuitems}}" wx:for-item="item" wx:for-index="index">
+    <block wx:for="{{menuitems}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.menuitemsId}}">
       <block wx:if="{{index%3==0 && index!=0}}">
         <view class='me-menuitems-interval'catchtap='onTapToDetail'data-menuitem-id='{{item.menuitemsId}}'>
           <text  class='menuitems-text'>{{item.text}}</text>
