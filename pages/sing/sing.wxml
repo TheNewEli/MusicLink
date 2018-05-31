@@ -1,0 +1,6 @@
+<view>
+  <button bindtap='voiceStart'>开始</button>
+  <button bindtap='voiceEnd'>结束</button>
+  <button bindtap='voicePlay'>播放</button>
+</view>
+

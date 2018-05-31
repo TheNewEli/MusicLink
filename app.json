@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/post/post",
+    "pages/world/world",
+    "pages/sing/sing",
+    "pages/me/me",
+    "pages/world/world-detail/world-detail"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#F5F5F5"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/post/post",
+        "text": "首页",
+        "iconPath": "/images/icon/hot.png",
+        "selectedIconPath": "/images/icon/hot_selected.png"
+      },
+      {
+        "pagePath": "pages/world/world",
+        "text": "世界",
+        "iconPath": "/images/icon/hot.png",
+        "selectedIconPath": "/images/icon/hot_selected.png"
+      },
+      {
+        "pagePath": "pages/sing/sing",
+        "text": "唱歌",
+        "iconPath": "/images/icon/sing.png",
+        "selectedIconPath": "/images/icon/sing_selected.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "/images/icon/me.png",
+        "selectedIconPath": "/images/icon/me_selected.png"
+      }
+    ],
+    "backgroundColor": "#ffffff",
+    "selectedColor": "#dc280c",
+    "borderStyle": "black"
+  }
+}
+ 

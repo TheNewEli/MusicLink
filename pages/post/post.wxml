@@ -1,0 +1,21 @@
+
+<import src="post-item-tpl/tpl-wxml/song-list-tpl.wxml"></import>
+<view>
+    <!--滚动海报-->
+    <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" circular='true'>
+        <block wx:for="{{imgUrls}}" wx:for-item="item">
+            <swiper-item>
+                <image class="swiper-image" src="{{item}}" mode='aspectFill'/>
+            </swiper-item>
+        </block>
+    </swiper>
+    <!--两个目录，一个热门，一个推荐-->
+    <view class="songs-template">
+        <template is = "songListTpl" data="{{...inThreaten}}"></template>
+    </view> 
+
+    <view class="songs-template">
+        <template is = "songListTpl" data="{{...ourRecommend}}"></template>
+    </view> 
+    
+</view>
