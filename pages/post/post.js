@@ -71,7 +71,7 @@ Page({
   processRequestData:function(songsRequested, settedKey, categoryTitle){
     var songs = [];
 
-    console.log(songsRequested);
+    //console.log(songsRequested);
 
     //标题过长，进行裁剪
     for(var i in songsRequested.songs){

@@ -3,7 +3,7 @@
 <view>
     <!--滚动海报-->
     <swiper indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" circular='true'>
-        <block wx:for="{{imgUrls}}" wx:for-item="item">
+        <block wx:for="{{imgUrls}}" wx:for-item="item" wx:key="">
             <swiper-item>
                 <image class="swiper-image" src="{{item}}" mode='aspectFill'/>
             </swiper-item>
