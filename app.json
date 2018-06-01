@@ -5,11 +5,8 @@
     "pages/world/world",
     "pages/me/me",
     "pages/world/world-detail/world-detail",
-<<<<<<< HEAD
-    "pages/select/select"
-=======
+    "pages/select/select",
     "pages/me/setting/setting"
->>>>>>> 02e73cb2ea94a133be8f367efc520fd92bd6ac28
   ],
   "window": {
     "navigationBarBackgroundColor": "#F5F5F5",

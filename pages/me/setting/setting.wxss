@@ -29,7 +29,7 @@
 
 .setting-img{
   align-items: center;
-  margin-top: 30%;
+  margin-top: 10%;
   width: 80%;
   height: 400rpx;
 }
