@@ -39,7 +39,7 @@ Page({
     var worldId = event.currentTarget.dataset.worldId;
     console.log(worldId);
     wx.navigateTo({
-      url: 'world-detail/world-detail?id=' + worldId
+      url: '../select/select?id=' + worldId
     })
   },
 

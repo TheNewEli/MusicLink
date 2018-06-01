@@ -1,0 +1,33 @@
+<view class='select-container'>
+  <view class='music-detail-container'>
+  <view class='music-detail'>
+      <image src='{{songs.music.coverImg}}'></image>
+    <view class='music-detail-text'>
+      <text>{{songs.music.title}}</text>
+      <text>原唱：{{songs.music.singer}}</text>
+    </view>
+  </view>
+  </view>
+
+  <view class='lyrics-container'>
+    <view class='music-detail'></view>
+    <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
+      <view class='lyrics-item' catchtap='selectLyrics' data-lyric-id='{{index}}'>
+        <block wx:if="{{item.isSelected}}">
+          <view class='selected'>
+            <image src='{{item.selected_user_avatar}}'></image>
+            <text>{{item.lyric}}</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class='unselected'>
+            <image src='{{item.selected_user_avatar}}'></image>
+            <text>{{item.lyric}}</text>
+          </view>
+        </block>
+
+      </view>
+    </block>
+  </view>
+
+</view>

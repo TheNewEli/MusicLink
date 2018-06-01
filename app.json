@@ -4,10 +4,12 @@
     "pages/post/post",
     "pages/world/world",
     "pages/me/me",
-    "pages/world/world-detail/world-detail"
+    "pages/world/world-detail/world-detail",
+    "pages/select/select"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#F5F5F5"
+    "navigationBarBackgroundColor": "#F5F5F5",
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "list": [
