@@ -22,13 +22,25 @@ Page({
 
     },
 
-    onTapToDetail:function(){
-      wx.navigateTo({
-        url: '../world/world-detail/world-detail',
-        success: function(res) {},
-        fail: function(res) {},
-        complete: function(res) {},
-      })
+    onTapToDetail:function(event){
+     
+      switch (event.currentTarget.dataset.menuitemId) {
+        case 0:
+          break;
+        case 1:
+          console.log(2);
+          break;
+        case 2:
+         wx.navigateTo({
+            url: 'setting/setting',
+          });
+          break;
+        case 3:
+          console.log(4);  
+          break;
+        default:
+          break;
+      }
     }
 
 })
