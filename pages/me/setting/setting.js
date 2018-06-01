@@ -22,16 +22,15 @@ Page({
       cancelText:"后悔了",
       confirmText:"确认清除",
       success:function(res){
-        try{
-          wx.clearStorageSync();
-          wx.showToast({
-            title: '清除成功',
-          });
-        }catch(e){
-          console.log(e);
-          wx.showToast({
-            title: '清除失败',
-          });
+        if(res.confirm){
+          try {
+            wx.clearStorageSync();
+            wx.showToast({title: '清除成功',});
+          } catch (e) 
+          {
+            console.log(e);
+            wx.showToast({title: '清除失败',});
+          }
         }
       }
     })
