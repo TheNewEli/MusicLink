@@ -5,14 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    pagesId:null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    if (options.id == 4) {
+      wx.previewImage({
+        current: 'https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg', // 当前显示图片的http链接
+        urls: ['https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg']
+      })
+    }
+    this.setData({
+      pagesId:options.id,
+    })
   },
 
   onTapClearStorage:function(){

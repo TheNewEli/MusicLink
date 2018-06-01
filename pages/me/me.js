@@ -23,26 +23,12 @@ Page({
     },
 
     onTapToDetail:function(event){
-     
-      switch (event.currentTarget.dataset.menuitemId) {
-        case 0:
-          break;
-        case 1:
-          console.log(2);
-          break;
-        case 2:
+      var pagesId = event.currentTarget.dataset.menuitemId;
          wx.navigateTo({
-            url: 'setting/setting',
+            url: 'setting/setting?id='+pagesId,
           });
-          break;
-        case 3:
-          console.log(4);  
-          break;
-        default:
-          break;
-      }
-    }
-
+    },
+    
 })
 
 

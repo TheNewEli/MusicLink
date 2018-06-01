@@ -44,8 +44,8 @@
 				{
 					"id": 1,
 					"name": "me",
-					"pathName": "pages/me/me",
-					"query": ""
+					"pathName": "pages/me/setting/setting",
+					"query": "id=4"
 				},
 				{
 					"id": -1,
