@@ -1,5 +1,5 @@
 <view class='world-container'>
-  <block wx:for="{{worldList}}" wx:for-item="item" >
+  <block wx:for="{{worldList}}" wx:for-item="item" wx:key="item.worldId">
     <view catchtap='onTapToDetail' data-post-id='{{item.worldId}}'>
         <view class='world-item'>
           <view class='world-initiator' >

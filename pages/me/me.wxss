@@ -38,8 +38,8 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding: 13px 0px 13px 0px;  
-  border-bottom: 2px solid #F5F5F5;
+   padding: 13px 0px 13px 0px;  
+  border-bottom: 2px solid #F5F5F5; 
 }
 
 .me-menuitems-interval{
@@ -50,7 +50,6 @@
   width: 100%;
   border-top: 10px solid #F5F5F5;
   border-bottom: 2px solid #F5F5F5;
-
 }
 
 .menuitems-text{
@@ -64,4 +63,17 @@
 .menuitems-image{
   height: 16px;
   width: 16px;
+}
+
+.setting-btn{
+  width: 70%;
+  text-align: left;
+  margin-left: 0rpx;
+  border-radius: 0;
+  color: #fff;
+  border:none;
+}
+
+button[class="setting-btn"]::after{
+  border: none;
 }

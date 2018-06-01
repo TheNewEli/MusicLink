@@ -139,7 +139,6 @@ Page({
       url: '../post/post',
     })
   }
-
 })
 
 

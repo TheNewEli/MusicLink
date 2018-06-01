@@ -31,9 +31,6 @@ Page({
     return worldList;
   },
 
-
-
-
   //world-detail界面待完成
   onTapToDetail(event) {
     var worldId = event.currentTarget.dataset.worldId;
