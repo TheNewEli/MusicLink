@@ -8,6 +8,7 @@
     "pages/select/select",
     "pages/me/setting/setting",
     "pages/create/create"
+
   ],
   "window": {
     "navigationBarBackgroundColor": "#F5F5F5",

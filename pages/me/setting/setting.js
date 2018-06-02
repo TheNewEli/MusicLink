@@ -5,14 +5,42 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    pagesId:null,
+    navigationText:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var id = options.id;
+    var title="";
+    switch(id){
+      case '0':
+        title = "已发起歌曲";
+        break;
+      case '1':
+        title = "参与的歌曲";
+        break;
+      case '2':
+        title = "设置";
+        break;
+      case '3':
+        title = "关于";
+        break;
+      default:
+        break;
+    }
+    this.setData({
+      pagesId:id,
+      navigationText:title
+    })
+  },
+
+  onReady: function () {
+    wx.setNavigationBarTitle({
+      title: this.data.navigationText,
+    })
   },
 
   onTapClearStorage:function(){

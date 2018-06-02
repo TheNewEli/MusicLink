@@ -23,26 +23,20 @@ Page({
     },
 
     onTapToDetail:function(event){
-     
-      switch (event.currentTarget.dataset.menuitemId) {
-        case 0:
-          break;
-        case 1:
-          console.log(2);
-          break;
-        case 2:
-         wx.navigateTo({
-            url: 'setting/setting',
+      var pagesId = event.currentTarget.dataset.menuitemId;
+      if (pagesId == 4) {
+        wx.previewImage({
+          current: 'https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg', // 当前显示图片的http链接
+          urls: ['https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg']
+        })
+      }else{
+          wx.navigateTo({
+            url: 'setting/setting?id=' + pagesId,
           });
-          break;
-        case 3:
-          console.log(4);  
-          break;
-        default:
-          break;
+        }
       }
-    }
 
+    
 })
 
 
