@@ -1,24 +1,20 @@
 <import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
+
 <view class="create-container">
     <!-- 歌曲所有信息视图层 -->
     <view class="songInfo">
-        <view class="song-cover">
-            <image mode="aspectFit" src="{{song.coverageUrl}}"></image>
-        </view>
-        <view class="song-other-info">
-            <view class="catagorey">
-                <text class="title-c">歌曲名称:</text>
-                <text class="singer-c">原唱:</text>
-                <text class="album-c">专辑:</text>
-                <text class="diffcucltRate">难度指数:</text>
+        <view class='music-box'>
+            <image class='cover' src='{{song.coverageUrl}}'></image>
+            <view class='music-detail'>
+                <text class="title">{{song.title}}</text>
+                <text class="other">原唱：{{song.singer}}</text>
+                <text class="other">专辑：{{song.album}}</text>
+                <view class='degree-of-difficulty' >
+                    <text class="other">难度指数：</text>
+                    <template is="starsTpl" data="{{stars:song.stars,score:7}}"></template>
+                </view>
             </view>
-            <view class="content">
-                <text class="title-r">{{song.title}}</text>
-                <text class="singer-r">{{song.singer}}</text>
-                <text class="album-r">{{song.album}}</text>
-                <template is="starsTpl" data="{{stars:song.stars,score:7}}"></template>
-            </view>
-        </view>
+      </view>
     </view>
     <!-- 创建歌曲相关设置视图层 -->
     <view class="settings">
@@ -46,8 +42,10 @@
             </view>
         </view>
         <view class="inputDescription">
-            <text>写点你分享的理由吧</text>
-            <textarea auto-focus="true" style="height: 6em" />
+            <text>推荐语</text>
+            <view class='textarea'>
+               <textarea style="height: 5em" cursor-spacing="77" show-confirm-bar=""   />
+            </view>
         </view>
     </view>
 
