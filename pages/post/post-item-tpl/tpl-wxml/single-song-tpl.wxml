@@ -1,9 +1,8 @@
 <import src="stars-tpl.wxml"></import>
-
 <template name="singleSongTpl">
-    <view class=""singleSong-container catchtap= "onSongTap" data-singleSong-id="{{songId}}" >
-        <image class="song-image" src="{{coverageUrl}}"></image>
-        <text class="song-title">{{title}}</text>
-        <template is="starsTpl" data="{{stars:stars,score:avarage}}"></template> 
+    <view class="singleSong-container" catchtap= "onSongTap" data-song="{{song}}">
+        <image class="song-image" src="{{song.coverageUrl}}"></image>
+        <text class="song-title">{{song.title}}</text>
+        <template is="starsTpl" data="{{stars:song.stars,score:song.avarage}}"></template> 
      </view>
  </template>

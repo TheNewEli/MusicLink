@@ -7,6 +7,6 @@
                 <image wx:else="{{i==0}}" src="/images/icon/star_none_icon.png"></image>
             </block>
         </view>
-        <text class="star-score">{{score}}</text>
+        <!-- <text class="star-score">{{score}}</text> -->
     </view>
 </template>

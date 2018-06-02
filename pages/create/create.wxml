@@ -1,0 +1,59 @@
+<import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
+<view class="create-container">
+    <!-- 歌曲所有信息视图层 -->
+    <view class="songInfo">
+        <view class="song-cover">
+            <image mode="aspectFit" src="{{song.coverageUrl}}"></image>
+        </view>
+        <view class="song-other-info">
+            <view class="catagorey">
+                <text class="title-c">歌曲名称:</text>
+                <text class="singer-c">原唱:</text>
+                <text class="album-c">专辑:</text>
+                <text class="diffcucltRate">难度指数:</text>
+            </view>
+            <view class="content">
+                <text class="title-r">{{song.title}}</text>
+                <text class="singer-r">{{song.singer}}</text>
+                <text class="album-r">{{song.album}}</text>
+                <template is="starsTpl" data="{{stars:song.stars,score:7}}"></template>
+            </view>
+        </view>
+    </view>
+    <!-- 创建歌曲相关设置视图层 -->
+    <view class="settings">
+        <view class="setCreatingType">
+            <view class="text-promt">
+                <text>是否公开</text>
+                <text class="Hint">允许他人参加你的合唱</text>
+            </view>
+            <switch class="switch-btn" bindchange="setCreatingType"></switch>
+        </view>
+        <view class="setDateSchedule">
+            <view class="text-promt">
+                <text>活动时间选择</text>
+                <text class="Hint">你的合唱活动的有效时间</text>
+            </view>
+            <view class="datePicker">
+                <view class="startDatePicker">
+                    <picker mode="date" value="{{startDate}}"></picker>
+                    <!-- <text>2018-06-01-></text> -->
+                </view>
+                <view class="endDatePicker">
+                    <picker mode="date" value="{{endDate}}"></picker>
+                    <!-- <text>2018-06-01</text> -->
+                </view>
+            </view>
+        </view>
+        <view class="inputDescription">
+            <text>写点你分享的理由吧</text>
+            <textarea auto-focus="true" style="height: 6em" />
+        </view>
+    </view>
+
+    <view class="all-btns">
+   <button class="cancel-btn">取消创建</button>
+    <button class="confirm-btn">创建</button>
+   </view>
+
+</view>

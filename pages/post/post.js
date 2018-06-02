@@ -19,6 +19,7 @@ Page({
 
     //推荐
     ourRecommned:{},
+
   },
 
   /**
@@ -87,7 +88,9 @@ Page({
       title: title,
       avarage:song.stars,
       coverageUrl:song.cover_url,
-      songId: song.song_id
+      singer:song.artist,
+      songId: song.song_id,
+      album:"lalala",
     };
 
     songs.push(temp);
@@ -101,5 +104,18 @@ Page({
     }
 
     this.setData(readyData);
+  },
+
+  onSongTap(event){
+   
+    var song = event.currentTarget.dataset.song;
+    console.log(song);
+
+    wx.setStorageSync("to_create_song", song);
+
+    //页面之间不能传递对象
+    wx.navigateTo({
+      url: '../create/create?songId='+song.songId,
+    });
   }
 })
