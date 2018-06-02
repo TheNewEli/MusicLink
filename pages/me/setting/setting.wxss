@@ -1,4 +1,3 @@
-
 /***********设置***********/
 .setting-container{
     display: flex;
@@ -32,8 +31,8 @@
   margin-top: 10%;
   width: 80%;
   height: 400rpx;
+  margin-right: 5%;
 }
-
 
 /*********打赏开发者**********/
 .donate{

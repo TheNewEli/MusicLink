@@ -24,10 +24,18 @@ Page({
 
     onTapToDetail:function(event){
       var pagesId = event.currentTarget.dataset.menuitemId;
-         wx.navigateTo({
-            url: 'setting/setting?id='+pagesId,
+      if (pagesId == 4) {
+        wx.previewImage({
+          current: 'https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg', // 当前显示图片的http链接
+          urls: ['https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg']
+        })
+      }else{
+          wx.navigateTo({
+            url: 'setting/setting?id=' + pagesId,
           });
-    },
+        }
+      }
+
     
 })
 
