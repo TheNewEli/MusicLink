@@ -1,0 +1,128 @@
+/* pages/create/create.wxss */
+@import "../post/post-item-tpl/tpl-wxss/stars-tpl.wxss";
+page{
+    height: 100%;
+}
+ .create-container{
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    height: 100%;
+} 
+
+.songInfo{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.song-cover{
+    width: 40%;
+    height: 300rpx;
+}
+
+.song-cover image{
+    padding: 10rpx 10rpx 10rpx 10rpx;
+    height: 90%;
+    width: 90%;
+}
+
+
+.song-other-info{
+    margin-left: 10rpx;
+    margin-top: 10rpx;
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    height: 290rpx;
+}
+
+.catagorey{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    height: 90%;
+    margin-left: 10rpx;
+}
+
+.singer-c{
+    margin-top: 42rpx;
+}
+.singer-r{
+    margin-top: 40rpx;
+}
+.album-r{
+    padding-top: 12rpx;
+    padding-bottom: 12rpx;
+}
+.album-c{
+    padding-top: 7%;
+    padding-bottom:7%;
+}
+.settings{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20%;
+}
+.setCreatingType{
+    display: flex;
+    flex-direction: row;
+}
+
+.text-promt{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+    width: 60%;
+}
+
+.Hint{
+    font-size: 25rpx;
+    
+}
+
+.switch-btn{
+    padding-left: 10%;
+}
+
+.setDateSchedule{
+    display: flex;
+    flex-direction: row;
+    padding-top: 5%;
+}
+
+.inputDescription{
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+    padding-top: 5%;
+}
+
+.inputDescription textarea{
+    border: 1px gray solid;
+    height: 3em;
+    margin-top: 10rpx;
+    border-radius: 2%;
+}
+.all-btns{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10%;
+}
+.cancel-btn{
+    width: 40%;
+    background-color: greenyellow;
+}
+.confirm-btn{
+    width: 40%;
+    background-color: greenyellow;
+}
+.stars-container{
+    margin-top: 15rpx;
+}

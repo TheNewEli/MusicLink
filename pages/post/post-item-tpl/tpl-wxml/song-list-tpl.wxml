@@ -11,7 +11,7 @@
             </view>
             <view class="songs-container">
                 <block wx:for="{{songs}}" wx:for-item="song" wx:key="song.song_id">
-                    <template is="singleSongTpl" data="{{...song}}"></template>
+                    <template is="singleSongTpl" data="{{song}}"></template>
                 </block>
             </view>
         </view>

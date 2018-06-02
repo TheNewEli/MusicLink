@@ -34,6 +34,7 @@
 		},
 		"miniprogram": {
 			"current": -1,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -63,6 +64,18 @@
 					"id": 3,
 					"name": "setting",
 					"pathName": "pages/me/setting/setting",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "create",
+					"pathName": "pages/create/create",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "post",
+					"pathName": "pages/post/post",
 					"query": ""
 				}
 			]
