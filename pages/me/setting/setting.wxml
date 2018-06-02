@@ -20,13 +20,14 @@
 
 <!--关于 界面  -->
 <block wx:elif="{{pagesId==3}}">
-
+  <view class='about'>
+    <image src='https://resource.caoyu.online/songs/song1/song1.jpg'></image>
+    <text>开发团队：501A_WEAT</text>
+    <text>项目成员：屈志豪 杨鹏宇 曹雨</text>
+    <text>学校院系：四川大学 软件学院</text>
+    <text>指导老师：王鹏</text>
+    <text>简介：这是一个萌萌哒(●′ω`●)，然而并没有什么用(•‾̑⌣‾̑•)✧˖°，只会嘤嘤嘤( σ'ω')σ 的简介。</text>
+  </view>
 </block>
 
-<!--打赏开发者界面  -->
-<!-- <block wx:elif="{{pagesId==4}}">
-  <view class='donate'>
-   <image src='/images/cover/donate.png'></image>
-  </view>
-</block> -->
 
