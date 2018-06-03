@@ -57,7 +57,7 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     });
-    console.log(e.detail.rawData);
+    //console.log(e.detail);
 
     this.login(e, (err, res) => {
       if (err) return console.log('login function has error');
