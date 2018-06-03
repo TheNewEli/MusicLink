@@ -46,9 +46,9 @@
 
 .about text{
   color: #808080;
-  font-size: 18px;
+  font-size: 16px;
   font-family: Microsoft YaHei;
-  padding: 20px 20px 0px 20px;
+  padding: 15px 20px 0px 20px;
   text-align: left;
 }
 
