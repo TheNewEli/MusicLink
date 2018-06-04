@@ -30,21 +30,19 @@
                 <text>活动时间选择</text>
                 <text class="Hint">你的合唱活动的有效时间</text>
             </view>
-            <view class="datePicker">
+            <!-- <view class="datePicker">
                 <view class="startDatePicker">
                     <picker mode="date" value="{{startDate}}"></picker>
-                    <!-- <text>2018-06-01-></text> -->
                 </view>
                 <view class="endDatePicker">
                     <picker mode="date" value="{{endDate}}"></picker>
-                    <!-- <text>2018-06-01</text> -->
                 </view>
-            </view>
+            </view> -->
         </view>
         <view class="inputDescription">
             <text>推荐语</text>
             <view class='textarea'>
-               <textarea style="height: 5em" cursor-spacing="77" show-confirm-bar=""   />
+               <textarea bindinput="inputChange" style="height: 5em" cursor-spacing="77" show-confirm-bar=""   />
             </view>
         </view>
     </view>
