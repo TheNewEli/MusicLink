@@ -50,8 +50,8 @@
     </view>
 
     <view class="all-btns">
-   <button class="cancel-btn">取消创建</button>
-    <button class="confirm-btn">创建</button>
+        <button class="cancel-btn" catchtap="onTaptoCancel">取消创建</button>
+        <button class="confirm-btn" catchtap="onTaptoCreate">创建</button>
    </view>
 
 </view>

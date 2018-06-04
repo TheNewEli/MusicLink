@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    toCreateSong:{},
   },
 
   /**
@@ -17,59 +17,27 @@ Page({
 
     var songId = options.songId;
 
-    var toCreateSong = wx.getStorageSync("to_create_song");
+    this.data.toCreateSong = wx.getStorageSync("to_create_song");
 
     this.setData({
-      song:toCreateSong,
+      song:this.data.toCreateSong,
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  //跳转到选择歌词界面
+  onTaptoCreate:function(event){
+    wx.redirectTo({
+      url: '../select/select',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  //跳转到post页面
+  onTaptoCancel:function(event){
+    wx.navigateBack({
+      url: '../post/post',
+    })
   }
 })

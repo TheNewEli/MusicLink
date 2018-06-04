@@ -64,10 +64,6 @@ class DBWorld {
     }
   }
 
-
-
-
-
 };
 
 export{DBWorld};
