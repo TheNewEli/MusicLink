@@ -1,6 +1,6 @@
 
 const app = getApp();
-
+const util = require('../../utils/util');
 Page({
   data: {
     motto: '开始你的音乐之旅',
@@ -104,22 +104,48 @@ Page({
     wx.login({
       //login是异步请求
       success: function (res) {
-        var code
+        var code;
         if (res.code) {
           code = res.code
         } else {
           console.log('登录失败  ！' + res.errMsg)
         }
+
         if (userinfo.detail.errMsg == 'getUserInfo:ok') {
-          wx.request({
-            url: getApp().globalData.server_base + '/OnLogin',
-            method: 'Get',
-            data: {
-              requestType: 'wechat_login',
-              code: code,
-              userInfo: userinfo.detail.rawData
-            }
-          }) // 将用户信息、匿名识别符发送给服务器，调用成功时执行 callback(null, res)
+
+          var data = { 
+            requestType: 'wechat_login',
+            code: code,
+            userInfo: userinfo.detail.rawData
+          };
+
+          util.requestFromServer("OnLogin",data).then((res)=>{
+            console.log("welcome: Request success");
+            console.log(res);
+            wx.setStorageSync("openid", res.data.openid);
+          }).catch((err)=>{
+            console.log("welcome: Request failed");
+          })
+          // 将用户信息、匿名识别符发送给服务器，调用成功时执行 callback(null, res)
+          // wx.request({
+          //   url: getApp().globalData.server_base + '/OnLogin',
+          //   method: 'Get',
+          //   data: {
+          //     requestType: 'wechat_login',
+          //     code: code,
+          //     userInfo: userinfo.detail.rawData
+          //   },
+          //   success:function(res)
+          //   {
+          //     console.log("Request server success");
+          //     console.log(res);
+          //     wx.setStorageSync("openid", res.data.openid);
+          //   },
+          //   fail:function(res){
+          //     console.log("Request failed");
+          //   }
+          // }) 
+
         }
         else if (userinfo.detail.errMsg == 'getUserInfo:fail auth deny') { // 当用户点击拒绝时
           wx.showModal({

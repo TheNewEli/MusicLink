@@ -33,35 +33,41 @@ Page({
     //   imgUrls:imgUrls,
     // });
 
-    var inThreatenUrl = app.globalData.server_base+
-    "/GetSongs?requestType=GetSongs&category=民谣";
 
-    var ourRecommnedUrl = app.globalData.server_base+
-    "/GetSongs?requestType=GetSongs&category=民谣";
- 
-
-    this.getSongsListData(inThreatenUrl,"inThreaten","热门");
-    this.getSongsListData(ourRecommnedUrl,"ourRecommend","推荐");
+    this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"民谣" });
+    this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"民谣" });
 
   },
 
-  getSongsListData:function(url, settedKey,categoryTitle){
+  getSongsListData:function(servelet, settedKey,categoryTitle,data){
+
+
     
     var that = this;
-    wx.request({
-      url:url,
-      method:"GET",
-      header:{
-        'content-type':"application/json",
-      },
-      dataType:"json",
-      success:function(res){
-        that.processRequestData(res.data,settedKey,categoryTitle);
-      },
-      fail:function(error){
-        console.log("Request error");
-      }
+
+    //这里是请求格式的模板
+    util.requestFromServer(servelet, data).then((res)=>{
+      console.log("post: request success");
+      that.processRequestData(res.data, settedKey, categoryTitle);
+    }).catch((err)=>{
+      console.log("请求失败");
     })
+    
+
+    // wx.request({
+    //   url:url,
+    //   method:"GET",
+    //   header:{
+    //     'content-type':"application/json",
+    //   },
+    //   dataType:"json",
+    //   success:function(res){
+    //     that.processRequestData(res.data,settedKey,categoryTitle);
+    //   },
+    //   fail:function(error){
+    //     console.log("Request error");
+    //   }
+    // })
   },
 
   /*

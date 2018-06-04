@@ -1,4 +1,5 @@
 // pages/create/create.js
+var app=getApp();
 Page({
 
   /**
@@ -26,6 +27,16 @@ Page({
 
   //跳转到选择歌词界面
   onTaptoCreate:function(event){
+
+    var songId = this.data.to_create_song.songId;
+
+    openid = wx.getStorageSync("openid");
+
+    wx.request({
+      url: app.globalData.server_base+"/CreateSong/requestType=CreateSong&song_id"+songId+
+      "openid="+openid,
+    })
+
     wx.redirectTo({
       url: '../select/select',
       success: function(res) {},

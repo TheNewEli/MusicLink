@@ -1,3 +1,6 @@
+
+
+var app = getApp();
 /*
  *根据客户端的时间信息得到发表评论的时间格式
  *多少分钟前，多少小时前，然后是昨天，然后再是月日
@@ -86,28 +89,55 @@ function getDiffTime(recordTime, yearsFlag) {
 
 
 //将返回的分数转换为五个元素的数组
-function convertToStarsArray(score){
-  var stars_num =Math.ceil(score/2);
+function convertToStarsArray(score) {
+  var stars_num = Math.ceil(score / 2);
 
   var array = [];
 
-  for(var i=0;i<5;i++){
-    if(i<stars_num-1)
-      array[i]=1;
-    else if(i>=stars_num)
-      array[i]=0;
-    else if(score/2<stars_num)
-      array[i]=0.5;
+  for (var i = 0; i < 5; i++) {
+    if (i < stars_num - 1)
+      array[i] = 1;
+    else if (i >= stars_num)
+      array[i] = 0;
+    else if (score / 2 < stars_num)
+      array[i] = 0.5;
     else
-      array[i]=1;
+      array[i] = 1;
   }
 
   return array;
 }
 
+/*servelet 是你的请求服务器接受的类型 如Getsongs也就是？前面的东西
+**data 是你要请求的数据
+**注意到post.js查看实际怎么调用
+*/
+const requestFromServer=(servelet, data)=> {
+
+  return new Promise((Resolve, Reject) => {
+    wx.request({
+      url: app.globalData.server_base + "/" + servelet,
+      data: data,
+      header: {
+        'content-type': 'application/json'
+      },
+      method: "GET",
+      dataType: "json",
+      success: function (res) {
+        //console.log("request success");
+        Resolve(res);
+      },
+      fail: function (errMsg) {
+        //console.log("request failed");
+        Reject(errMsg);
+      }
+    });
+  });
+}
 
 module.exports = {
   getDiffTime: getDiffTime,
   convertToStarsArray: convertToStarsArray,
+  requestFromServer: requestFromServer,
 }
 
