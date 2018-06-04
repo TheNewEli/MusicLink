@@ -1,5 +1,6 @@
 // pages/create/create.js
-var app=getApp();
+const app=getApp();
+const util = require('../../utils/util');
 Page({
 
   /**
@@ -7,6 +8,9 @@ Page({
    */
   data: {
     toCreateSong:{},
+    createType:false,
+    recommendWord:"",
+    createSonId:"",
   },
 
   /**
@@ -15,11 +19,9 @@ Page({
   onLoad: function (options) {
 
     console.log(options);
-
     var songId = options.songId;
 
     this.data.toCreateSong = wx.getStorageSync("to_create_song");
-
     this.setData({
       song:this.data.toCreateSong,
     })
@@ -28,13 +30,33 @@ Page({
   //跳转到选择歌词界面
   onTaptoCreate:function(event){
 
-    var songId = this.data.to_create_song.songId;
+    var songId = this.data.toCreateSong.songId,
+        openid = wx.getStorageSync("openid"),
+        recommendWord = this.data.recommendWord,
+        world_shared = this.data.createType==true?1:0;
+    if(recommendWord.length<=6){
+      wx.showModal({
+        title: '提示',
+        content: '推荐语字数必须多于六个字喔，请重新填写',
+        showCancel:false,
+      });
 
-    openid = wx.getStorageSync("openid");
+      return;
+    }
+    
+    var data = {
+      requestType: "CreateSong",
+      song_id: songId,
+      openid: openid,
+      message: recommendWord,
+      world_shared: world_shared,
+    }
+    
+    util.requestFromServer("CreateSong",data).then((res)=>{
+      console.log(res);
 
-    wx.request({
-      url: app.globalData.server_base+"/CreateSong/requestType=CreateSong&song_id"+songId+
-      "openid="+openid,
+    }).catch((err)=>{
+      console.log("Create: request error");
     })
 
     wx.redirectTo({
@@ -50,5 +72,15 @@ Page({
     wx.navigateBack({
       url: '../post/post',
     })
+  },
+
+  setCreatingType:function(event){
+    this.data.createType = event.detail.value;
+  },
+
+  inputChange:function(event){
+    this.data.recommendWord = event.detail.value;
   }
+
+
 })
