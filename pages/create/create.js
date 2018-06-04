@@ -53,17 +53,17 @@ Page({
     
     util.requestFromServer("CreateSong",data).then((res)=>{
       console.log(res);
-
+      wx.redirectTo({
+        url: '../select/select?id=' + res.data.created_song_id,
+        success: function (res) { },
+        fail: function (res) { },
+        complete: function (res) { },
+      })
     }).catch((err)=>{
       console.log("Create: request error");
     })
 
-    wx.redirectTo({
-      url: '../select/select?id='+songId,
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+   
   },
 
   //跳转到post页面
