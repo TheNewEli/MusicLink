@@ -7,7 +7,15 @@
     "pages/world/world-detail/world-detail",
     "pages/select/select",
     "pages/me/setting/setting",
+<<<<<<< HEAD
     "pages/create/create"
+=======
+    "pages/create/create",
+    "pages/sing/sing",
+    "pages/me/list-item/list-item",
+    "pages/player/player"
+
+>>>>>>> 20eddf3d197add85229ce4a261ab7433329dcc0f
   ],
   "window": {
     "navigationBarBackgroundColor": "#F5F5F5",

@@ -24,7 +24,12 @@ Page({
 
     onTapToDetail:function(event){
       var pagesId = event.currentTarget.dataset.menuitemId;
-      if (pagesId == 4) {
+      if (pagesId==0 || pagesId==1){
+        wx.navigateTo({
+          url: 'list-item/list-item?id=' + pagesId,
+        });
+      }
+      else if (pagesId == 4) {
         wx.previewImage({
           current: 'https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg', // 当前显示图片的http链接
           urls: ['https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg']

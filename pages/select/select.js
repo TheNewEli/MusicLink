@@ -1,111 +1,46 @@
 // pages/select/select.js
+var app=getApp();
+
 Page({
   data: {
-    songs:{},
-    // userInfo: {},
-    // hasUserInfo: false,
-    userOpenId:1,
+    songs:[],
+    song_id:null,
+    openId: "oQncY4wgRub_6_WMzTWISGbdq8Ag",
     userAvatar: "/images/avatar/avatar-1.png",
   },
 
   onLoad: function (options) {
-    var songs={
-      songsId:1,
-      initiator:{
-        avatar:"/images/avatar/avatar-4.png",
-        nick:"Alix",
-      },
-      music:{
-        title:"成都",
-        coverImg:"https://resource.caoyu.online/songs/song1/song1.jpg",
-        singer:"赵雷",
-        url:null,
-      },
-      lyrics:[
-        {
-          lyric:"让我掉下眼泪的 不止昨夜的酒",
-          selected_user_avatar: "/images/avatar/avatar-3.png",
-          selected_user_openId: 3,
-          isSelected: true,
-        },
-        {
-          lyric: "让我依依不舍的 不止你的温柔",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "余路还要走多久 你攥着我的手",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "让我感到为难的 是挣扎的自由",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "分别总是在九月 回忆是思念的愁",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "深秋嫩绿的垂柳 亲吻着我额头",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "在那座阴雨的小城里 我从未忘记你",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "成都 带不走的 只有你",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "和我在成都的街头走一走",
-          selected_user_avatar: "/images/avatar/avatar-5.png",
-          selected_user_openId: 5,
-          isSelected: true,
-        },
-        {
-          lyric: "直到所有的灯都熄灭了也不停留",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "深秋嫩绿的垂柳 亲吻着我额头",
-          selected_user_avatar: "/images/avatar/avatar-2.png",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "在那座阴雨的小城里 我从未忘记你",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "成都 带不走的 只有你",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "和我在成都的街头走一走",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-        {
-          lyric: "直到所有的灯都熄灭了也不停留",
-          selected_user_avatar: null,
-          isSelected: false,
-        },
-      ]
-    };
+    var song_id=options.id;
     this.setData({
-      songs:songs,
-      // userInfo: app.globalData.userInfo,
-      // hasUserInfo: true,
+      song_id:song_id
+    })
+    this.getSongsLyricsData();
+  },
+
+  //获取歌曲详细信息
+  getSongsLyricsData: function () {
+
+    var that = this;
+    wx.request({
+      url: app.globalData.server_base+'/GetClips',
+      data:{
+        requestType:"GetClips",
+        song_id: this.data.song_id
+      },
+      method: "GET",
+      header: {
+        'content-type': "application/json",
+      },
+      dataType: "json",
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          songs:res.data.songs
+        })
+      },
+      fail: function (error) {
+        console.log("Request error");
+      }
     })
   },
 
@@ -139,8 +74,109 @@ Page({
   },
 
   // 对整个选择整体提交服务器，点击后不能再选
+  //提交后跳转至唱歌界面
   handon:function(){
 
   }
 
 })
+
+
+
+
+
+
+
+    // var songs={
+    //   songsId:1,
+    //   initiator:{
+    //     avatar:"/images/avatar/avatar-4.png",
+    //     nick:"Alix",
+    //   },
+    //   music:{
+    //     title:"成都",
+    //     coverImg:"https://resource.caoyu.online/songs/song1/song1.jpg",
+    //     singer:"赵雷",
+    //     url:null,
+    //   },
+    //   lyrics:[
+    //     {
+    //       lyric:"让我掉下眼泪的 不止昨夜的酒",
+    //       selected_user_avatar: "/images/avatar/avatar-3.png",
+    //       selected_user_openId: 3,
+    //       isSelected: true,
+    //     },
+    //     {
+    //       lyric: "让我依依不舍的 不止你的温柔",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "余路还要走多久 你攥着我的手",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "让我感到为难的 是挣扎的自由",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "分别总是在九月 回忆是思念的愁",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "深秋嫩绿的垂柳 亲吻着我额头",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "在那座阴雨的小城里 我从未忘记你",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "成都 带不走的 只有你",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "和我在成都的街头走一走",
+    //       selected_user_avatar: "/images/avatar/avatar-5.png",
+    //       selected_user_openId: 5,
+    //       isSelected: true,
+    //     },
+    //     {
+    //       lyric: "直到所有的灯都熄灭了也不停留",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "深秋嫩绿的垂柳 亲吻着我额头",
+    //       selected_user_avatar: "/images/avatar/avatar-2.png",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "在那座阴雨的小城里 我从未忘记你",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "成都 带不走的 只有你",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "和我在成都的街头走一走",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //     {
+    //       lyric: "直到所有的灯都熄灭了也不停留",
+    //       selected_user_avatar: null,
+    //       isSelected: false,
+    //     },
+    //   ]
+    // };

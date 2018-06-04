@@ -1,0 +1,27 @@
+<!-- <view class="list-title">
+  <text>合唱世界</text>
+  <image src='/images/icon/more_icon.png'></image>
+</view> -->
+<view class='list-container'>
+  <block wx:for="{{worldList}}" wx:for-item="item" >
+    <view catchtap='onTapToDetail' data-post-id='{{item.songId}}'>
+        <view class='list-item'>
+          <view class='list-initiator-nick' >
+            <image src='https://resource.caoyu.online/songs/song1/song1.jpg'></image>
+            <!-- <text>{{item.initiatorNick}}</text> -->
+          </view>
+          <view class='list-detail'>
+            <view class='list-box'>
+              <view class='title'> 
+                <text >{{item.music.title}}</text> 
+              </view>
+              <view class='time'>
+                <text>{{item.create_time_read}}</text>
+              </view>
+            </view>
+            <progress percent="{{item.progress}}" show-info active stroke-width='5'/>
+          </view>
+        </view>
+    </view>
+  </block>
+</view>
