@@ -39,7 +39,6 @@ Page({
     var ourRecommnedUrl = app.globalData.server_base+
     "/GetSongs?requestType=GetSongs&category=民谣";
  
-
     this.getSongsListData(inThreatenUrl,"inThreaten","热门");
     this.getSongsListData(ourRecommnedUrl,"ourRecommend","推荐");
 
