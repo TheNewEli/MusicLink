@@ -10,7 +10,6 @@ Page({
     toCreateSong:{},
     createType:false,
     recommendWord:"",
-    createSonId:"",
   },
 
   /**
@@ -60,7 +59,7 @@ Page({
     })
 
     wx.redirectTo({
-      url: '../select/select',
+      url: '../select/select?id='+songId,
       success: function(res) {},
       fail: function(res) {},
       complete: function(res) {},
