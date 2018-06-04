@@ -6,15 +6,19 @@ Page({
   data: {
     songs:[],
     song_id:null,
-    openId: "oQncY48nL3gbs046GBrpV8YQ_wZQ",
-    userAvatar: "https://wx.qlogo.cn/mmopen/vi_32/clYKE7o6IjL4iaDE63pH2NTGicF4lLDC7PtobkxPHVsroUqsS2ZibQpslSLwAaq5ia3IIgHNmEV3ddW8f1iao8ykyIw/132",
+    openId: "",
+    userAvatar: "",
     clips:[]
   },
 
   onLoad: function (options) {
     var song_id=options.id;
+    var openId = wx.getStorageSync('openid');
+    var userAvatar = app.globalData.userInfo.avatarUrl;
     this.setData({
-      song_id:song_id
+      song_id:song_id,
+      openId:openId,
+      userAvatar: userAvatar,
     })
     this.getSongsLyricsData();
   },
