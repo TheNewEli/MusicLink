@@ -1,12 +1,14 @@
 // pages/select/select.js
+var util = require('../../utils/util');
 var app=getApp();
 
 Page({
   data: {
     songs:[],
     song_id:null,
-    openId: "oQncY4wgRub_6_WMzTWISGbdq8Ag",
-    userAvatar: "/images/avatar/avatar-1.png",
+    openId: "oQncY48nL3gbs046GBrpV8YQ_wZQ",
+    userAvatar: "https://wx.qlogo.cn/mmopen/vi_32/clYKE7o6IjL4iaDE63pH2NTGicF4lLDC7PtobkxPHVsroUqsS2ZibQpslSLwAaq5ia3IIgHNmEV3ddW8f1iao8ykyIw/132",
+    clips:[]
   },
 
   onLoad: function (options) {
@@ -17,30 +19,104 @@ Page({
     this.getSongsLyricsData();
   },
 
+  // getSelectedClips:function(){
+  // },
+
+
   //获取歌曲详细信息
   getSongsLyricsData: function () {
 
+    var that=this;
+    var data={
+      requestType: "GetClips",
+      song_id: this.data.song_id
+    }
+
+    util.requestFromServer("GetClips", data).then((res) => {
+      console.log("select: request success");
+      that.processRequestData(res);
+      that.getGetCreatedClips();
+    }).catch((err) => {
+      console.log("请求失败");
+    })
+
+  },
+
+  //获取歌曲已经被选择的情况
+  getGetCreatedClips: function () {
     var that = this;
-    wx.request({
-      url: app.globalData.server_base+'/GetClips',
-      data:{
-        requestType:"GetClips",
-        song_id: this.data.song_id
-      },
-      method: "GET",
-      header: {
-        'content-type': "application/json",
-      },
-      dataType: "json",
-      success: function (res) {
-        console.log(res.data);
-        that.setData({
-          songs:res.data.songs
-        })
-      },
-      fail: function (error) {
-        console.log("Request error");
+    var data = {
+      requestType: "GetCreatedClips",
+      createdSongId: this.data.song_id,
+    }
+
+    util.requestFromServer("GetCreatedClips", data).then((res) => {
+      console.log("select: request success");
+      console.log(res);
+      that.processRequestData_Create(res);
+    }).catch((err) => {
+      console.log("请求失败");
+    })
+  },
+  
+  //绑定请求后的数据
+  processRequestData_Create:function(res){
+    var selected = res.data.selected_info;
+    var songs = this.data.songs;
+    var lyrics = songs.lyrics;
+    var clips=[];
+    for(var i in selected){
+
+      if (selected[i].openid == this.data.openId){
+        clips.push(selected[i].clip_count);
       }
+      for(var j in lyrics){
+        if (lyrics[j].clipCount == selected[i].clip_count){
+          lyrics[j].selected_user_avatar = selected[i].avatar;
+          lyrics[j].selected_user_openId = selected[i].openid;
+          lyrics[j].isSelected = true;
+          //isSing变量待确定
+          // lyrics[selected[i].clip_count].isSing = null;
+        }
+      } 
+    }
+
+    this.setData({
+      songs: songs,
+      clips: clips
+    })
+  },
+
+
+  //处理数据
+  processRequestData:function(res){
+    var that = this;
+    var songs={
+      songId:res.data.song_id,
+      music:{
+        title:res.data.title,
+        coverImg:res.data.cover_url,
+        singer:res.data.artist,
+      },
+      lyrics:[],
+    }
+
+    for (var i in res.data.songs){
+      var song =res.data.songs[i];
+      for (var j in song.lyric.lyrics) {
+         var temp={
+           lyric: song.lyric.lyrics[j].line,
+           clipCount: song.clipCount,
+           selected_user_avatar:null,
+           selected_user_openId: null,
+           isSelected: null,
+           isSing:null,
+         }
+         songs.lyrics.push(temp);
+      }
+    }
+    that.setData({
+      songs:songs
     })
   },
 
@@ -48,135 +124,105 @@ Page({
   selectLyrics:function(event){
     var lyricId = event.currentTarget.dataset.lyricId;
     var songs = this.data.songs;
-    var lyric = songs.lyrics[lyricId];
-  
-    if (this.data.userOpenId == lyric.selected_user_openId || lyric.selected_user_openId == null){
-      //对未选择的歌词换头像,修改OpenId
-      if (!lyric.isSelected){
-        lyric.selected_user_avatar = this.data.userAvatar;
-        lyric.selected_user_openId = this.data.userOpenId;
+    var lyrics = songs.lyrics[lyricId];
+    var clipCount = songs.lyrics[lyricId].clipCount;
+
+    if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null){
+      var clips = [];
+      if (lyrics.isSelected){
+        for (var i in this.data.clips){
+          if (this.data.clips[i] != lyrics.clipCount){
+            clips.push(this.data.clips[i])
+          }
+        }
       }else{
-        lyric.selected_user_avatar = null;
-        lyric.selected_user_openId = null;
+        for (var i in this.data.clips) {
+            clips.push(this.data.clips[i])
+        }
+        clips.push(lyrics.clipCount);
       }
-      lyric.isSelected = !lyric.isSelected;
+
+      for(var i in songs.lyrics){
+        if (songs.lyrics[i].clipCount == clipCount){
+
+          var lyric = songs.lyrics[i];
+          //对未选择的歌词换头像,修改OpenId
+          if (!lyric.isSelected) {
+            lyric.selected_user_avatar = this.data.userAvatar;
+            lyric.selected_user_openId = this.data.openId;
+          } else {
+            lyric.selected_user_avatar = null;
+            lyric.selected_user_openId = null;
+          }
+          lyric.isSelected = !lyric.isSelected;
+        }
+      }
+    
+      this.setData({
+        songs: songs,
+        clips: clips
+      })
     }
-    this.setData({
-      songs:songs,
-    })
   },
+
 
   // 锁定已选择歌词，给出交互信息，
   // 对成功锁定的歌词进行成功反馈，对锁定失败的歌词进行失败反馈
   // 锁定后可再次进行，锁定，解锁
   lock:function(){
+    var that = this;
+    var data = {
+      requestType: "CreateClips",
+      createdSongId: this.data.song_id,
+      openid: this.data.openId,
+      clips: this.data.clips,
+    }
+
+    util.requestFromServer("CreateClips", data).then((res) => {
+      console.log("select: request success");
+      console.log(res);
+      this.processRequestData_Create(res);
+      var success = res.data.succeed;
+      var failed = res.data.failed;
+      var failedString ="";
+      var successString ="";
+
+      for (var i in success){
+        successString = successString + ' '+success[i];
+      }
+      successString = successString + "段";
+
+      if (failed.len>0){
+        failedString="，失败锁定第";
+        for (var i in failed) {
+          failedString = failedString + ' ' + failed[i];
+        }
+        failedString = failedString + "段";
+      }
+
+
+      wx.showModal({
+        title: '提示',
+        content: '成功锁定第 ' + successString + failedString,
+        showCancel: false,
+        confirmText: "确定",
+      })
+    }).catch((err) => {
+      console.log("请求失败");
+    })
+
 
   },
 
   // 对整个选择整体提交服务器，点击后不能再选
   //提交后跳转至唱歌界面
   handon:function(){
+    this.lock();
 
+    wx.navigateTo({
+      url: '../sing/sing?id=' + this.data.song_id,
+    })
   }
 
 })
 
-
-
-
-
-
-
-    // var songs={
-    //   songsId:1,
-    //   initiator:{
-    //     avatar:"/images/avatar/avatar-4.png",
-    //     nick:"Alix",
-    //   },
-    //   music:{
-    //     title:"成都",
-    //     coverImg:"https://resource.caoyu.online/songs/song1/song1.jpg",
-    //     singer:"赵雷",
-    //     url:null,
-    //   },
-    //   lyrics:[
-    //     {
-    //       lyric:"让我掉下眼泪的 不止昨夜的酒",
-    //       selected_user_avatar: "/images/avatar/avatar-3.png",
-    //       selected_user_openId: 3,
-    //       isSelected: true,
-    //     },
-    //     {
-    //       lyric: "让我依依不舍的 不止你的温柔",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "余路还要走多久 你攥着我的手",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "让我感到为难的 是挣扎的自由",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "分别总是在九月 回忆是思念的愁",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "深秋嫩绿的垂柳 亲吻着我额头",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "在那座阴雨的小城里 我从未忘记你",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "成都 带不走的 只有你",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "和我在成都的街头走一走",
-    //       selected_user_avatar: "/images/avatar/avatar-5.png",
-    //       selected_user_openId: 5,
-    //       isSelected: true,
-    //     },
-    //     {
-    //       lyric: "直到所有的灯都熄灭了也不停留",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "深秋嫩绿的垂柳 亲吻着我额头",
-    //       selected_user_avatar: "/images/avatar/avatar-2.png",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "在那座阴雨的小城里 我从未忘记你",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "成都 带不走的 只有你",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "和我在成都的街头走一走",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //     {
-    //       lyric: "直到所有的灯都熄灭了也不停留",
-    //       selected_user_avatar: null,
-    //       isSelected: false,
-    //     },
-    //   ]
-    // };

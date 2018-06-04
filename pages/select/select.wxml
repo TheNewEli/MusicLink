@@ -14,7 +14,7 @@
     <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
       <view class='lyrics-item' catchtap='selectLyrics' data-lyric-id='{{index}}'>
 
-        <block wx:if="{{item.selected_user_openId == userOpenId}}">
+        <block wx:if="{{item.selected_user_openId == openId}}">
           <view class='selected-self'>
             <text>{{item.lyric}}</text>
             <image src='{{item.selected_user_avatar}}'></image>
