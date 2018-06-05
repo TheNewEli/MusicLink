@@ -1,0 +1,101 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.7",
+	"appid": "wx42fc2e8b4292d25f",
+	"projectname": "MusicLink",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "world",
+					"pathName": "pages/world/world",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "me",
+					"pathName": "pages/me/me",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "select",
+					"pathName": "pages/select/select",
+					"query": "id=1"
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/test",
+					"query": ""
+				},
+				{
+					"id": 3,
+					"name": "setting",
+					"pathName": "pages/me/setting/setting",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "create",
+					"pathName": "pages/create/create",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "post",
+					"pathName": "pages/post/post",
+					"query": ""
+				},
+				{
+					"id": 7,
+					"name": "list-item",
+					"pathName": "pages/me/list-item/list-item",
+					"query": "id=0"
+				},
+				{
+					"id": -1,
+					"name": "sing",
+					"pathName": "pages/sing/sng",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": ""
+				}
+			]
+		}
+	}
+}

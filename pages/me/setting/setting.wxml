@@ -1,0 +1,34 @@
+<!--已发起歌曲 界面  -->
+<block wx:if="{{pagesId==0}}">
+
+</block>
+
+<!--参与的歌曲 界面  -->
+<block wx:elif="{{pagesId==1}}">
+
+</block>
+
+<!--设置 界面  -->
+<block wx:elif="{{pagesId==2}}">
+  <view class="setting-container">
+    <image class="setting-img" src="/images/icon/authorized_icon.png" mode='aspectFill'></image>
+    <button class="authorized-btn" open-type="openSetting" size="default">授权</button>
+    <button class="clearStorage-btn" size="default" catchtap='onTapClearStorage'>清除缓存</button>
+    <button class="clearAuthorized-btn" size="default" catchtap='onTapClearAuthorized'>清除授权           </button>
+  </view>
+</block>
+
+<!--关于 界面  -->
+<block wx:elif="{{pagesId==3}}">
+  <view class='about'>
+    <image src='https://resource.caoyu.online/songs/song1/song1.jpg'></image>
+    <text>开发团队：501A_WEAT</text>
+    <text>项目成员：屈志豪 杨鹏宇 曹雨</text>
+    <text>学校院系：四川大学 软件学院</text>
+    <text>技术顾问：高浩天</text>
+    <text>指导老师：王鹏</text>
+    <text>简介：这是一个萌萌哒(●′ω`●)，然而并没有什么用(•‾̑⌣‾̑•)✧˖°，只会嘤嘤嘤( σ'ω')σ 的简介。</text>
+  </view>
+</block>
+
+

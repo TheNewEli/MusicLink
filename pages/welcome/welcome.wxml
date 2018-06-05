@@ -1,0 +1,17 @@
+<view class='container'>  
+  <block wx:if="{{!hasUserInfo && canIUse}}" >
+    <button class="start-btn" plain='' open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
+      <text class='button-color'>一键登录和配置</text>
+    </button>
+
+  </block>
+  <block wx:else>
+    <view class='userInfo-box' >
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
+      <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
+    </view>
+    <button class="enter-post-btn" plain='' catchtap="enterPostPage">
+      <text class='button-color'>开始你的音乐之旅吧!</text>
+    </button>
+  </block>
+</view>  

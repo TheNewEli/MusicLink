@@ -1,0 +1,91 @@
+.list-title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0px 0 0px 10px;
+  border-bottom: 1px solid #cdcdcd;
+  padding: 10px 0 10px 10px;
+}
+
+.list-title text{
+  font-size: 20px;
+  font-family: Microsoft YaHei;
+  color: #696969;
+}
+
+.list-title image{
+  height: 16px;
+  width: 16px;
+  margin-left: 10px;
+}
+
+.list-container{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 0px 0px 10px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touth;
+}
+
+.list-item{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #ededed;  
+}
+
+.list-initiator-nick{
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rpx;
+  margin-bottom: 5rpx;
+}
+
+.list-initiator-nick image{
+  width: 140rpx;
+  height: 140rpx;
+}
+
+.list-initiator-nick text{
+  font-size: 26rpx;
+  color: #666;
+  margin: 5px 0 3px 0px;
+  width:50px;
+  text-align:center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-detail{
+  padding: 10px 5px 10px 10px;
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  width: 100%;
+}
+
+.list-box{
+  display: flex;
+  flex-direction: row;
+}
+
+.title{
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1px 1px 1px 1px;
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  width: 350rpx;
+}
+
+.time{
+  margin-left:50rpx; 
+  margin-top: 5rpx;
+  color: #ccc;
+  font-size: 24rpx;
+}
+
+.list-detail progress{
+  margin-top: 20rpx;
+  color: #ccc;
+}

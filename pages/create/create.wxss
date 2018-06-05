@@ -1,0 +1,142 @@
+/* pages/create/create.wxss */
+@import "../post/post-item-tpl/tpl-wxss/stars-tpl.wxss";
+page{
+    width: 750rpx;
+    height: 100%;
+    background-color: #D3D3D3;
+}
+ .create-container{
+    display: flex;
+    flex-direction: column;
+} 
+
+.songInfo{
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid 		#F5F5F5; 
+}
+
+.music-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #D3D3D3;
+    padding: 30rpx 30rpx 30rpx 30rpx;
+    width: 100%;
+  }
+  
+.cover{
+    height: 250rpx;
+    width: 250rpx;
+  }
+  
+.music-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 440rpx;
+    height: 100%;
+  }
+
+
+.music-detail text{
+    font-family: Microsoft YaHei;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 300rpx;
+  }
+
+.title{
+    padding: 20rpx 2rpx 10rpx 30rpx;
+    font-size: 17px;
+    color: #000000;
+}
+
+.other{
+    font-size: 14px;
+    padding: 7rpx 2rpx 7rpx 30rpx;
+    color: #666;
+}
+
+.degree-of-difficulty{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.degree-of-difficulty text{
+    width: 150rpx;
+}
+
+ /* 创建歌曲相关设置视图层 */
+.settings{
+    display: flex;
+    flex-direction: column;
+    padding-top: 20rpx;
+}
+
+.setCreatingType{
+    display: flex;
+    flex-direction: row;
+}
+
+.text-promt{
+    display: flex;
+    flex-direction: column;
+    padding-left: 80rpx;
+    width: 60%;
+}
+
+.Hint{
+    font-size: 25rpx;
+    color: 	#696969;
+}
+
+.switch-btn{
+    padding-left: 10%;
+}
+
+.setDateSchedule{
+    display: flex;
+    flex-direction: row;
+    padding-top: 5%;
+}
+
+.inputDescription{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.inputDescription text{
+    padding: 5% 80rpx 5% 10%;
+}
+
+.textarea{
+  padding: 25rpx 75.5rpx 25rpx 75.5rpx;
+  background-color: #DCDCDC;
+}
+
+
+
+.all-btns{
+    position: fixed;
+    bottom: 10%;
+    left:0;
+    right: 0;
+    min-height: 100rpx;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    padding-top: 10%;
+}
+.cancel-btn{
+    width: 40%;
+    background-color: 	#F5F5F5;
+}
+.confirm-btn{
+    width: 40%;
+    background-color: 	#F5F5F5;
+}
+

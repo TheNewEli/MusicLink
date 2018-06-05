@@ -1,0 +1,69 @@
+/***********设置***********/
+.setting-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .authorized-btn{
+    margin-top: 40px;
+    width: 400rpx;
+    background-color: #87CEFA;
+    color: #fff;
+  }
+
+.clearStorage-btn{
+    margin-top: 20px;
+    width: 400rpx;
+    background-color: #87CEFA;
+    color: #fff;
+}
+.clearAuthorized-btn{
+  margin-top: 20px;
+  width: 400rpx;
+  background-color:#ff0033;
+  color: #fff;
+}
+
+
+.setting-img{
+  align-items: center;
+  margin-top: 10%;
+  width: 80%;
+  height: 400rpx;
+  margin-right: 5%;
+}
+
+/**********关于**************/
+.about{
+  display: flex;
+  flex-direction: column;
+}
+
+.about image{
+  width: 100%;
+}
+
+.about text{
+  color: #808080;
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  padding: 15px 20px 0px 20px;
+  text-align: left;
+}
+
+/*********打赏开发者**********/
+.donate{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.donate image{
+  position: fixed;
+  top:10%;
+  width: 100%;
+  height: 800rpx;
+}

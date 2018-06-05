@@ -1,0 +1,12 @@
+
+.countDown-container{
+    display: flex;
+    flex-direction: row;
+    height: 30rpx;
+    width: 110rpx;
+}
+.cnt-img{
+    height:30rpx;
+    width: 30rpx;
+    margin-right: 10rpx;
+}
