@@ -1,2 +1,40 @@
-<!--pages/sing/sing.wxml-->
-<text>pages/sing/sing.wxml</text>
+<!--歌词界面按照用户选择的段 全部顺序打印 -->
+<!-- <view class='sing-container'>
+  <view class='lyric-box' >
+    <block wx:for="{{clips}}" wx:for-item="item" wx:for-index="index" >
+      <block wx:for="{{lyrics}}" wx:for-item="lyric" wx:for-index="index-lyric">
+        <block wx:if="{{lyric.clipCount == item}}">
+          <text>{{lyric.line}}</text>
+        </block>
+      </block>
+    </block>
+
+  </view>
+</view> -->
+
+
+<view class='sing-container'>
+
+<!--歌词界面仅仅输出用户选择的段中  当前看的段  -->
+  <!-- <view class='lyric-box' >
+    <block wx:for="{{lyrics}}" wx:for-item="lyric" wx:for-index="index">
+      <block wx:if="{{lyric.clipCount == currentClip}}">
+        <text class='lyric' >{{lyric.line}}</text>
+      </block>
+    </block>
+  </view> -->
+
+  <view class='lyric-box' >
+    <block wx:for="{{lyrics}}" wx:for-item="lyric" wx:for-index="index">
+      <text class='lyric' >{{lyric.line}}</text>
+    </block>
+  </view>
+
+  <view class='control-box'>
+    <image class='image-other' catchtap='originalSinger' src='/images/icon/originalsinger_icon.png' >原唱</image>
+    <image class='image-other' catchtap='lastClips' src='/images/icon/lastClips_icon.png' >上一段</image>
+    <image class='image-main'catchtap='start' src='/images/icon/start_icon.png' >开始</image>
+    <image class='image-other'catchtap='nextClips' src='/images/icon/nextClips_icon.png' >下一段</image>
+    <image class='image-other' catchtap='freshen' src='/images/icon/freshen_icon.png' >重唱</image>
+  </view>
+</view> 
