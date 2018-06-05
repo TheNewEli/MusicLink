@@ -225,7 +225,7 @@ Page({
   //提交后跳转至唱歌界面
   handon:function(){
     this.lock();
-
+    wx.setStorageSync("selectData", this.data);
     wx.navigateTo({
       url: '../sing/sing?id=' + this.data.song_id,
     })

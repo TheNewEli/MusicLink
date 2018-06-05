@@ -14,11 +14,11 @@ page{
   align-items: center;
 }
 
-.lyric-box .lyric{
+.lyric{
   width: 750rpx;
   text-align: center;
   padding: 5px 0px 5px 0px;
-  font-size: 20px;
+  font-size: 16px;
   color: #808080;
 }
 
@@ -31,7 +31,9 @@ page{
   padding: 10px 10px 20px 10px;
   position: fixed;
   bottom: 0;
-   min-height: 150rpx;
+  min-height: 150rpx;
+
+  background-color: #cdcdcd; 
 }
 
 

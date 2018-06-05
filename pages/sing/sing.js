@@ -1,125 +1,26 @@
 // pages/sing/sing.js
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-    currentClip:1,
-    clips:[1,3,5],
-    lyrics:[
-      {
-        clipCount:1,
-        line:"1疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 1,
-        line: "1疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 3,
-        line: "3疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 3,
-        line: "3疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 4,
-        line: "4疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 4,
-        line: "4疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 5,
-        line: "5疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 5,
-        line: "5疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 6,
-        line: "6疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 6,
-        line: "6疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 1,
-        line: "1疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 1,
-        line: "1疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 2,
-        line: "2疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 3,
-        line: "3疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 3,
-        line: "3疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 4,
-        line: "4疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 4,
-        line: "4疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 5,
-        line: "5疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 5,
-        line: "5疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 6,
-        line: "6疯狂的价格多少分阶段开始减肥"
-      },
-      {
-        clipCount: 6,
-        line: "6疯狂的价格多少分阶段开始减肥"
-      }            
-    ]
+    currentClip:null,
+    clips:null,
+    title:null,
+    created_songId:null,
+    songs:null,
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
+
   onLoad: function (options) {
-    
+    var selectData=wx.getStorageSync("selectData");
+    var songs = selectData.songs;
+    var created_songId = selectData.created_song_id;
+    this.setData({
+      currentClip: selectData.clips[0],
+      title:songs.music.title,
+      songs:songs,
+      clips:selectData.clips,
+      created_songId: created_songId
+    })
   },
 
 
