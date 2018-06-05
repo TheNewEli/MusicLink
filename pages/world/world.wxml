@@ -1,6 +1,6 @@
 <view class='world-container'>
   <block wx:for="{{worldList}}" wx:for-item="item" wx:key="item.worldId">
-    <view catchtap='onTapToDetail' data-post-id='{{item.worldId}}'>
+    <view catchtap='onTapToDetail' data-ids='{{item.ids}}' >
         <view class='world-item'>
           <view class='world-initiator' >
             <image src='{{item.avatar}}'></image>

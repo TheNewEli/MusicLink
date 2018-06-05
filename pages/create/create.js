@@ -54,7 +54,7 @@ Page({
     util.requestFromServer("CreateSong",data).then((res)=>{
       console.log(res);
       wx.redirectTo({
-        url: '../select/select?id=' + res.data.created_song_id,
+        url: '../select/select?created_song_id=' + res.data.created_song_id+'&'+"song_id="+songId,
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },

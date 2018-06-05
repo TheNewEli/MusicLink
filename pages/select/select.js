@@ -9,16 +9,18 @@ Page({
     openId: "",
     userAvatar: "",
     clips:[],
-    created_song_id:"",
+    createdSongId:"",
   },
 
   onLoad: function (options) {
-    var created_song_id=options.id;
+    var createdSongId=options.created_song_id;
+    var songId = options.song_id;
     var openId = wx.getStorageSync('openid');
-    var songId = wx.getStorageSync("to_create_song").songId;
     var userAvatar = app.globalData.userInfo.avatarUrl;
+
+
     this.setData({
-      created_song_id: created_song_id,
+      createdSongId: createdSongId,
       openId:openId,
       userAvatar: userAvatar,
       song_id: songId
@@ -54,7 +56,7 @@ Page({
     var that = this;
     var data = {
       requestType: "GetCreatedClips",
-      createdSongId: this.data.created_song_id,
+      createdSongId: this.data.createdSongId,
     }
 
     util.requestFromServer("GetCreatedClips", data).then((res) => {
@@ -180,7 +182,7 @@ Page({
     var that = this;
     var data = {
       requestType: "CreateClips",
-      createdSongId: this.data.created_song_id,
+      createdSongId: this.data.createdSongId,
       openid: this.data.openId,
       clips: this.data.clips,
     }

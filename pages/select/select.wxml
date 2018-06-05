@@ -11,7 +11,7 @@
   </view>
 
   <view class='lyrics-container'>
-    <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
+    <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index" wx:key="">
       <view class='lyrics-item' catchtap='selectLyrics' data-lyric-id='{{index}}'>
 
         <block wx:if="{{item.selected_user_openId == openId}}">

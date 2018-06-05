@@ -84,9 +84,9 @@
 					"query": "id=0"
 				},
 				{
-					"id": 8,
+					"id": -1,
 					"name": "sing",
-					"pathName": "pages/sing/sing",
+					"pathName": "pages/sing/sng",
 					"query": ""
 				},
 				{
