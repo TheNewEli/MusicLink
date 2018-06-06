@@ -184,17 +184,17 @@ Page({
       requestType: "CreateClips",
       createdSongId: this.data.createdSongId,
       openid: this.data.openId,
-      clips: this.data.clips,
+      clips: this.data.clips.sort(),
     }
 
     util.requestFromServer("CreateClips", data).then((res) => {
       console.log("select: request success");
       console.log(res);
       this.processRequestData_Create(res);
-      var success = res.data.succeed;
-      var failed = res.data.failed;
       var failedString ="";
       var successString ="";
+      var success = res.data.succeed.sort();
+      var failed = res.data.failed.sort();
 
       for (var i in success){
         successString = successString + ' '+success[i];
@@ -220,7 +220,6 @@ Page({
       console.log("请求失败");
     })
 
-
   },
 
   // 对整个选择整体提交服务器，点击后不能再选
@@ -231,7 +230,10 @@ Page({
     wx.navigateTo({
       url: '../sing/sing?id=' + this.data.song_id,
     })
-  }
+  },
+
+
+
 
 })
 
