@@ -1,6 +1,7 @@
 
 
 var app = getApp();
+var timer = require('timer');
 /*
  *根据客户端的时间信息得到发表评论的时间格式
  *多少分钟前，多少小时前，然后是昨天，然后再是月日
@@ -135,9 +136,14 @@ const requestFromServer=(servelet, data)=> {
   });
 }
 
+function getSortedListByTime(list){
+  list.sort(timer.compareWithTime);
+  return list;
+}
 module.exports = {
   getDiffTime: getDiffTime,
   convertToStarsArray: convertToStarsArray,
   requestFromServer: requestFromServer,
+  getSortedListByTime: getSortedListByTime,
 }
 

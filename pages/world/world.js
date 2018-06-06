@@ -15,17 +15,6 @@ Page({
     this.getAllDataFromServer();
   },
 
-  // //获取全部数据，同时添加progress数据
-  // getAllData: function(){
-  //   var dbWorld = new DBWorld();
-  //   var worldList = dbWorld.getSortedWorldData();
-  //   var len = worldList.length;
-  //   for (var i = 0; i < len; i++) {
-  //     worldList[i].progress = parseInt(worldList[i].participantNum / worldList[i].totalNum * 100);
-  //   }
-  //   return worldList;
-  // },
-
   getAllDataFromServer: function () {
 
     var that = this;
@@ -53,6 +42,7 @@ Page({
     for(var i in songs){
       var song = songs[i];
       var progress =  parseInt(song.reserved_clips / song.clip_number * 100);
+      var create_time_read = util.getDiffTime(song.song_created_time/1000, true);
       var temp = {
         ids: {
           created_song_id: song.created_song_id,
@@ -60,7 +50,8 @@ Page({
         },
         avatar: song.avatar_url,
         initiatorNick: song.nickname,
-        create_time_read: song.song_created_time,
+        created_time: song.song_created_time,
+        create_time_read: create_time_read,
         comment:song.message,
         music:{
           coverImg: song.cover_url,
@@ -71,7 +62,10 @@ Page({
       }
 
       worldList.push(temp);
+      
     }
+    
+    worldList = util.getSortedListByTime(worldList);
     wx.hideLoading();
     this.setData({
       worldList:worldList,

@@ -45,6 +45,10 @@ Page({
     
     var that = this;
 
+    wx.showLoading({
+      title: '加载中',
+    })
+
     //这里是请求格式的模板
     util.requestFromServer(servelet, data).then((res)=>{
       console.log("post: request success");
@@ -53,21 +57,6 @@ Page({
       console.log("请求失败");
     })
     
-
-    // wx.request({
-    //   url:url,
-    //   method:"GET",
-    //   header:{
-    //     'content-type':"application/json",
-    //   },
-    //   dataType:"json",
-    //   success:function(res){
-    //     that.processRequestData(res.data,settedKey,categoryTitle);
-    //   },
-    //   fail:function(error){
-    //     console.log("Request error");
-    //   }
-    // })
   },
 
   /*
@@ -108,7 +97,7 @@ Page({
        categoryTitle: categoryTitle,
        songs:songs,
     }
-
+    wx.hideLoading();
     this.setData(readyData);
   },
 
@@ -123,5 +112,14 @@ Page({
     wx.navigateTo({
       url: '../create/create?songId='+song.songId,
     });
+  },
+
+  onMoreTap(event){
+    wx.showModal({
+      title: '抱歉',
+      content: '时间问题，我们没有更多的数据提供给您',
+      showCancel:false,
+    })
+
   }
 })
