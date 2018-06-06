@@ -1,11 +1,31 @@
+
+
 page{
   background-color: #cdcdcd; 
 }
+
+@import "sing-item-tpl/tpl-wxss/count-dot-tpl.wxss";
 .sing-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom:200rpx; 
+  padding-bottom:200rpx;
+  z-index:-1;
+ 
+}
+.countDown{
+  z-index: 1;
+  position: fixed;
+}
+
+.progress-bar{
+  margin-top: 50%;
+  width: 90%;
+  height: 10rpx;
+  position: fixed;
+  z-index: 2;
+  align-items: center;
+
 }
 
 .lyric-box{
