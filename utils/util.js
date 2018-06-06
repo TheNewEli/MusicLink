@@ -10,49 +10,57 @@ var timer = require('timer');
  * yearsFlag -{bool} 是否要年份
  */
 
-function getDiffTime(recordTime, yearsFlag) {
+function getDiffTime(recordTime, yearFlag) {
+
   if (recordTime) {
-    recordTime = new Date(parseFloat(recordTime) * 1000); //recordTime为Unix时间戳
+    recordTime = new Date(parseFloat(recordTime) * 1000);
+    //recordTime.setMonth(recordTime.getMonth() - 1);
     var minute = 1000 * 60,
       hour = minute * 60,
       day = hour * 24,
       now = new Date(),
-      diff = now - recordTime;
-    //console.log("recordTime:" + recordTime + " now:" + now + " diff:" + diff);
+     diff = now - recordTime;
     var result = '';
-    if (diff < 0) {
+    if (diff < 0)
       return result;
-    }
+
     var weekR = diff / (7 * day);
     var dayC = diff / day;
     var hourC = diff / hour;
     var minC = diff / minute;
-    if (dayC > 1) {
-      var formate = 'MM-dd hh:mm';
-      if (yearsFlag) {
-        //formate = 'yyyy-MM-dd hh:mm';
-        formate = 'yyyy-MM-dd';
-      }
+    if (weekR > 1) {
+      var formate = "MM-dd hh:mm";
+      if (yearFlag)
+        formate = 'yyyy-MM-dd hh:mm'
       return recordTime.format(formate);
     }
     else if (dayC == 1 || (hourC < 24 && recordTime.getDate() != now.getDate())) {
-      //getDate（）获取的是当前月份的日期，例如12-5输出为5
-      result == '昨天' + recordTime.format('hh:mm');
+      result = '昨天' + recordTime.format("hh:mm");
       return result;
     }
+    else if (dayC > 1) {
+      var formate = 'MM-dd hh:mm';
+      if (yearFlag) {
+        formate = "yyyy-MM-dd hh:mm"
+      }
+      return recordTime.format(formate);
+    }
+
     else if (hourC >= 1) {
-      result = parseInt(hourC) + '小时前';
+      result = "大约"+parseInt(hourC) + '小时前';
       return result;
     }
     else if (minC >= 1) {
-      result = parseInt(minC) + '分钟前';
+      result = "大约" + parseInt(minC) + '分钟前';
       return result;
-    } else {
+    }
+
+    else {
       result = '刚刚';
       return result;
     }
+    return '';
   }
-  return '';
 }
 
 /*

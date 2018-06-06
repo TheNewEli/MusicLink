@@ -25,7 +25,7 @@ Page({
       userAvatar: userAvatar,
       song_id: songId
     })
-    this.getSongsLyricsData();
+    this.setSongsLyricsData();
   },
 
   // getSelectedClips:function(){
@@ -33,7 +33,7 @@ Page({
 
 
   //获取歌曲详细信息
-  getSongsLyricsData: function () {
+  setSongsLyricsData: function () {
 
     var that=this;
     var data={
@@ -43,6 +43,7 @@ Page({
 
     util.requestFromServer("GetClips", data).then((res) => {
       console.log("select: request success");
+      console.log(res);
       that.processRequestData(res);
       that.getGetCreatedClips();
     }).catch((err) => {
@@ -191,6 +192,7 @@ Page({
       console.log("select: request success");
       console.log(res);
       this.processRequestData_Create(res);
+
       var failedString ="";
       var successString ="";
       var success = res.data.succeed.sort();
