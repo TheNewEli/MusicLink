@@ -35,6 +35,14 @@ Page({
       },
     })
 
+    //初始化tocurrentView
+    var toCurrentView;
+    if (selectData.clips[0]==1){
+      toCurrentView=toView[0];
+    }else{
+      toCurrentView = toView[selectData.clips[0]-2];
+    }
+
     this.setData({
       currentClip: selectData.clips[0],
       title:songs.music.title,
@@ -42,7 +50,7 @@ Page({
       clips:selectData.clips,
       created_songId: created_songId,
       toview: toView,
-      toCurrentView: toView[0],
+      toCurrentView: toCurrentView,
       clipsIndex: clipsIndex
     })
   },
@@ -117,8 +125,5 @@ Page({
   originalSinger:function(){
 
   }
-
-
-
-  
+ 
 })
