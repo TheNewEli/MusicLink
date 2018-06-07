@@ -4,8 +4,9 @@
     flex-direction: row;
     height: 30rpx;
     width: 110rpx;
+    z-index: 1;
 }
-.cnt-img{
+.dot-img{
     height:30rpx;
     width: 30rpx;
     margin-right: 10rpx;

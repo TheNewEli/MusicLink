@@ -1,4 +1,6 @@
 
+var app = getApp();
+
 /**
  * @param {你的page对象.调用该函数的this} that 
  * @param {计时时间} remainedTime 
@@ -6,7 +8,24 @@
 function countDown(that, remainedTime) {
 
   if (remainedTime <= 0) {
+
+    const options = {
+      duration: 600000,
+      sampleRate: 44100,
+      numberOfChannels: 1,
+      encodeBitRate: 192000,
+      format: 'mp3',
+      frameSize: 50
+    }
+
     console.log("countDown completed");
+    wx.getRecorderManager().start(options);
+
+    var hasOriginSinger = wx.getStorageSync("hasOriginSinger");
+    var currentBCK_IAC=app.globalData.currentBCK_IAC;
+    
+    currentBCK_IAC.play();
+    that.data.isReading = true;
     return;
   }
 

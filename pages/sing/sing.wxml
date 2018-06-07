@@ -1,4 +1,5 @@
-<!--歌词界面按照用户选择的段 全部顺序打印 -->
+<import src="sing-item-tpl/tpl-wxml/count-dot-tpl.wxml"></import>
+<!-- 歌词界面按照用户选择的段 全部顺序打印 -->
 <!-- <view class='sing-container'>
   <view class='lyric-box' >
     <block wx:for="{{clips}}" wx:for-item="item" wx:for-index="index" >
@@ -11,50 +12,59 @@
 
   </view>
 </view> -->
-
-
-<view class='sing-container'>
-
-<!--歌词界面仅仅输出用户选择的段中  当前看的段  -->
+<view class="sing-container">
+  <!-- 歌词界面仅仅输出用户选择的段中  当前看的段 -->
   <!-- <view class='lyric-box' >
     <block wx:for="{{lyrics}}" wx:for-item="lyric" wx:for-index="index">
-      <block wx:if="{{lyric.clipCount == currentClip}}">
+      <block wx:if="{{lyric.clipCount == currentClipNum}}">
         <text class='lyric' >{{lyric.line}}</text>
       </block>
     </block>
   </view> -->
+  <view class="lyric-box">
 
-  <view class='lyric-box' >
+    <view class="progress-bar" hidden="{{!isDownloading}}">
+      <text class="title">下载进度：</text>
+      <progress percent="{{progress}}" show-info active='{{isDown}}' stroke-width="10" active-mode="forwards" show-info="{{false}}" />
+    </view>
+
+    <view class="countDown" hidden="{{isReadying}}">
+      <template is="countDownTpl" data="{{remainedTime}}"></template>
+    </view>
     <scroll-view scroll-y="true" scroll-with-animation="true" style="height: {{systemInfo.windowHeight-90}}px" scroll-into-view="{{toCurrentView}}">
-
-      <block wx:for="{{clipsIndex}}" wx:for-item="clipsIndex" wx:for-index="idx">
-        <view id='{{toview[idx]}}' >
+      <block wx:for="{{clipsIndex}}" wx:for-item="clipsIndex" wx:for-index="idx" wx:key="" >
+        <view id="{{toview[idx]}}">
           <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
             <block wx:if="{{(idx+1)==item.clipCount}}">
-              <block wx:if="{{(idx+1)==currentClip}}">
-                <view class='lyric-toview' >
+              <block wx:if="{{(idx+1)==currentClipNum}}">
+                <view class="lyric-toview">
                   <text>{{item.lyric}}</text>
-                </view> 
+                </view>
               </block>
               <block wx:else>
-                <view class='lyric' >
+                <view class="lyric">
                   <text>{{item.lyric}}</text>
                   <text></text>
-                </view> 
+                </view>
               </block>
             </block>
           </block>
         </view>
       </block>
-
-    </scroll-view>  
+    </scroll-view>
   </view>
-
-  <view class='control-box'>
-    <image class='image-other' catchtap='originalSinger' src='/images/icon/originalsinger_icon.png' >原唱</image>
-    <image class='image-other' catchtap='lastClips' src='/images/icon/lastClips_icon.png' >上一段</image>
-    <image class='image-main'catchtap='start' src='/images/icon/start_icon.png' >开始</image>
-    <image class='image-other'catchtap='nextClips' src='/images/icon/nextClips_icon.png' >下一段</image>
-    <image class='image-other' catchtap='freshen' src='/images/icon/freshen_icon.png' >重唱</image>
+  <view class="control-box">
+    <image class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
+      原唱
+    </image>
+    <image class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
+      上一段
+    </image>
+    <image wx:if="{{!hasCompleted}}" class="image-main" catchtap="startRecord" src="/images/icon/start_icon.png">开始</image>
+    <image wx:else  class="image-main" catchtap="tryListening" src="/images/icon/try_listening_icon.png">试听</image>
+    <image class="image-other" catchtap="skipToNextClips" src="/images/icon/nextClips_icon.png">
+      下一段
+    </image>
+    <image class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
   </view>
-</view> 
+</view>

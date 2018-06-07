@@ -10,6 +10,7 @@ Page({
     userAvatar: "",
     clips:[],
     createdSongId:"",
+    allOriginClips:[],
   },
 
   onLoad: function (options) {
@@ -43,8 +44,9 @@ Page({
 
     util.requestFromServer("GetClips", data).then((res) => {
       console.log("select: request success");
-      console.log(res);
+      //console.log(res);
       that.processRequestData(res);
+      
       that.getGetCreatedClips();
     }).catch((err) => {
       console.log("请求失败");
@@ -100,6 +102,9 @@ Page({
 
   //处理数据
   processRequestData:function(res){
+    
+    var allOriginClips = res.data.songs;
+
     var that = this;
     var songs={
       songId:res.data.song_id,
@@ -111,8 +116,10 @@ Page({
       lyrics:[],
     }
 
+
     for (var i in res.data.songs){
       var song =res.data.songs[i];
+      console.log(song);
       for (var j in song.lyric.lyrics) {
          var temp={
            lyric: song.lyric.lyrics[j].line,
@@ -126,7 +133,8 @@ Page({
       }
     }
     that.setData({
-      songs:songs
+      songs:songs,
+      allOriginClips:allOriginClips,
     })
   },
 
@@ -228,7 +236,7 @@ Page({
   //提交后跳转至唱歌界面
   handon:function(){
     this.lock();
-    wx.setStorageSync("selectData", this.data);
+    wx.setStorageSync("selectedData", this.data);
     wx.navigateTo({
       url: '../sing/sing?id=' + this.data.song_id,
     })
