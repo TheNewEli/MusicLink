@@ -87,7 +87,7 @@
 					"id": 8,
 					"name": "sing",
 					"pathName": "pages/sing/sing",
-					"query": "id=1"
+					"query": "songId=1"
 				},
 				{
 					"id": -1,

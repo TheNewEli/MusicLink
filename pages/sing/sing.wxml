@@ -35,10 +35,13 @@
       <block wx:for="{{clipsIndex}}" wx:for-item="clipsIndex" wx:for-index="idx" wx:key="" >
         <view id="{{toview[idx]}}">
           <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
-            <block wx:if="{{(idx+1)==item.clipCount}}">
+          <!--让每一段歌词依次输出  -->
+             <block wx:if="{{(idx+1)==item.clipCount}}"> 
+             <!--在每次渲染时，将当前段特别显示（更改背景和字体颜色） -->
               <block wx:if="{{(idx+1)==currentClipNum}}">
                 <view class="lyric-toview">
-                  <text>{{item.lyric}}</text>
+                <!--当前段滚动歌词实现 -->
+                  <text class="text {{currentLineNum == idx ? 'current': '' }}">{{item.lyric}}</text>
                 </view>
               </block>
               <block wx:else>
@@ -47,7 +50,7 @@
                   <text></text>
                 </view>
               </block>
-            </block>
+             </block> 
           </block>
         </view>
       </block>

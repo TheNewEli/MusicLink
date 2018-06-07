@@ -8,8 +8,9 @@ var app = getApp();
 Page({
 
   data: {
-
     //by Alix
+    currentLineNum: null,  //Alix添加
+    Lyrics:null,        //Alix 带开始时间和结束时间的全部歌词
     currentClipNum: null,
     clips: null,
     title: null,
@@ -59,7 +60,6 @@ Page({
     BCK_url: "",
     Org_url: "",
   },
-
 
   onLoad: function (options) {
     
@@ -164,8 +164,8 @@ Page({
     var clips = this.data.clips;
     var index = 0;
     var nowSkipTime = new Date().getTime();
-    console.log(nowSkipTime);
 
+    //防止频繁点击
     if (!this.diffTime(nowSkipTime, this.data.lastSkipTime))
       return;
 
@@ -177,7 +177,6 @@ Page({
     if (index != 0) {
       index--;
       var currentClipNum = clips[index];
-      console.log(currentClipNum);
       //让被唱的那一段的前一段，跳转到顶部，达到让被唱段搂在中部的目的，
       //若要让被唱段跳转到顶部，"ClipCount" + (currentClipNum - 1) 就行
       var toCurrentView = "ClipCount" + (currentClipNum - 2);
@@ -190,13 +189,7 @@ Page({
         tryListeningClickAmount:0,
       })
     }
-    // 测试的时候发现连续频繁点击last的时候，会出现回不到首段的效果。
-    if (this.data.currentClipNum == 1) {
-      this.setData({
-        currentClipNum: 1,
-        toCurrentView: "ClipCount0",
-      })
-    }
+
   },
 
   skipToNextClips: function () {
@@ -205,7 +198,6 @@ Page({
     var clips = this.data.clips;
     var index = clips.length;
     var nowSkipTime = new Date().getTime();
-    console.log(nowSkipTime);
 
 
     //防止用户频繁点击
@@ -220,7 +212,6 @@ Page({
     }
     if (index < clips.length) {
       var currentClipNum = clips[index];
-      console.log(currentClipNum);
       var toCurrentView = "ClipCount" + (currentClipNum - 2);
       this.setData({
         currentClipNum: currentClipNum,
@@ -499,6 +490,33 @@ Page({
         progress: res.progress
       })
     });
+  },
+
+
+  // 歌词滚动回调函数  添加By Alix
+  handleLyric: function (currentTime) {
+    var currentLineNum = this.data.currentLineNum;  //当前唱到的歌词行
+    var lyrics = this.data.currentClip.lyric.lyrics;
+    for (var i in lyrics) {
+      var beginTime = this.analysisTime(lyrics[i].beginTime);
+      var endTime = this.analysisTime(lyrics[i].endTime);
+      if (currentTime > beginTime && currentTime < endTime) {
+        currentLineNum = i;
+        break;
+      }
+    }
+    this.setData({
+      currentLineNum: currentLineNum,
+    })
+  },
+
+  // lyrics 时间解析
+  analysisTime: function (time) {
+    var Time = time.split(":");
+    var analysisTime = 0;
+    parseFloat(Time[0])
+    analysisTime = parseFloat(Time[0]) * 60 + parseFloat(Time[1]);
+    return analysisTime * 1000;
   },
 
 })
