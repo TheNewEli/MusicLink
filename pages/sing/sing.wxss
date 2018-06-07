@@ -1,5 +1,4 @@
 
-
 page{
   background-color: #cdcdcd; 
 }
@@ -68,8 +67,11 @@ page{
   color: #F5F5F5; 
 }
 
-.current{
-    color: #ffcd32;
+.lyric-toview .current{
+  width: 100%;
+  text-align: center;
+  font-size: 17px;
+  color: #ffcd32; 
 }
 
 

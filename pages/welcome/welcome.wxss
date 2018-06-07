@@ -1,17 +1,27 @@
 page{
-  overflow:hidden; 
-  position:fixed; 
-  background-image:url('https://resource.caoyu.online/basic/BG.jpg'); 
-  margin: 0px; 
-  /*下面的是关键的设置100%显示*/ 
-  background-size: 100% 100%;
-  background-color: #ddd; 
+
 }
 
 .container{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.background{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.4;  
+  /* -webkit-filter: blur(30rpx);
+  filter: blur(30rpx);    */
+}
+.background image{
+  width: 100%;
+  height: 100%;
 }
 
 .userinfo-avatar{
@@ -44,6 +54,6 @@ page{
 }
 
 .button-color{
-  /* font-weight: bold;
-  color: #ddd; */
+   /* font-weight: bold;
+  color: #ddd;  */
 }

@@ -1,5 +1,6 @@
 // pages/sing/sing.js
 const timer = require('../../utils/timer');
+var util = require('../../utils/util');
 
 var BCK_url = "https://oss.caoyu.online/music/test.m4a";
 
@@ -104,8 +105,16 @@ Page({
     })
 
     var currentClipNum = selectedData.clips[0];
+    for(var i in songs.lyrics){
+      var lyric = songs.lyrics[i];
+      if (lyric.clipCount == currentClipNum){
+        var currentLineNum =i;
+        break;
+      }
+    }
 
     this.setData({
+      currentLineNum: currentLineNum,
       currentClipNum: currentClipNum,
       currentClip: selectedData.allOriginData.songs[currentClipNum - 1],
       title: songs.music.title,
@@ -120,6 +129,8 @@ Page({
       lastSkipTime: new Date().getTime(),
       songId: songId,
     })
+
+    this.getPlayInfoDataFromServer();
   },
 
   onReady: function () {
@@ -148,10 +159,20 @@ Page({
     if (index != 0) {
       index--;
       var currentClipNum = clips[index];
+
+      for (var i in this.data.songs.lyrics) {
+        var lyric = this.data.songs.lyrics[i];
+        if (lyric.clipCount == currentClipNum) {
+          var currentLineNum = i;
+          break;
+        }
+      }
+
       //让被唱的那一段的前一段，跳转到顶部，达到让被唱段搂在中部的目的，
       //若要让被唱段跳转到顶部，"ClipCount" + (currentClipNum - 1) 就行
       var toCurrentView = "ClipCount" + (currentClipNum - 2);
       this.setData({
+        currentLineNum: currentLineNum,
         currentClipNum: clips[index],
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
@@ -180,7 +201,16 @@ Page({
     if (index < clips.length) {
       var currentClipNum = clips[index];
       var toCurrentView = "ClipCount" + (currentClipNum - 2);
+
+      for (var i in this.data.songs.lyrics) {
+        var lyric = this.data.songs.lyrics[i];
+        if (lyric.clipCount == currentClipNum) {
+          var currentLineNum = i;
+          break;
+        }
+      }
       this.setData({
+        currentLineNum: currentLineNum,
         currentClipNum: currentClipNum,
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
@@ -275,6 +305,9 @@ Page({
 
       console.log(currentBCK_IAC.currentTime);
       console.log(that.data.endTime);
+
+      //歌词滚动 CurrentLineNum 刷新
+      this.handleLyric(currentBCK_IAC.currentTime*1000,that);
 
       if (currentBCK_IAC.currentTime >= that.data.endTime) {
         console.log('该段结束');
@@ -450,18 +483,18 @@ Page({
 
 
   // 歌词滚动回调函数  添加By Alix
-  handleLyric: function (currentTime) {
-    var currentLineNum = this.data.currentLineNum;  //当前唱到的歌词行
-    var lyrics = this.data.currentClip.lyric.lyrics;
+  handleLyric: function (currentTime, that) {
+    var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
+    var lyrics = that.data.Lyrics;
     for (var i in lyrics) {
-      var beginTime = this.analysisTime(lyrics[i].beginTime);
-      var endTime = this.analysisTime(lyrics[i].endTime);
+      var beginTime = that.analysisTime(lyrics[i].beginTime);
+      var endTime = that.analysisTime(lyrics[i].endTime);
       if (currentTime > beginTime && currentTime < endTime) {
         currentLineNum = i;
         break;
       }
     }
-    this.setData({
+    that.setData({
       currentLineNum: currentLineNum,
     })
   },
@@ -473,6 +506,25 @@ Page({
     parseFloat(Time[0])
     analysisTime = parseFloat(Time[0]) * 60 + parseFloat(Time[1]);
     return analysisTime * 1000;
+  },
+
+  //获取带有开始和结束时间的歌词数据
+  getPlayInfoDataFromServer: function () {
+
+    var that = this;
+
+    var data = {
+      requestType: "GetPlayInfo",
+      createdSongId: this.data.created_songId,
+    }
+
+    util.requestFromServer("GetPlayInfo", data).then((res) => {
+      that.setData({
+        Lyrics: res.data.lyrics
+      })
+    }).catch((err) => {
+      console.log("请求失败");
+    })
   },
 
 })

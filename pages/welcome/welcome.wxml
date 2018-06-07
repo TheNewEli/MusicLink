@@ -1,6 +1,13 @@
-<view class='container'>  
+<view class='container'> 
+
+  <view class="background">
+    <image src="https://resource.caoyu.online/basic/BG.jpg" style="width: 100%"/>
+  </view>
+
   <block wx:if="{{!hasUserInfo && canIUse}}" >
-    <button class="start-btn" plain='' open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
+    <button class="start-btn" 
+            open-type="getUserInfo" 
+            bindgetuserinfo="getAllAuthorized">
       <text class='button-color'>一键登录和配置</text>
     </button>
 
@@ -10,7 +17,7 @@
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}"></image>
       <!-- <text class="userinfo-nickname">{{userInfo.nickName}}</text> -->
     </view>
-    <button class="enter-post-btn" plain='' catchtap="enterPostPage">
+    <button class="enter-post-btn" plain='true' catchtap="enterPostPage">
       <text class='button-color'>开始你的音乐之旅吧!</text>
     </button>
   </block>

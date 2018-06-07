@@ -40,9 +40,13 @@
              <!--在每次渲染时，将当前段特别显示（更改背景和字体颜色） -->
               <block wx:if="{{(idx+1)==currentClipNum}}">
                 <view class="lyric-toview">
-                <!--当前段滚动歌词实现 -->
-                  <text class="text {{currentLineNum == idx ? 'current': '' }}">{{item.lyric}}</text>
-                </view>
+                 <block wx:if="{{currentLineNum == index}}">
+                   <text class="current">{{item.lyric}}</text>
+                 </block>
+                 <block wx:else>
+                    <text class="text">{{item.lyric}}</text>
+                 </block>
+                </view> 
               </block>
               <block wx:else>
                 <view class="lyric">
