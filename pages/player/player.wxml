@@ -59,11 +59,11 @@
 <!--操作框  -->
         <view class="operators">
             <view class='control-box'>
-            <image class='image' catchtap='changeMod' src='/images/icon/originalsinger_icon.png' >原唱</image>
-            <image class='image' catchtap='prev' src='/images/icon/lastClips_icon.png' >上一段</image>
-            <image class='image'catchtap='togglePlaying' src='/images/icon/start_icon.png' >开始</image>
-            <image class='image'catchtap='next' src='/images/icon/nextClips_icon.png' >下一段</image>
-            <image class='image' catchtap='openList' src='/images/icon/freshen_icon.png' >重唱</image>
+             <image class='image' catchtap='changeMod' src='/images/icon/return_icon.png' >返回</image> 
+            <image class='image' catchtap='prev' src='/images/icon/playerLast_icon.png' >上一首</image>
+            <image class='image'catchtap='togglePlaying' src='/images/icon/playerBegin_icon.png' >开始</image>
+            <image class='image'catchtap='next' src='/images/icon/playerNext_icon.png' >下一首</image>
+             <image class='image' catchtap='openList' src='/images/icon/share_icon.png' >分享</image> 
           </view>  
         </view>    
       </view>

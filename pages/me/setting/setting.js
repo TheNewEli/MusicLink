@@ -1,4 +1,6 @@
 // pages/setting/setting.js
+var app=getApp();
+
 Page({
 
   /**
@@ -52,8 +54,11 @@ Page({
       success:function(res){
         if(res.confirm){
           try {
+            var openid =wx.getStorageSync("openid");
             wx.clearStorageSync();
             wx.showToast({title: '清除成功',});
+            //为了保证程序的正常使用，清除其他缓存后，继续保存openid
+            wx.setStorageSync("openid", openid);  
           } catch (e) 
           {
             console.log(e);
