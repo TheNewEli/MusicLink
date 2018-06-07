@@ -13,7 +13,7 @@ Page({
     currentDot: 0,
   },
   onShow:function(){
-    var selectData = wx.getStorageSync("selectData");
+    var selectData = wx.getStorageSync("selectedData");
     this.setData({
       currentSong:selectData.songs,
     })
@@ -123,6 +123,7 @@ Page({
       currentDot: e.detail.current
     })
   },
+
   togglePlaying: function () {
     console.log("sad");
     wx.getBackgroundAudioPlayerState({
@@ -136,19 +137,12 @@ Page({
       }
     })
   },
-  changeMod: function () {
-    // let playMod = this.data.playMod + 1
-    // if (playMod > SINGLE_CYCLE_MOD) {
-    //   playMod = SEQUENCE_MODE
-    // }
-    // this.setData({
-    //   playMod: playMod
-    // })
-  },
+
   prev: function () {
     // app.currentIndex = this.getNextIndex(false)
     // this._init()
   },
+  
   next: function () {
     // app.currentIndex = this.getNextIndex(true)
     // this._init()
