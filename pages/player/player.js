@@ -125,7 +125,6 @@ Page({
   },
 
   togglePlaying: function () {
-    console.log("sad");
     wx.getBackgroundAudioPlayerState({
       success: function (res) {
         var status = res.status

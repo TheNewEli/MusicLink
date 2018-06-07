@@ -61,13 +61,16 @@ page{
 }
 
 
-.lyric-toview text{
+.lyric-toview .text{
   width: 100%;
   text-align: center;
   font-size: 17px;
   color: #F5F5F5; 
 }
 
+.current{
+    color: #ffcd32;
+}
 
 
 .control-box{
