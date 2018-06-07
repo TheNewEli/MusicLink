@@ -10,7 +10,7 @@ Page({
     userAvatar: "",
     clips:[],
     createdSongId:"",
-    allOriginClips:[],
+    allOriginData:[],
   },
 
   onLoad: function (options) {
@@ -104,7 +104,7 @@ Page({
   //处理数据
   processRequestData:function(res){
     
-    var allOriginClips = res.data.songs;
+    var allOriginData = res.data;
 
     var that = this;
     var songs={
@@ -135,7 +135,7 @@ Page({
     }
     that.setData({
       songs:songs,
-      allOriginClips:allOriginClips,
+      allOriginData:allOriginData,
     })
   },
 

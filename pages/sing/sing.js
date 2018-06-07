@@ -1,6 +1,6 @@
 // pages/sing/sing.js
 const timer = require('../../utils/timer');
-//var BCK_url = "https://resource.caoyu.online/%E6%88%90%E9%83%BD%E4%BC%B4%E5%A5%8F.m4a";
+
 var BCK_url = "https://oss.caoyu.online/music/test.m4a";
 
 var app = getApp();
@@ -51,9 +51,13 @@ Page({
     //记录跳转时间
     lastSkipTime: 0,
     //临时文件路径
-    currentBCK_Temp_FilePath: {},
-    currentOrg_Temp_FilePath: {},
+    currentBCK_FilePath: {},
+    currentOrg_FilePath: {},
     songId: -1,
+
+    //原唱和伴奏的url
+    BCK_url: "",
+    Org_url: "",
   },
 
 
@@ -76,12 +80,17 @@ Page({
 
     var ER = wx.getStorageSync("ER");
 
-    if (ER == "" || ER.songId != songId)
+    if (ER == "" || ER.songId != songId) {
+      this.setData({
+        BCK_url: selectedData.allOriginData.bg_url,
+        Org_url: selectedData.allOriginData.origin_url,
+      })
       this.downloadFiles();
+    }
     else {
       this.setData({
-        currentBCK_Temp_FilePath: ER.currentBCK_Temp_FilePath,
-        currentOrg_Temp_FilePath: ER.currentOrg_Temp_FilePath,
+        currentBCK_FilePath: ER.currentBCK_FilePath,
+        currentOrg_FilePath: ER.currentOrg_FilePath,
       })
     }
 
@@ -99,7 +108,7 @@ Page({
 
     this.setData({
       currentClipNum: currentClipNum,
-      currentClip: selectedData.allOriginClips[currentClipNum - 1],
+      currentClip: selectedData.allOriginData.songs[currentClipNum - 1],
       title: songs.music.title,
       songs: songs,
       clips: selectedData.clips,
@@ -229,14 +238,41 @@ Page({
       currentRec_IAC = wx.createInnerAudioContext(),
       currentOrg_IAC = wx.createInnerAudioContext();
 
-    if (this.data.currentBCK_Temp_FilePath && this.data.currentOrg_Temp_FilePath) {
-      currentBCK_IAC.src = this.data.currentBCK_Temp_FilePath;
-      currentOrg_IAC.src = this.data.currentOrg_Temp_FilePath;
+    if (this.data.currentBCK_FilePath && this.data.currentOrg_FilePath) {
+      currentBCK_IAC.src = this.data.currentBCK_FilePath;
+      currentOrg_IAC.src = this.data.currentOrg_FilePath;
     }
     else {
       console.log("播放路径出错");
     }
 
+
+    if (that.data.hasOriginSinger=true){
+      currentBCK_IAC.src=currentOrg_IAC.src;
+    }
+
+    
+
+
+    //重新计算当前clip
+    var currentClipNum = this.data.currentClipNum;
+    var currentClip = this.data.selectedData.allOriginData.songs[currentClipNum - 1];
+
+    currentBCK_IAC.startTime = currentClip.begin_time / 1000;
+    console.log(currentBCK_IAC.startTime);
+
+    //app.globalData.currentBCK_IAC = currentBCK_IAC;
+
+    wx.setStorageSync("hasOriginSinger", that.data.hasOriginSinger);
+
+    that.setData({
+      startRecordClickAmount: 1,
+      currentClip: currentClip,
+      isReadying: false,
+      currentBCK_IAC: currentBCK_IAC,
+      currentOrg_IAC: currentOrg_IAC,
+      endTime: currentClip.end_time / 1000,
+    });
 
     currentBCK_IAC.onPlay(() => {
       console.log('开始播放')
@@ -247,40 +283,14 @@ Page({
     });
     currentBCK_IAC.onTimeUpdate((res) => {
 
-      // console.log(currentBCK_IAC.currentTime);
-      // console.log(that.data.endTime);
+      console.log(currentBCK_IAC.currentTime);
+      console.log(that.data.endTime);
 
-      if(currentBCK_IAC.currentTime>=that.data.endTime){
+      if (currentBCK_IAC.currentTime >= that.data.endTime) {
         console.log('该段结束');
         wx.getRecorderManager().stop();
         currentBCK_IAC.stop();
       }
-    });
-
-
-    //重新计算当前clip
-    var currentClipNum = this.data.currentClipNum;
-    var currentClip = this.data.selectedData.allOriginClips[currentClipNum - 1];
-
-    currentBCK_IAC.startTime = currentClip.begin_time / 1000;
-    console.log(currentBCK_IAC.startTime);
-
-    //app.globalData.currentBCK_IAC = currentBCK_IAC;
-
-    if (that.data.hasOriginSinger)
-      app.globalData.currentBCK_IAC = currentBCK_IAC;
-    else
-      app.globalData.currentBCK_IAC = currentOrg_IAC;
-
-    wx.setStorageSync("hasOriginSinger", that.data.hasOriginSinger);
-
-    that.setData({
-      startRecordClickAmount: 1,
-      currentClip: currentClip,
-      isReadying: false,
-      currentBCK_IAC: currentBCK_IAC,
-      currentOrg_IAC: currentOrg_IAC,
-      endTime: currentClip.end_time/1000,
     });
 
     timer.countDown(that, remainedTime);
@@ -296,17 +306,10 @@ Page({
     var currentRec_IAC = this.data.currentRec_IAC;
     //防止重复点击导致重复播放
     if (this.data.tryListeningClickAmount == 1) {
-
-      if (this.data.hasOriginSinger) {
         currentBCK_IAC.stop();
         currentRec_IAC.stop();
-      }
-      else {
-        currentOrg_IAC.stop();
-        currentRec_IAC.stop();
-      }
-      return;
     }
+    
     console.log("Listening")
 
     this.setData({
@@ -314,23 +317,15 @@ Page({
       tryListeningClickAmount: 1,
     });
 
-    if (this.data.hasOriginSinger) {
-      currentOrg_IAC.volume = 0.2;
-      currentOrg_IAC.play();
-
-    } else {
-      currentBCK_IAC.volume = 0.2;
-      currentBCK_IAC.play();
-    }
-    currentRec_IAC.volume = 1;
-    currentRec_IAC.play();
+    currentBCK_IAC.volume = 0.2;
+    currentBCK_IAC.play();
 
   },
   // 重唱该段
   ensemble: function () {
 
-    // if (!this.data.hasCompleted)
-    //   return;
+    if (!this.data.hasCompleted)
+      return;
 
     this.data.currentBCK_IAC.stop();
     this.data.currentRec_IAC.stop();
@@ -364,15 +359,14 @@ Page({
       isDownloading: true,
     })
 
-    var currentBCK_Temp_FilePath;
-    var currentOrg_Temp_FilePath;
+    var currentBCK_FilePath;
+    var currentOrg_FilePath;
 
     var that = this;
     const downloadTask1 = wx.downloadFile({
-      url: BCK_url,
+      url: that.data.Org_url,
       success: function (res) {
         if (res.statusCode === 200) {
-
           wx.getSavedFileList({
             success: function (res) {
               if (res.fileList.length > 0) {
@@ -383,25 +377,28 @@ Page({
                   }
                 })
               }
+            },
+            fail: function (err) {
+              console.log(err);
             }
           })
 
           wx.saveFile({
             tempFilePath: res.tempFilePath,
             success: function (res) {
-              currentBCK_Temp_FilePath = res.savedFilePath;
-              currentOrg_Temp_FilePath = res.savedFilePath;
+              currentBCK_FilePath = res.savedFilePath;
+              currentOrg_FilePath = res.savedFilePath;
 
               var existedResource = {
-                currentBCK_Temp_FilePath: currentBCK_Temp_FilePath,
-                currentOrg_Temp_FilePath: currentOrg_Temp_FilePath,
+                currentBCK_FilePath: currentBCK_FilePath,
+                currentOrg_FilePath: currentOrg_FilePath,
                 songId: that.data.songId,
               }
 
               that.setData({
                 isDownloading: false,
-                currentBCK_Temp_FilePath: currentBCK_Temp_FilePath,
-                currentOrg_Temp_FilePath: currentOrg_Temp_FilePath,
+                currentBCK_FilePath: currentBCK_FilePath,
+                currentOrg_FilePath: currentOrg_FilePath,
               })
 
               wx.setStorageSync("ER", existedResource);
@@ -416,22 +413,22 @@ Page({
 
 
 
-          // currentBCK_Temp_FilePath = res.tempFilePath;
+          // currentBCK_FilePath = res.tempFilePath;
           // const downloadTask2 = wx.downloadFile({
           //   url: BCK_url,
           //   success: function (res) {
           //     console.log(res);
           //     if (res.statusCode === 200) {
-          //       currentOrg_Temp_FilePath = res.tempFilePath;
+          //       currentOrg_FilePath = res.tempFilePath;
           //       var existedResource = {
-          //         currentBCK_Temp_FilePath: currentBCK_Temp_FilePath,
-          //         currentOrg_Temp_FilePath: currentOrg_Temp_FilePath,
+          //         currentBCK_FilePath: currentBCK_FilePath,
+          //         currentOrg_FilePath: currentOrg_FilePath,
           //         songId: that.data.songId,
           //       }
           //       that.setData({
           //         isDownloading: false,
-          //         currentBCK_Temp_FilePath: currentBCK_Temp_FilePath,
-          //         currentOrg_Temp_FilePath: currentOrg_Temp_FilePath,
+          //         currentBCK_FilePath: currentBCK_FilePath,
+          //         currentOrg_FilePath: currentOrg_FilePath,
           //       })
 
           //       wx.setStorageSync("ER", existedResource);
@@ -444,6 +441,9 @@ Page({
           //   }
         }
       },
+      fail: function (err) {
+        console.log(err);
+      }
 
     });
     // downloadTask2.onProgressUpdate((res) => {
