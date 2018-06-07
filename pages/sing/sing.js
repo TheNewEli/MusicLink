@@ -63,12 +63,15 @@ Page({
   },
 
   onLoad: function (options) {
-    
-    this.init(options);
+    var songId = options.songId;
+    this.setData({
+      songId: songId
+    })
+    this.init();
   },
 
-  onShow:function(options){
-    this.init(options);
+  onShow:function(){
+    this.init();
   },
 
   onReady: function () {
@@ -92,8 +95,7 @@ Page({
   /*由于页面每次被重新打开需要重新设置数据，
   **所以将onLoad的所有东西抽出来
   */
-  init:function(options){
-    var songId = options.songId;
+  init:function(){
     var selectedData = wx.getStorageSync("selectedData");
     var songs = selectedData.songs;
     var created_songId = selectedData.createdSongId;
@@ -109,7 +111,7 @@ Page({
 
     var ER = wx.getStorageSync("ER");
 
-    if (ER == "" || ER.songId != songId) {
+    if (ER == "" || ER.songId != this.data.songId) {
       this.setData({
         BCK_url: selectedData.allOriginData.bg_url,
         Org_url: selectedData.allOriginData.origin_url,
@@ -160,7 +162,6 @@ Page({
       remainedTime: 3,
       selectedData: selectedData,
       lastSkipTime: new Date().getTime(),
-      songId: songId,
       currentBCK_IAC: currentBCK_IAC,
       currentRec_IAC: currentRec_IAC,
       currentOrg_IAC: currentOrg_IAC,
