@@ -21,9 +21,9 @@ function countDown(that, remainedTime) {
     console.log("countDown completed");
     wx.getRecorderManager().start(options);
 
-    var currentBCK_IAC=app.globalData.currentBCK_IAC;
-    currentBCK_IAC.play();
-    that.data.isReading = true;
+    
+    that.data.currentBCK_IAC.play();
+    that.data.isReadying = true;
     return;
   }
 
