@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 8,
 			"list": [
 				{
 					"id": -1,
@@ -79,15 +79,15 @@
 				},
 				{
 					"id": 7,
-					"name": "list-item",
-					"pathName": "pages/me/list-item/list-item",
-					"query": "id=0"
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": ""
 				},
 				{
-					"id": -1,
+					"id": 8,
 					"name": "sing",
-					"pathName": "pages/sing/sng",
-					"query": ""
+					"pathName": "pages/sing/sing",
+					"query": "id=1"
 				},
 				{
 					"id": -1,
@@ -112,6 +112,12 @@
 					"name": "play",
 					"pathName": "pages/player/player",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": "id=0"
 				}
 			]
 		}
