@@ -50,7 +50,7 @@ Page({
   },
 
   getUserInfo: function (e) {
-    console.log("UserInfo getted");
+    //console.log("UserInfo getted");
     app.globalData.userInfo = e.detail.userInfo
     
     this.setData({
@@ -70,7 +70,7 @@ Page({
     wx.authorize({
       scope: 'scope.record',
       success() {
-        console.log("Authorized succeed");
+        //console.log("Authorized succeed");
       },
       fail() {
         console.log("First authorized failed");
@@ -120,8 +120,8 @@ Page({
           };
 
           util.requestFromServer("OnLogin",data).then((res)=>{
-            console.log("welcome: Request success");
-            console.log(res);
+            //console.log("welcome: Request success");
+            //console.log(res);
             wx.setStorageSync("openid", res.data.openid);
           }).catch((err)=>{
             console.log("welcome: Request failed");

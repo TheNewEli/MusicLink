@@ -51,7 +51,7 @@ Page({
 
     //这里是请求格式的模板
     util.requestFromServer(servelet, data).then((res)=>{
-      console.log("post: request success");
+      //console.log("post: request success");
       that.processRequestData(res.data, settedKey, categoryTitle);
     }).catch((err)=>{
       console.log("请求失败");
@@ -104,7 +104,7 @@ Page({
   onSongTap(event){
    
     var song = event.currentTarget.dataset.song;
-    console.log(song);
+    //console.log(song);
 
     wx.setStorageSync("to_create_song", song);
 
