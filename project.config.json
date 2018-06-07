@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 11,
 			"list": [
 				{
 					"id": -1,
@@ -87,6 +87,18 @@
 					"id": -1,
 					"name": "sing",
 					"pathName": "pages/sing/sng",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
 					"query": ""
 				},
 				{
