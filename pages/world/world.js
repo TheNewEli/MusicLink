@@ -77,6 +77,7 @@ Page({
   onTapToDetail(event) {
     var ids = event.currentTarget.dataset.ids;
     console.log(ids);
+    
     wx.navigateTo({
       url: '../select/select?created_song_id=' +ids.created_song_id+"&song_id="+ids.song_id, 
     })

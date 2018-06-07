@@ -1,19 +1,22 @@
-<!-- <view class="list-title">
-  <text>合唱世界</text>
-  <image src='/images/icon/more_icon.png'></image>
-</view> -->
 <view class='list-container'>
-  <block wx:for="{{worldList}}" wx:for-item="item" >
-    <view catchtap='onTapToDetail' data-post-id='{{item.songId}}'>
+  <block wx:for="{{ListItem}}" wx:for-item="item" >
+    <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}'>
         <view class='list-item'>
           <view class='list-initiator-nick' >
-            <image src='https://resource.caoyu.online/songs/song1/song1.jpg'></image>
+            <image src='{{item.cover_url}}'></image>
             <!-- <text>{{item.initiatorNick}}</text> -->
           </view>
           <view class='list-detail'>
             <view class='list-box'>
+
+              <block wx:if="{{item.world_shared}}">
+                <image src='/images/icon/public_icon.png'></image>  
+              </block>
+              <block wx:else>
+                <image src='/images/icon/private_icon.png'></image>
+              </block>
               <view class='title'> 
-                <text >{{item.music.title}}</text> 
+                <text >{{item.title}}</text> 
               </view>
               <view class='time'>
                 <text>{{item.create_time_read}}</text>

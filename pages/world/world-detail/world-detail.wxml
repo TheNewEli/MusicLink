@@ -1,4 +1,0 @@
-<view class='container'>
-  <image src='/images/icon/authoriz-1.png'></image>
-  <button>授权</button> 
-</view>

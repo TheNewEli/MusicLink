@@ -94,6 +94,24 @@
 					"name": "player",
 					"pathName": "pages/player/player",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "player",
+					"pathName": "pages/player/player",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "play",
+					"pathName": "pages/player/player",
+					"query": ""
 				}
 			]
 		}

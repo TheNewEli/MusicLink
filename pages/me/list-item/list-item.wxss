@@ -65,6 +65,7 @@
 .list-box{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .title{
@@ -75,7 +76,7 @@
   text-overflow: ellipsis;
   padding: 1px 1px 1px 1px;
   border-bottom: 1px solid rgba(255,255,255, 0.5);
-  width: 350rpx;
+  width: 300rpx;
 }
 
 .time{
@@ -88,4 +89,10 @@
 .list-detail progress{
   margin-top: 20rpx;
   color: #ccc;
+}
+
+
+.list-box  image{
+  height: 40rpx;
+  width: 40rpx;
 }
