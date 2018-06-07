@@ -19,6 +19,8 @@ Page({
     var openId = wx.getStorageSync('openid');
     var userAvatar = app.globalData.userInfo.avatarUrl;
 
+    console.log(options);
+
 
     this.setData({
       createdSongId: createdSongId,
@@ -43,10 +45,9 @@ Page({
     }
 
     util.requestFromServer("GetClips", data).then((res) => {
-      console.log("select: request success");
-      //console.log(res);
+      console.log("select: GetClips");
+      console.log(res);
       that.processRequestData(res);
-      
       that.getGetCreatedClips();
     }).catch((err) => {
       console.log("请求失败");
@@ -235,10 +236,20 @@ Page({
   // 对整个选择整体提交服务器，点击后不能再选
   //提交后跳转至唱歌界面
   handon:function(){
+
+    if(this.data.clips.length==0){
+      wx.showModal({
+        title:"提示",
+        content:"你还没选任何数据喔",
+      })
+
+      return;
+    }
+
     this.lock();
     wx.setStorageSync("selectedData", this.data);
     wx.navigateTo({
-      url: '../sing/sing?id=' + this.data.song_id,
+      url: '../sing/sing?songId=' + this.data.song_id,
     })
   },
 
