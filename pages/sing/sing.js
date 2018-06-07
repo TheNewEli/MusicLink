@@ -63,7 +63,36 @@ Page({
   },
 
   onLoad: function (options) {
+    
+    this.init(options);
+  },
 
+  onShow:function(options){
+    this.init(options);
+  },
+
+  onReady: function () {
+    wx.setNavigationBarTitle({
+      title: this.data.title,
+    })
+  },
+
+  onHide:function(){
+    this.data.currentBCK_IAC.stop();
+    this.data.currentRec_IAC.stop();
+    wx.getRecorderManager().stop();
+  },
+  
+  onUnload:function(){
+    this.data.currentBCK_IAC.destroy();
+    this.data.currentRec_IAC.destroy();
+    wx.getRecorderManager().stop();
+  },
+
+  /*由于页面每次被重新打开需要重新设置数据，
+  **所以将onLoad的所有东西抽出来
+  */
+  init:function(options){
     var songId = options.songId;
     var selectedData = wx.getStorageSync("selectedData");
     var songs = selectedData.songs;
@@ -113,6 +142,10 @@ Page({
       }
     }
 
+    var currentBCK_IAC = wx.createInnerAudioContext(),
+      currentRec_IAC = wx.createInnerAudioContext(),
+      currentOrg_IAC = wx.createInnerAudioContext();
+
     this.setData({
       currentLineNum: currentLineNum,
       currentClipNum: currentClipNum,
@@ -128,17 +161,13 @@ Page({
       selectedData: selectedData,
       lastSkipTime: new Date().getTime(),
       songId: songId,
+      currentBCK_IAC: currentBCK_IAC,
+      currentRec_IAC: currentRec_IAC,
+      currentOrg_IAC: currentOrg_IAC,
     })
 
     this.getPlayInfoDataFromServer();
   },
-
-  onReady: function () {
-    wx.setNavigationBarTitle({
-      title: this.data.title,
-    })
-  },
-
 
   skipToLastClips: function () {
 
@@ -176,12 +205,16 @@ Page({
         currentClipNum: clips[index],
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
+        hasCompleted:false,
+        startRecordClickAmount:0,
+        tryListeningClickAmount:0,
       })
     }
 
   },
 
   skipToNextClips: function () {
+
     var currentClipNum = this.data.currentClipNum;
     var clips = this.data.clips;
     var index = clips.length;
@@ -214,6 +247,9 @@ Page({
         currentClipNum: currentClipNum,
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
+        hasCompleted:false,
+        startRecordClickAmount:0,
+        tryListeningClickAmount:0,
       })
     }
   },
@@ -221,10 +257,13 @@ Page({
   //开始录制 
   startRecord: function () {
 
-    if (this.data.startRecordClickAmount == 1 || this.data.isDownloading)
+    var that = this;
+
+    if (that.data.startRecordClickAmount == 1 || that.data.isDownloading)
       return;
 
     const recorderManager = wx.getRecorderManager();
+
 
     recorderManager.onStop((res) => {
 
@@ -233,50 +272,43 @@ Page({
       var temp_IAC = wx.createInnerAudioContext();
       temp_IAC.src = tempFilePath;
 
-      this.setData({
+      that.setData({
         hasCompleted: true,
         currentRec_IAC: temp_IAC,
-        startRecordClickAmount: 1,
+        startRecordClickAmount: 0,
         tryListeningClickAmount: 0,
       })
     });
 
-    this.readyToRecord();
+    that.readyToRecord();
 
   },
 
   readyToRecord: function () {
 
-    //防止重复点击
-    if (this.data.startRecordClickAmount == 1)
-      return;
-
     var that = this;
+
+
     var remainedTime = 3;
 
-    var currentBCK_IAC = wx.createInnerAudioContext(),
-      currentRec_IAC = wx.createInnerAudioContext(),
-      currentOrg_IAC = wx.createInnerAudioContext();
+    var currentBCK_IAC = that.data.currentBCK_IAC,
+      currentOrg_IAC = that.data.currentOrg_IAC;
 
-    if (this.data.currentBCK_FilePath && this.data.currentOrg_FilePath) {
-      currentBCK_IAC.src = this.data.currentBCK_FilePath;
-      currentOrg_IAC.src = this.data.currentOrg_FilePath;
+    if (that.data.currentBCK_FilePath && that.data.currentOrg_FilePath) {
+      currentBCK_IAC.src = that.data.currentBCK_FilePath;
+      currentOrg_IAC.src = that.data.currentOrg_FilePath;
     }
     else {
       console.log("播放路径出错");
     }
 
-
-    if (that.data.hasOriginSinger=true){
-      currentBCK_IAC.src=currentOrg_IAC.src;
+    if (that.data.hasOriginSinger = true) {
+      currentBCK_IAC.src = currentOrg_IAC.src;
     }
 
-    
-
-
     //重新计算当前clip
-    var currentClipNum = this.data.currentClipNum;
-    var currentClip = this.data.selectedData.allOriginData.songs[currentClipNum - 1];
+    var currentClipNum = that.data.currentClipNum;
+    var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
 
     currentBCK_IAC.startTime = currentClip.begin_time / 1000;
     console.log(currentBCK_IAC.startTime);
@@ -301,6 +333,7 @@ Page({
       console.log('该段结束');
       wx.getRecorderManager().stop();
     });
+
     currentBCK_IAC.onTimeUpdate((res) => {
 
       console.log(currentBCK_IAC.currentTime);
@@ -324,36 +357,46 @@ Page({
   //试听唱过的部分
   tryListening: function () {
 
+   
+    var that = this;
 
-    var currentBCK_IAC = this.data.currentBCK_IAC;
-    var currentRec_IAC = this.data.currentRec_IAC;
+    // if(!that.hasCompleted)
+    //    return;
+
+    var currentBCK_IAC = that.data.currentBCK_IAC;
+    var currentRec_IAC = that.data.currentRec_IAC;
     //防止重复点击导致重复播放
-    if (this.data.tryListeningClickAmount == 1) {
-        currentBCK_IAC.stop();
-        currentRec_IAC.stop();
+    if (that.data.tryListeningClickAmount == 1) {
+      currentBCK_IAC.stop();
+      currentRec_IAC.stop();
     }
-    
+
     console.log("Listening")
 
-    this.setData({
+    that.setData({
       startRecordClickAmount: 0,
       tryListeningClickAmount: 1,
     });
 
     currentBCK_IAC.volume = 0.2;
+    currentRec_IAC.volume = 1;
+
+    currentRec_IAC.play();
     currentBCK_IAC.play();
 
   },
   // 重唱该段
   ensemble: function () {
 
-    if (!this.data.hasCompleted)
+    var that = this;
+
+    if (!that.data.hasCompleted)
       return;
 
-    this.data.currentBCK_IAC.stop();
-    this.data.currentRec_IAC.stop();
+    that.data.currentBCK_IAC.stop();
+    that.data.currentRec_IAC.stop();
 
-    this.setData({
+    that.setData({
       startRecordClickAmount: 0,
       tryListeningClickAmount: 0,
       hasCompleted: false,
@@ -378,14 +421,16 @@ Page({
 
   downloadFiles: function () {
 
-    this.setData({
+    var that = this;
+
+    that.setData({
       isDownloading: true,
     })
 
     var currentBCK_FilePath;
     var currentOrg_FilePath;
 
-    var that = this;
+   
     const downloadTask1 = wx.downloadFile({
       url: that.data.Org_url,
       success: function (res) {
@@ -475,7 +520,7 @@ Page({
     //   })
 
     downloadTask1.onProgressUpdate((res) => {
-      this.setData({
+      that.setData({
         progress: res.progress
       })
     });
