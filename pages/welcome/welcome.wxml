@@ -1,11 +1,15 @@
-<view class="container">
-  <!-- <view class="background">
-    <image src="/images/cover/cover6.jpg" />
-  </view> -->
-  <view class="detail">
-    <image class="sign" src="/images/cover/cover.png" />
-    <text class="theme">连音符</text>
-    <text class="introduction">让你我与音乐相连！</text>
+
+
+<view class='container'> 
+
+  <view class="background">
+    <image src="/images/cover/3.jpg" />
+  </view>  
+
+  <view class='detail'>
+    <image class='sign' src="/images/cover/cover.png" /> 
+    <text class='theme' >连音符</text>
+    <text class='introduction'>让你我与音乐相连！</text>
   </view>
   <block wx:if="{{true}}">
     <button class="start-btn" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
