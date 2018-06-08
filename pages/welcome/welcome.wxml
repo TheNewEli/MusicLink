@@ -2,9 +2,9 @@
 
 <view class='container'> 
 
-   <!-- <view class="background">
-    <image src="/images/cover/cover6.jpg" />
-  </view>  -->
+  <view class="background">
+    <image src="/images/cover/3.jpg" />
+  </view>  
 
   <view class='detail'>
     <image class='sign' src="/images/cover/cover.png" /> 

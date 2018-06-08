@@ -75,4 +75,5 @@ page{
   height: 50rpx;
   width: 50rpx;
   margin-left: 30rpx;
+   /* opacity: 0.7;  */
 }
