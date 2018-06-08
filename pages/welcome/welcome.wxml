@@ -11,16 +11,11 @@
     <text class='theme' >连音符</text>
     <text class='introduction'>让你我与音乐相连！</text>
   </view>
-
-
-  <block wx:if="{{!hasUserInfo && canIUse}}" >
-    <button class="start-btn" 
-            open-type="getUserInfo"
-
-            bindgetuserinfo="getAllAuthorized">开启音乐之旅
+  <block wx:if="{{true}}">
+    <button class="start-btn" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
+      开启音乐之旅
       <!-- <text class='button-color'>一键登录和配置</text> -->
     </button>
-
   </block>
   <!-- <block wx:else>
     <view class='userInfo-box' >
@@ -29,5 +24,5 @@
     <button class="enter-post-btn" plain='true' catchtap="enterPostPage">
       <text class='button-color'>开始你的音乐之旅吧!</text>
     </button>
-  </block>-->
-</view>   
+  </block> -->
+</view>

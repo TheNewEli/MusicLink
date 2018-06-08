@@ -10,9 +10,9 @@ function countDown(that, remainedTime) {
   if (remainedTime <= 0) {
 
     const options = {
-      duration: 600000,
+      duration: 300000,
       sampleRate: 44100,
-      numberOfChannels: 1,
+      numberOfChannels: 2,
       encodeBitRate: 192000,
       format: 'mp3',
       frameSize: 50
@@ -21,9 +21,10 @@ function countDown(that, remainedTime) {
     console.log("countDown completed");
     wx.getRecorderManager().start(options);
 
-    
-    that.data.currentBCK_IAC.play();
-    that.data.isReadying = true;
+    if(that.data.currentBCK_IAC.paused){
+      that.data.currentBCK_IAC.play();
+      that.data.isReadying = true;
+    }
     return;
   }
 

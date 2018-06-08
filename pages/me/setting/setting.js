@@ -48,8 +48,7 @@ Page({
       success:function(res){
         if(res.confirm){
           try {
-            var openid =wx.getStorageSync("openid");
-            //清除缓存
+          
             wx.clearStorageSync();
             //清除文件缓存
             wx.getSavedFileList({
@@ -58,19 +57,25 @@ Page({
                   if (res.fileList.length > 0) {
                     wx.removeSavedFile({
                       filePath: res.fileList[i].filePath,
-                      // complete: function (res) {
-                      //   console.log("clear:"+"file "+i+" "+res)
-                      // }
+                      fail:function(err){
+                        wx.showToast({
+                          title:"清楚文件失败",
+                          image: "/images/icon/error_icon.png",
+                          mask: true,
+                        });
+                        console.log(err);
+                      }
                     })
-                    
                   }
                 }
               }
             })
-
             wx.showToast({title: '清除成功',});
-            //为了保证程序的正常使用，清除其他缓存后，继续保存openid
-            wx.setStorageSync("openid", openid);  
+
+            wx.reLaunch({
+              url: '../../welcome/welcome'
+            })
+  
           } catch (e) 
           {
             console.log(e);
@@ -78,7 +83,8 @@ Page({
           }
         }
       }
-    })
+    });
+   
    
   },
   

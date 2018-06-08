@@ -19,7 +19,7 @@ Page({
     var openId = wx.getStorageSync('openid');
     var userAvatar = app.globalData.userInfo.avatarUrl;
 
-    console.log(options);
+    //console.log(options);
 
 
     this.setData({
@@ -30,7 +30,6 @@ Page({
     })
     this.setSongsLyricsData();
   },
-
   // getSelectedClips:function(){
   // },
 
@@ -45,8 +44,8 @@ Page({
     }
 
     util.requestFromServer("GetClips", data).then((res) => {
-      console.log("select: GetClips");
-      console.log(res);
+      //console.log("select: GetClips");
+      //console.log(res);
       that.processRequestData(res);
       that.getGetCreatedClips();
     }).catch((err) => {
@@ -64,8 +63,8 @@ Page({
     }
 
     util.requestFromServer("GetCreatedClips", data).then((res) => {
-      console.log("select: request success");
-      console.log(res);
+      //console.log("select: request success");
+      //console.log(res);
       that.processRequestData_Create(res);
     }).catch((err) => {
       console.log("请求失败");
@@ -120,10 +119,10 @@ Page({
 
     for (var i in res.data.songs){
       var song =res.data.songs[i];
-      console.log(song);
+      //console.log(song);
       for (var j in song.lyric.lyrics) {
          var temp={
-           lyric: song.lyric.lyrics[j].line,
+           lyric: song.lyric.lyrics[j].lyric,
            clipCount: song.clipCount,
            selected_user_avatar:null,
            selected_user_openId: null,
@@ -198,8 +197,8 @@ Page({
     }
 
     util.requestFromServer("CreateClips", data).then((res) => {
-      console.log("select: request success");
-      console.log(res);
+      //console.log("select: request success");
+      //console.log(res);
       this.processRequestData_Create(res);
 
       var failedString ="";

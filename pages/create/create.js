@@ -36,10 +36,17 @@ Page({
     if(recommendWord.length<=6){
       wx.showModal({
         title: '提示',
-        content: '推荐语字数必须多于六个字喔，请重新填写',
+        content: '推荐语字数必须多于五个字喔，请重新填写',
         showCancel:false,
       });
-
+      return;
+    }
+    else if(recommendWord.length>=50){
+      wx.showModal({
+        title: '提示',
+        content: '推荐语字数过长，请重新填写',
+        showCancel:false,
+      });
       return;
     }
     
