@@ -17,7 +17,7 @@ Page({
     title: null,
     created_songId: null,
     songs: null,
-    toview: null,
+    toView: null,
     toCurrentView: null,
     systemInfo: {},
     clipsIndex: null,
@@ -53,8 +53,8 @@ Page({
     //记录跳转时间
     lastSkipTime: 0,
     //临时文件路径
-    currentBCK_FilePath: {},
-    currentOrg_FilePath: {},
+    currentBCK_FilePath: "",
+    currentOrg_FilePath: "",
     songId: -1,
 
     //原唱和伴奏的url
@@ -71,7 +71,17 @@ Page({
   },
 
   onShow:function(){
-    this.init();
+
+    var currentClipNum = this.data.currentClipNum;
+    var toView = this.data.toView;
+    this.setData({
+      currentClip: this.data.selectedData.allOriginData.songs[currentClipNum - 1],
+      toCurrentView: toView[currentClipNum-1],
+      remainedTime: 3,
+      lastSkipTime: new Date().getTime(),
+      hasCompleted:false,
+      isDownloading:false,
+    })
   },
 
   onReady: function () {
@@ -96,6 +106,8 @@ Page({
   **所以将onLoad的所有东西抽出来
   */
   init:function(){
+
+
     var selectedData = wx.getStorageSync("selectedData");
     var songs = selectedData.songs;
     var created_songId = selectedData.createdSongId;
@@ -156,7 +168,7 @@ Page({
       songs: songs,
       clips: selectedData.clips,
       created_songId: created_songId,
-      toview: toView,
+      toView: toView,
       toCurrentView: toView[0],
       clipsIndex: clipsIndex,
       remainedTime: 3,
@@ -168,6 +180,8 @@ Page({
     })
 
     this.getPlayInfoDataFromServer();
+
+    
   },
 
   skipToLastClips: function () {
@@ -265,7 +279,7 @@ Page({
 
     const recorderManager = wx.getRecorderManager();
 
-
+   
     recorderManager.onStop((res) => {
 
       console.log("Recorder stop", res);
@@ -295,12 +309,20 @@ Page({
     var currentBCK_IAC = that.data.currentBCK_IAC,
       currentOrg_IAC = that.data.currentOrg_IAC;
 
-    if (that.data.currentBCK_FilePath && that.data.currentOrg_FilePath) {
+    if (that.data.currentBCK_FilePath!="" && that.data.currentOrg_FilePath!="") {
       currentBCK_IAC.src = that.data.currentBCK_FilePath;
       currentOrg_IAC.src = that.data.currentOrg_FilePath;
     }
     else {
       console.log("播放路径出错");
+      wx.showToast({
+        title:"文件丢失",
+        image:"/images/icon/error_icon.png",
+        mask:true,
+      });
+      if(!that.data.isDownloading)
+        that.downloadFiles();
+      return;
     }
 
     if (that.data.hasOriginSinger = true) {
@@ -310,6 +332,7 @@ Page({
     //重新计算当前clip
     var currentClipNum = that.data.currentClipNum;
     var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
+    var currentLineNum = that.getCurrentClipFirstLyricIndex();
 
     currentBCK_IAC.startTime = currentClip.begin_time / 1000;
     console.log(currentBCK_IAC.startTime);
@@ -321,6 +344,7 @@ Page({
     that.setData({
       startRecordClickAmount: 1,
       currentClip: currentClip,
+      currentLineNum:currentLineNum,
       isReadying: false,
       currentBCK_IAC: currentBCK_IAC,
       currentOrg_IAC: currentOrg_IAC,
@@ -338,10 +362,19 @@ Page({
     currentBCK_IAC.onTimeUpdate((res) => {
 
       console.log(currentBCK_IAC.currentTime);
-      console.log(that.data.endTime);
+      //console.log(that.data.endTime);
+      var currentLineNum = that.data.currentLineNum;
+
+      console.log(that.data.Lyrics[currentLineNum].endTime);
 
       //歌词滚动 CurrentLineNum 刷新
-      this.handleLyric(currentBCK_IAC.currentTime*1000,that);
+      //this.handleLyric(currentBCK_IAC.currentTime*1000,that);
+      if(currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime)
+      {
+        that.setData({
+          currentLineNum:currentClipNum++,
+        });
+      }
 
       if (currentBCK_IAC.currentTime >= that.data.endTime) {
         console.log('该段结束');
@@ -471,6 +504,10 @@ Page({
               })
 
               wx.setStorageSync("ER", existedResource);
+              wx.showToast({
+                title:"数据加载成功",
+                icon:"success",
+              })
             },
             fail: function (err) {
               console.log(err);
@@ -528,22 +565,46 @@ Page({
   },
 
 
-  // 歌词滚动回调函数  添加By Alix
-  handleLyric: function (currentTime, that) {
-    var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
-    var lyrics = that.data.Lyrics;
-    for (var i in lyrics) {
-      var beginTime = that.analysisTime(lyrics[i].beginTime);
-      var endTime = that.analysisTime(lyrics[i].endTime);
-      if (currentTime > beginTime && currentTime < endTime) {
-        currentLineNum = i;
-        break;
+  // // 歌词滚动回调函数  添加By Alix
+  // handleLyric: function (currentTime, that) {
+  //   var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
+  //   var lyrics = that.data.Lyrics;
+  //   for (var i in lyrics) {
+  //     var beginTime = that.analysisTime(lyrics[i].beginTime);
+  //     var endTime = that.analysisTime(lyrics[i].endTime);
+  //     if (currentTime > beginTime && currentTime < endTime) {
+  //       currentLineNum = i;
+  //       break;
+  //     }
+  //   }
+  //   that.setData({
+  //     currentLineNum: currentLineNum,
+  //   })
+  // },
+
+  handleLyric: function () {
+    //var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
+    var originLyrics = this.data.Lyrics;
+    var processedLyrics = new Array([originLyrics.length]);
+    
+
+    for (var i in originLyrics) {
+      var lyric_temp = {
+        beginTime:0,
+        endTime:0,
+        // lyric:"",
       }
+      lyric_temp.beginTime = (this.analysisTime(originLyrics[i].beginTime))/1000;
+      lyric_temp.endTime = (this.analysisTime(originLyrics[i].endTime))/1000;
+      //lyric_temp.lyric = lyrics[i].lyric;
+      processedLyrics[i]=lyric_temp;
     }
-    that.setData({
-      currentLineNum: currentLineNum,
+
+    this.setData({
+      Lyrics:processedLyrics,
     })
   },
+  
 
   // lyrics 时间解析
   analysisTime: function (time) {
@@ -552,6 +613,25 @@ Page({
     parseFloat(Time[0])
     analysisTime = parseFloat(Time[0]) * 60 + parseFloat(Time[1]);
     return analysisTime * 1000;
+  },
+
+  getCurrentClipFirstLyricIndex(){
+
+
+    var index=0;
+
+    for(var i in this.data.selectedData.allOriginData.songs){
+       if(i<this.data.currentClipNum-1){
+        var length = this.data.selectedData.allOriginData.songs[i].lyric.lyrics.length;
+        index+=length;
+       }
+       else{
+         break;
+       }
+        
+    }
+
+    return index;
   },
 
   //获取带有开始和结束时间的歌词数据
@@ -567,10 +647,11 @@ Page({
     util.requestFromServer("GetPlayInfo", data).then((res) => {
       that.setData({
         Lyrics: res.data.lyrics
-      })
+      });
+      this.handleLyric();
     }).catch((err) => {
       console.log("请求失败");
-    })
+    });
   },
 
 })
