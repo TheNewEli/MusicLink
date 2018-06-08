@@ -464,12 +464,12 @@ Page({
       that.tryListeningCorrection(that);
 
       if (that.currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
-        console.log("Update row num：",that.data.currentLineNum);
+        //console.log("Update row num：",that.data.currentLineNum);
         currentLineNum += 1;
         that.setData({
           currentLineNum: currentLineNum,
         });
-        console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
+        //console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
       }
 
     })
