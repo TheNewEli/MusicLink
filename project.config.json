@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 5,
 			"list": [
 				{
 					"id": 1,
@@ -64,6 +64,12 @@
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
 					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "toplist",
+					"pathName": "pages/toplist/toplist",
+					"query": "category=热门"
 				}
 			]
 		}

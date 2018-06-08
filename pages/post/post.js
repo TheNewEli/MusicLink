@@ -18,7 +18,7 @@ Page({
     inThreaten:{},
 
     //推荐
-    ourRecommned:{},
+    ourRecommend:{},
 
   },
 
@@ -33,30 +33,22 @@ Page({
     //   imgUrls:imgUrls,
     // });
 
-
     this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"民谣" });
     this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"民谣" });
 
   },
 
-  getSongsListData:function(servelet, settedKey,categoryTitle,data){
-
-
-    
+  getSongsListData:function(servelet, settedKey,categoryTitle,data){  
     var that = this;
-
     wx.showLoading({
       title: '加载中',
     })
-
     //这里是请求格式的模板
     util.requestFromServer(servelet, data).then((res)=>{
-      //console.log("post: request success");
       that.processRequestData(res.data, settedKey, categoryTitle);
     }).catch((err)=>{
       console.log("请求失败");
     })
-    
   },
 
   /*
@@ -115,11 +107,14 @@ Page({
   },
 
   onMoreTap(event){
-    wx.showModal({
-      title: '抱歉',
-      content: '时间问题，我们没有更多的数据提供给您',
-      showCancel:false,
-    })
+
+    wx.setStorageSync("inthreatenData", this.data.inThreaten);
+    wx.setStorageSync("recommendData", this.data.ourRecommend);
+
+    var category = event.currentTarget.dataset.category;
+    wx.navigateTo({
+      url: '../toplist/toplist?category=' + category ,
+    });
 
   }
 })

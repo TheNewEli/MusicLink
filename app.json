@@ -9,7 +9,8 @@
     "pages/create/create",
     "pages/sing/sing",
     "pages/me/list-item/list-item",
-    "pages/player/player"
+    "pages/player/player",
+    "pages/toplist/toplist"
   ],
   "window": {
     "navigationBarBackgroundColor": "#F5F5F5",
