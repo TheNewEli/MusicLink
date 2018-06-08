@@ -29,7 +29,7 @@
               <view ref="lyricLine"
                     id="line{{index}}"
                     class="text {{currentLineNum == index ? 'current': '' }}"
-                    wx:for="{{lyrics}}">{{item.lyric}}
+                    wx:for="{{Lyrics}}">{{item.lyric}}
               </view>
             </view>
             <view wx:else>
@@ -59,11 +59,16 @@
 <!--操作框  -->
         <view class="operators">
             <view class='control-box'>
-             <image class='image' catchtap='changeMod' src='/images/icon/return_icon.png' >返回</image> 
-            <image class='image' catchtap='prev' src='/images/icon/playerLast_icon.png' >上一首</image>
-            <image class='image'catchtap='togglePlaying' src='/images/icon/playerBegin_icon.png' >开始</image>
-            <image class='image'catchtap='next' src='/images/icon/playerNext_icon.png' >下一首</image>
-             <image class='image' catchtap='openList' src='/images/icon/share_icon.png' >分享</image> 
+              <image class='image' catchtap='Return' src='/images/icon/return_icon.png' />
+              <image class='image' catchtap='prev' src='/images/icon/playerLast_icon.png' />
+              <block wx:if="{{playIcon=='icon-play'}}">
+                <image class='image'catchtap='togglePlaying'src='/images/icon/playerPause_icon.png' />
+              </block>
+              <block wx:elif="{{playIcon=='icon-pause'}}">
+                  <image class='image'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />
+              </block>
+              <image class='image'catchtap='next' src='/images/icon/playerNext_icon.png' />
+              <image class='image' catchtap='share' src='/images/icon/share_icon.png' />
           </view>  
         </view>    
       </view>
