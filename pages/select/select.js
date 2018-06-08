@@ -30,7 +30,6 @@ Page({
     })
     this.setSongsLyricsData();
   },
-
   // getSelectedClips:function(){
   // },
 
@@ -123,7 +122,7 @@ Page({
       console.log(song);
       for (var j in song.lyric.lyrics) {
          var temp={
-           lyric: song.lyric.lyrics[j].line,
+           lyric: song.lyric.lyrics[j].lyric,
            clipCount: song.clipCount,
            selected_user_avatar:null,
            selected_user_openId: null,

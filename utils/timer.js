@@ -10,9 +10,9 @@ function countDown(that, remainedTime) {
   if (remainedTime <= 0) {
 
     const options = {
-      duration: 600000,
+      duration: 300000,
       sampleRate: 44100,
-      numberOfChannels: 1,
+      numberOfChannels: 2,
       encodeBitRate: 192000,
       format: 'mp3',
       frameSize: 50

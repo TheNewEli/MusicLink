@@ -77,8 +77,7 @@ Page({
     this.setData({
       currentClip: this.data.selectedData.allOriginData.songs[currentClipNum - 1],
       toCurrentView: toView[currentClipNum-1],
-      remainedTime: 3,
-      lastSkipTime: new Date().getTime(),
+      remainedTime: 0,
       hasCompleted:false,
       isDownloading:false,
     })
@@ -186,6 +185,10 @@ Page({
 
   skipToLastClips: function () {
 
+    //如果录音已经开始，按键失效
+    if(isReadying)
+      return;
+
     var currentClipNum = this.data.currentClipNum;
     var clips = this.data.clips;
     var index = 0;
@@ -230,6 +233,10 @@ Page({
 
   skipToNextClips: function () {
 
+    //如果录音已经开始，按键失效
+    if(isReadying)
+      return;
+
     var currentClipNum = this.data.currentClipNum;
     var clips = this.data.clips;
     var index = clips.length;
@@ -239,6 +246,7 @@ Page({
     //防止用户频繁点击
     if (!this.diffTime(nowSkipTime, this.data.lastSkipTime))
       return;
+    
 
     for (var i in clips) {
       if (currentClipNum == clips[i]) {
@@ -292,6 +300,7 @@ Page({
         currentRec_IAC: temp_IAC,
         startRecordClickAmount: 0,
         tryListeningClickAmount: 0,
+        isReadying:true,
       })
     });
 
@@ -362,24 +371,30 @@ Page({
     currentBCK_IAC.onTimeUpdate((res) => {
 
       console.log(currentBCK_IAC.currentTime);
+      console.log(currentBCK_IAC.startTime);
       //console.log(that.data.endTime);
       var currentLineNum = that.data.currentLineNum;
 
-      console.log(that.data.Lyrics[currentLineNum].endTime);
-
+      //console.log(that.data.Lyrics[currentLineNum].endTime);
       //歌词滚动 CurrentLineNum 刷新
       //this.handleLyric(currentBCK_IAC.currentTime*1000,that);
-      if(currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime)
-      {
-        that.setData({
-          currentLineNum:currentClipNum++,
-        });
-      }
-
       if (currentBCK_IAC.currentTime >= that.data.endTime) {
         console.log('该段结束');
         wx.getRecorderManager().stop();
         currentBCK_IAC.stop();
+      }
+
+      // console.log("这一句的行数：",that.data.currentLineNum)
+      // console.log("这一句的开始时间：",that.data.Lyrics[currentLineNum].beginTime,"结束时间",that.data.Lyrics[currentLineNum].endTime);
+
+      if(currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime)
+      {
+        console.log("Update row num：",that.data.currentLineNum);
+        currentLineNum+=1;
+        that.setData({
+          currentLineNum:currentLineNum,
+        });
+        console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
       }
     });
 
