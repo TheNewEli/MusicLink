@@ -3,7 +3,7 @@ const app = getApp();
 const util = require('../../utils/util');
 Page({
   data: {
-    motto: '开始你的音乐之旅',
+    motto: '开启音乐之旅',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -47,6 +47,7 @@ Page({
     this.getUserInfo(e);
     //获取录音权限
     this.getRecorderAuthority();
+    this.enterPostPage();
   },
 
   getUserInfo: function (e) {
@@ -76,18 +77,15 @@ Page({
         console.log("First authorized failed");
         wx.showModal({
           title: '提示',
-          content: '未授权，录音发无法使用',
+          content: '未授权，录音发无法使用，请前往"我的"界面设置一栏进行授权',
           showCancel: true,
           confirmText: "授权",
           confirmColor: "#52a2d8",
           success: function (res) {
             //确认打开设置界面进行授权
             if (res.confirm) {
-              wx.showModal({
-                title: '提示',
-                content: '未授权，录音功能无法使用，刚刚干嘛去了',
-                showCancel: true,
-                confirmText: "知道了",
+              wx.switchTab({
+                url: '../me/me',
               })
             }
           },

@@ -11,7 +11,7 @@ Page({
   data: {
     //by Alix
     currentLineNum: null,  //Alix添加
-    Lyrics:null,        //Alix 带开始时间和结束时间的全部歌词
+    Lyrics: null,        //Alix 带开始时间和结束时间的全部歌词
     currentClipNum: null,
     clips: null,
     title: null,
@@ -70,17 +70,17 @@ Page({
     this.init();
   },
 
-  onShow:function(){
+  onShow: function () {
 
     var currentClipNum = this.data.currentClipNum;
     var toView = this.data.toView;
     this.setData({
       currentClip: this.data.selectedData.allOriginData.songs[currentClipNum - 1],
-      toCurrentView: toView[currentClipNum-1],
+      toCurrentView: toView[currentClipNum - 1],
       remainedTime: 3,
       lastSkipTime: new Date().getTime(),
-      hasCompleted:false,
-      isDownloading:false,
+      hasCompleted: false,
+      isDownloading: false,
     })
   },
 
@@ -90,13 +90,13 @@ Page({
     })
   },
 
-  onHide:function(){
+  onHide: function () {
     this.data.currentBCK_IAC.stop();
     this.data.currentRec_IAC.stop();
     wx.getRecorderManager().stop();
   },
-  
-  onUnload:function(){
+
+  onUnload: function () {
     this.data.currentBCK_IAC.destroy();
     this.data.currentRec_IAC.destroy();
     wx.getRecorderManager().stop();
@@ -105,7 +105,7 @@ Page({
   /*由于页面每次被重新打开需要重新设置数据，
   **所以将onLoad的所有东西抽出来
   */
-  init:function(){
+  init: function () {
 
 
     var selectedData = wx.getStorageSync("selectedData");
@@ -148,10 +148,10 @@ Page({
     })
 
     var currentClipNum = selectedData.clips[0];
-    for(var i in songs.lyrics){
+    for (var i in songs.lyrics) {
       var lyric = songs.lyrics[i];
-      if (lyric.clipCount == currentClipNum){
-        var currentLineNum =i;
+      if (lyric.clipCount == currentClipNum) {
+        var currentLineNum = i;
         break;
       }
     }
@@ -181,7 +181,7 @@ Page({
 
     this.getPlayInfoDataFromServer();
 
-    
+
   },
 
   skipToLastClips: function () {
@@ -220,9 +220,9 @@ Page({
         currentClipNum: clips[index],
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
-        hasCompleted:false,
-        startRecordClickAmount:0,
-        tryListeningClickAmount:0,
+        hasCompleted: false,
+        startRecordClickAmount: 0,
+        tryListeningClickAmount: 0,
       })
     }
 
@@ -262,9 +262,9 @@ Page({
         currentClipNum: currentClipNum,
         toCurrentView: toCurrentView,
         lastSkipTime: nowSkipTime,
-        hasCompleted:false,
-        startRecordClickAmount:0,
-        tryListeningClickAmount:0,
+        hasCompleted: false,
+        startRecordClickAmount: 0,
+        tryListeningClickAmount: 0,
       })
     }
   },
@@ -279,7 +279,7 @@ Page({
 
     const recorderManager = wx.getRecorderManager();
 
-   
+
     recorderManager.onStop((res) => {
 
       console.log("Recorder stop", res);
@@ -309,18 +309,18 @@ Page({
     var currentBCK_IAC = that.data.currentBCK_IAC,
       currentOrg_IAC = that.data.currentOrg_IAC;
 
-    if (that.data.currentBCK_FilePath!="" && that.data.currentOrg_FilePath!="") {
+    if (that.data.currentBCK_FilePath != "" && that.data.currentOrg_FilePath != "") {
       currentBCK_IAC.src = that.data.currentBCK_FilePath;
       currentOrg_IAC.src = that.data.currentOrg_FilePath;
     }
     else {
       console.log("播放路径出错");
       wx.showToast({
-        title:"文件丢失",
-        image:"/images/icon/error_icon.png",
-        mask:true,
+        title: "文件丢失",
+        image: "/images/icon/error_icon.png",
+        mask: true,
       });
-      if(!that.data.isDownloading)
+      if (!that.data.isDownloading)
         that.downloadFiles();
       return;
     }
@@ -335,7 +335,7 @@ Page({
     var currentLineNum = that.getCurrentClipFirstLyricIndex();
 
     currentBCK_IAC.startTime = currentClip.begin_time / 1000;
-    console.log(currentBCK_IAC.startTime);
+    // console.log(currentBCK_IAC.startTime);
 
     //app.globalData.currentBCK_IAC = currentBCK_IAC;
 
@@ -344,7 +344,7 @@ Page({
     that.setData({
       startRecordClickAmount: 1,
       currentClip: currentClip,
-      currentLineNum:currentLineNum,
+      currentLineNum: currentLineNum,
       isReadying: false,
       currentBCK_IAC: currentBCK_IAC,
       currentOrg_IAC: currentOrg_IAC,
@@ -361,18 +361,17 @@ Page({
 
     currentBCK_IAC.onTimeUpdate((res) => {
 
-      console.log(currentBCK_IAC.currentTime);
+      // console.log(currentBCK_IAC.currentTime);
       //console.log(that.data.endTime);
       var currentLineNum = that.data.currentLineNum;
 
-      console.log(that.data.Lyrics[currentLineNum].endTime);
+      // console.log(that.data.Lyrics[currentLineNum].endTime);
 
       //歌词滚动 CurrentLineNum 刷新
-      //this.handleLyric(currentBCK_IAC.currentTime*1000,that);
-      if(currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime)
-      {
+      this.handleLyric(currentBCK_IAC.currentTime*1000,that);
+      if (currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
         that.setData({
-          currentLineNum:currentClipNum++,
+          currentLineNum: currentClipNum++,
         });
       }
 
@@ -384,14 +383,14 @@ Page({
     });
 
     timer.countDown(that, remainedTime);
-    console.log("here");
+    // console.log("here");
 
   },
 
   //试听唱过的部分
   tryListening: function () {
 
-   
+
     var that = this;
 
     // if(!that.hasCompleted)
@@ -464,7 +463,7 @@ Page({
     var currentBCK_FilePath;
     var currentOrg_FilePath;
 
-   
+
     const downloadTask1 = wx.downloadFile({
       url: that.data.Org_url,
       success: function (res) {
@@ -505,8 +504,8 @@ Page({
 
               wx.setStorageSync("ER", existedResource);
               wx.showToast({
-                title:"数据加载成功",
-                icon:"success",
+                title: "数据加载成功",
+                icon: "success",
               })
             },
             fail: function (err) {
@@ -582,29 +581,46 @@ Page({
   //   })
   // },
 
-  handleLyric: function () {
-    //var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
-    var originLyrics = this.data.Lyrics;
-    var processedLyrics = new Array([originLyrics.length]);
-    
-
-    for (var i in originLyrics) {
-      var lyric_temp = {
-        beginTime:0,
-        endTime:0,
-        // lyric:"",
+  handleLyric: function (currentTime, that) {
+    var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
+    var lyrics = that.data.Lyrics;
+    for (var i in lyrics) {
+      var beginTime = that.analysisTime(lyrics[i].beginTime);
+      var endTime = that.analysisTime(lyrics[i].endTime);
+      if (currentTime > beginTime && currentTime < endTime) {
+        currentLineNum = i;
+        console.log("currentLineNum:" + currentLineNum + " beginTime:" + beginTime + " currentTime:" + currentTime + " endTime:" + endTime);
+        break;
       }
-      lyric_temp.beginTime = (this.analysisTime(originLyrics[i].beginTime))/1000;
-      lyric_temp.endTime = (this.analysisTime(originLyrics[i].endTime))/1000;
-      //lyric_temp.lyric = lyrics[i].lyric;
-      processedLyrics[i]=lyric_temp;
     }
-
-    this.setData({
-      Lyrics:processedLyrics,
+    that.setData({
+      currentLineNum: currentLineNum,
     })
   },
-  
+
+  // handleLyric: function () {
+  //   //var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
+  //   var originLyrics = this.data.Lyrics;
+  //   var processedLyrics = new Array([originLyrics.length]);
+
+
+  //   for (var i in originLyrics) {
+  //     var lyric_temp = {
+  //       beginTime: 0,
+  //       endTime: 0,
+  //       // lyric:"",
+  //     }
+  //     lyric_temp.beginTime = (this.analysisTime(originLyrics[i].beginTime)) / 1000;
+  //     lyric_temp.endTime = (this.analysisTime(originLyrics[i].endTime)) / 1000;
+  //     //lyric_temp.lyric = lyrics[i].lyric;
+  //     processedLyrics[i] = lyric_temp;
+  //   }
+
+  //   this.setData({
+  //     Lyrics: processedLyrics,
+  //   })
+  // },
+
 
   // lyrics 时间解析
   analysisTime: function (time) {
@@ -615,20 +631,20 @@ Page({
     return analysisTime * 1000;
   },
 
-  getCurrentClipFirstLyricIndex(){
+  getCurrentClipFirstLyricIndex() {
 
 
-    var index=0;
+    var index = 0;
 
-    for(var i in this.data.selectedData.allOriginData.songs){
-       if(i<this.data.currentClipNum-1){
+    for (var i in this.data.selectedData.allOriginData.songs) {
+      if (i < this.data.currentClipNum - 1) {
         var length = this.data.selectedData.allOriginData.songs[i].lyric.lyrics.length;
-        index+=length;
-       }
-       else{
-         break;
-       }
-        
+        index += length;
+      }
+      else {
+        break;
+      }
+
     }
 
     return index;
@@ -648,7 +664,7 @@ Page({
       that.setData({
         Lyrics: res.data.lyrics
       });
-      this.handleLyric();
+      // this.handleLyric();
     }).catch((err) => {
       console.log("请求失败");
     });
