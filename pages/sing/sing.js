@@ -45,6 +45,7 @@ Page({
     remainedTime: 3,
 
     isReadying: true,
+    isRecording: false,
     progress: 0,
     isDownloading: false,
 
@@ -73,10 +74,10 @@ Page({
     var currentClipNum = this.data.currentClipNum;
     var toView = this.data.toView;
     this.setData({
-      toCurrentView: toView[currentClipNum-1],
+      toCurrentView: toView[currentClipNum - 1],
       remainedTime: 0,
-      hasCompleted:false,
-      isDownloading:false,
+      hasCompleted: false,
+      isDownloading: false,
     })
   },
 
@@ -88,9 +89,9 @@ Page({
 
   onHide: function () {
 
-    if(!this.data.currentBCK_IAC.paused)
+    if (!this.data.currentBCK_IAC.paused)
       this.data.currentBCK_IAC.stop();
-    if(!this.data.currentRec_IAC.paused)
+    if (!this.data.currentRec_IAC.paused)
       this.data.currentRec_IAC.stop();
     wx.getRecorderManager().stop();
   },
@@ -186,7 +187,7 @@ Page({
   skipToLastClips: function () {
 
     //如果录音已经开始，按键失效
-    if(!this.data.currentBCK_IAC.paused)
+    if (!this.data.currentBCK_IAC.paused)
       return;
 
     var currentClipNum = this.data.currentClipNum;
@@ -234,7 +235,7 @@ Page({
   skipToNextClips: function () {
 
     //如果录音已经开始，按键失效
-    if(!this.data.currentBCK_IAC.paused)
+    if (!this.data.currentBCK_IAC.paused)
       return;
 
     var currentClipNum = this.data.currentClipNum;
@@ -246,7 +247,7 @@ Page({
     //防止用户频繁点击
     if (!this.diffTime(nowSkipTime, this.data.lastSkipTime))
       return;
-    
+
 
     for (var i in clips) {
       if (currentClipNum == clips[i]) {
@@ -300,8 +301,8 @@ Page({
         currentRec_IAC: temp_IAC,
         startRecordClickAmount: 0,
         tryListeningClickAmount: 0,
-        isReadying:true,
-      })
+        isReadying: true,
+      });
     });
 
     that.readyToRecord();
@@ -312,11 +313,10 @@ Page({
 
     var that = this;
 
-
     var remainedTime = 3;
 
     var currentBCK_IAC = that.data.currentBCK_IAC,
-        currentOrg_IAC = that.data.currentOrg_IAC;
+      currentOrg_IAC = that.data.currentOrg_IAC;
 
     if (that.data.currentBCK_FilePath != "" && that.data.currentOrg_FilePath != "") {
       currentBCK_IAC.src = that.data.currentBCK_FilePath;
@@ -343,8 +343,10 @@ Page({
     var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
     var currentLineNum = that.getCurrentClipFirstLyricIndex();
 
-    currentBCK_IAC.startTime = currentClip.begin_time / 1000;
-    console.log(currentBCK_IAC.startTime);
+    // currentBCK_IAC.startTime = currentClip.begin_time / 1000;
+    currentBCK_IAC.startTime = that.data.Lyrics[currentLineNum].beginTime;
+    currentBCK_IAC.volume = 1;
+    //console.log(currentBCK_IAC.startTime);
 
     wx.setStorageSync("hasOriginSinger", that.data.hasOriginSinger);
 
@@ -356,49 +358,65 @@ Page({
       currentBCK_IAC: currentBCK_IAC,
       currentOrg_IAC: currentOrg_IAC,
       endTime: currentClip.end_time / 1000,
+      startTime: currentBCK_IAC.startTime,
     });
 
     currentBCK_IAC.onPlay(() => {
       console.log('开始播放')
     });
-    currentBCK_IAC.onEnded(() => {
-      console.log('该段结束');
-      wx.getRecorderManager().stop();
-    });
+
     currentBCK_IAC.onTimeUpdate((res) => {
+
       var currentLineNum = that.data.currentLineNum;
+      var startRecordTime = that.data.Lyrics[that.getCurrentClipFirstLyricIndex()].beginTime;
+
+      if (currentBCK_IAC.currentTime - startRecordTime > 0.01 && !that.data.isRecording) {
+        const options = {
+          duration: 300000,
+          sampleRate: 44100,
+          numberOfChannels: 2,
+          encodeBitRate: 192000,
+          format: 'mp3',
+          frameSize: 50
+        }
+        console.log("countDown completed");
+        wx.getRecorderManager().start(options);
+        that.setData({
+          isRecording: true,
+        })
+      }
 
       if (currentBCK_IAC.currentTime >= that.data.endTime) {
         console.log('该段结束');
         wx.getRecorderManager().stop();
         currentBCK_IAC.stop();
+        //currentBCK_IAC.offTimeUpdate();
         return;
       }
 
-      if(currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime)
-      {
+      if (currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
         //console.log("Update row num：",that.data.currentLineNum);
-        currentLineNum+=1;
+        currentLineNum += 1;
         that.setData({
-          currentLineNum:currentLineNum,
+          currentLineNum: currentLineNum,
         });
         //console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
       }
     });
-
-    currentBCK_IAC.onError((err)=>{
+    currentBCK_IAC.onError((err) => {
       wx.showToast({
-        title:"文件丢失",
+        title: "文件丢失",
         image: "/images/icon/error_icon.png",
         mask: true,
       });
-
-     wx.getRecorderManager().stop();
-     wx.removeStorageSync('ER');
-     that.setData({
-       currentBCK_FilePath:"",
-       currentOrg_IAC:"",
-     }) 
+      wx.getRecorderManager.offStop();
+      wx.getRecorderManager().stop();
+      wx.removeStorageSync('ER');
+      that.setData({
+        currentBCK_FilePath: "",
+        currentOrg_IAC: "",
+      });
+      that.downloadFiles();
     });
 
     timer.countDown(that, remainedTime);
@@ -423,15 +441,42 @@ Page({
       currentRec_IAC.stop();
     }
 
-    console.log("Listening")
+    console.log("Try Listening")
 
     that.setData({
       startRecordClickAmount: 0,
       tryListeningClickAmount: 1,
+      currentLineNum: that.getCurrentClipFirstLyricIndex(),
     });
 
     currentBCK_IAC.volume = 0.2;
     currentRec_IAC.volume = 1;
+
+    currentRec_IAC.onEnded(() => {
+      that.data.currentBCK_IAC.offPlay();
+      that.data.currentBCK_IAC.offStop();
+      that.data.currentBCK_IAC.stop();
+      that.data.currentBCK_IAC.offTimeUpdate();
+      currentRec_IAC.offTimeUpdate();
+    });
+
+    currentRec_IAC.onTimeUpdate((res) => {
+      that.tryListeningCorrection(that);
+
+      if (that.currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
+        //console.log("Update row num：",that.data.currentLineNum);
+        currentLineNum += 1;
+        that.setData({
+          currentLineNum: currentLineNum,
+        });
+        //console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
+      }
+
+    })
+
+    currentRec_IAC.onPlay(() => {
+      console.log("开始播放录音");
+    })
 
     currentRec_IAC.play();
     currentBCK_IAC.play();
@@ -445,9 +490,9 @@ Page({
     if (!that.data.hasCompleted)
       return;
 
-    if(!that.data.currentBCK_IAC.paused)
+    if (!that.data.currentBCK_IAC.paused)
       that.data.currentBCK_IAC.stop();
-    if(!that.data.currentRec_IAC.paused)
+    if (!that.data.currentRec_IAC.paused)
       that.data.currentRec_IAC.stop();
 
     that.setData({
@@ -587,7 +632,7 @@ Page({
     return analysisTime * 1000;
   },
 
-  getCurrentClipFirstLyricIndex() {
+  getCurrentClipFirstLyricIndex: function () {
 
     var index = 0;
     for (var i in this.data.selectedData.allOriginData.songs) {
@@ -623,5 +668,27 @@ Page({
       console.log("请求失败");
     });
   },
+
+  tryListeningCorrection: function (that) {
+
+    var BCK_relative_time = that.data.currentBCK_IAC.currentTime - that.data.startTime;
+    var Rec_current_time = that.data.currentRec_IAC.currentTime;
+
+    if (Rec_current_time - BCK_relative_time > 0.1) {
+      that.data.currentRec_IAC.seek(Rec_current_time - 0.05);
+      return;
+    }
+
+    if (BCK_relative_time - Rec_current_time > 0.1) {
+      that.data.currentBCK_IAC.seek(that.data.currentBCK_IAC.currentTime - 0.5);
+      return;
+    }
+
+
+
+
+
+
+  }
 
 })
