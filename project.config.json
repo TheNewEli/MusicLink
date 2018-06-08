@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 3,
 			"list": [
 				{
 					"id": 1,
@@ -54,7 +54,7 @@
 					"query": "created_songId=3"
 				},
 				{
-					"id": 8,
+					"id": 3,
 					"name": "sing",
 					"pathName": "pages/sing/sing",
 					"query": "songId=1"
