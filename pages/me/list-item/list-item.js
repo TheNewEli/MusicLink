@@ -8,7 +8,7 @@ Page({
 
   //生命周期函数--监听页面加载
   onLoad: function (options) {
-    var id = options.id;   //页面跳转的id，0为已发起的歌曲，1为参与的歌曲
+    var id = options.id;   //页面跳转的id，0为已发起的歌曲，1为参与的歌曲，2为已完成的歌曲
     var openid = wx.getStorageSync("openid");
     this.setData({
       openid:openid,
@@ -22,13 +22,17 @@ Page({
     this._init();
   },
 
+
   onReady: function () {
     var navigationText;
     if (this.data.id == 0){
       navigationText="我发起的歌曲";
     } else if (this.data.id == 1){
       navigationText = "我参与的歌曲";
+    } else if (this.data.id == 2) {
+      navigationText = "我完成的歌曲";
     }
+
     wx.setNavigationBarTitle({
       title: navigationText,
     })
@@ -41,6 +45,9 @@ Page({
     } else if (this.data.id == 1) {
       //1为参与的歌曲
       this.getMyParticipatedDataFromServer();
+    } else if (this.data.id == 2) {
+      //2为完成的歌曲
+
     }
 
   },

@@ -1,10 +1,16 @@
+var util = require('../../utils/util');
+
+
+//跳转player需要传入 created_songId
 Page({
   data:{
+    created_songId:null,
     duration_print: '5:28', 
     duration: 328,
     currentSong:null,
     currentLyric: '',
-    playUrl:'http://dl.stream.qqmusic.qq.com/C400000FR5GV0lwW18.m4a?vkey=5C2977C9B5B27FFAD57E941822E1D2E416F087D64E62F5854CA3ACB5294C222A307572C1707CD3E55A01B8884335B82C557187E36AF419E4&guid=6322766144&uin=0&fromtag=66',
+    Lyrics:null,
+    playUrl:'http://dl.stream.qqmusic.qq.com/C400000FR5GV0lwW18.m4a?vkey=8F8E86F58CDEBFBC5F91DC72152A57256F56E5DD3D444AA4242B2AAFD87E2F81312F808E982BFB6A209AC82F7B318F1591AA17EB94DC174B&guid=6322766144&uin=0&fromtag=66',
     currentLineNum:0,
     toLineNum: -1,
     playIcon: 'icon-play',
@@ -12,12 +18,25 @@ Page({
     dotsArray: new Array(2),
     currentDot: 0,
   },
+
+  onLoad:function(options){
+    var created_songId = options.created_songId;
+    this.setData({
+      created_songId: created_songId
+    })
+
+    var selectData = wx.getStorageSync("selectedData");
+    this.setData({
+      currentSong: selectData.songs,
+    })
+    this.getPlayInfoDataFromServer();
+    this._createAudio(this.data.playUrl);
+  },
   onShow:function(){
     var selectData = wx.getStorageSync("selectedData");
     this.setData({
       currentSong:selectData.songs,
     })
-    this.setLyrics();
     this._createAudio(this.data.playUrl);
   },
 
@@ -59,17 +78,22 @@ Page({
         currentTime: this._formatTime(currentTime),
         percent: currentTime / this.data.duration
       })
-      // if (this.data.currentLyric) {
-      //   this.handleLyric(currentTime * 1000)
-      // }
-      this.handleLyric(currentTime * 1000);
+        this.handleLyric(currentTime * 1000)
     })
   },
   // 歌词滚动回调函数
   handleLyric: function (currentTime) {
-    var currentLineNum = this.data.currentLineNum,  //当前唱到的歌词行
-        toLineNum;        //跳转到顶部的行，不一定是当前唱到的歌词
-    var lyrics=this.data.lyrics; 
+    //当前唱到的歌词行
+    var currentLineNum = this.data.currentLineNum;
+    //跳转到顶部的行，不一定是当前唱到的歌词
+    var toLineNum;        
+    
+    //处理异步问题造成的错误，当Lyrics数据还未从服务器获取时，直接退出。
+    if (this.data.Lyrics==null){
+      return;
+    }
+
+    var lyrics=this.data.Lyrics; 
     for (var i in lyrics){
       var beginTime = this.analysisTime(lyrics[i].beginTime);
       var endTime = this.analysisTime(lyrics[i].endTime);
@@ -79,7 +103,8 @@ Page({
         break;
       }
     }
-
+    
+    //为保证currentLineNum大于5时 唱到的歌词在中间
     var toLineNum = currentLineNum - 5;
     if (currentLineNum > 5 && toLineNum != this.data.toLineNum) {
       this.setData({
@@ -136,6 +161,10 @@ Page({
       }
     })
   },
+  
+  Return:function(){
+
+  },
 
   prev: function () {
     // app.currentIndex = this.getNextIndex(false)
@@ -147,77 +176,27 @@ Page({
     // this._init()
   },
 
-  setLyrics:function(){
-      var lyrics=[
-        {
-          lyric: '让我掉下眼泪的 不止昨夜的酒',
-          beginTime: '00:18.69',
-          endTime: '00:25.10',
-        },
-        {
-          lyric: '让我依依不舍的 不止你的温柔',
-          beginTime: '00:26.48',
-          endTime: '00:33.14',
-        },
-        {
-          lyric: '余路还要走多久 你攥着我的手',
-          beginTime: '00:34.41',
-          endTime: '00:40.83',
-        },
-        {
-          lyric: '让我感到为难的 是挣扎的自由',
-          beginTime: '00:42.39',
-          endTime: '00:48.86',
-        },
-        {
-          lyric: '分别总是在九月 回忆是思念的愁',
-          beginTime: '00:52.12',
-          endTime: '00:58.68',
-        },
-        {
-          lyric: '深秋嫩绿的垂柳 亲吻着我额头',
-          beginTime: '01:00.12',
-          endTime: '01:06.59',
-        },
-        {
-          lyric: '在那座阴雨的小城里',
-          beginTime: '01:07.88',
-          endTime: '01:11.37',
-        },
-        {
-          lyric: '我从未忘记你',
-          beginTime: '01:11.99',
-          endTime: '01:14.57',
-        },
-        {
-          lyric: '成都 带不走的 只有你',
-          beginTime: '01:15.89',
-          endTime: '01:20.50',
-        },
-        {
-          lyric: '和我在成都的街头走一走',
-          beginTime: '01:23.86',
-          endTime: '01:29.38',
-        },
-        {
-          lyric: '直到所有的灯都熄灭了也不停留',
-          beginTime: '01:31.75',
-          endTime: '01:38.35',
-        },
-        {
-          lyric: '你会挽着我的衣袖',
-          beginTime: '01:39.78',
-          endTime: '01:42.03',
-        },
-        {
-          lyric: '我会把手揣进裤兜',
-          beginTime: '01:43.66',
-          endTime: '',
-        },
-      ];
-      this.setData({
-        lyrics:lyrics
+  share:function(){
+
+  },
+
+  //获取带有开始和结束时间的歌词数据
+  getPlayInfoDataFromServer: function () {
+
+    var that = this;
+
+    var data = {
+      requestType: "GetPlayInfo",
+      createdSongId: this.data.created_songId,  
+    }
+
+    util.requestFromServer("GetPlayInfo", data).then((res) => {
+      that.setData({
+        Lyrics: res.data.lyrics
       })
+    }).catch((err) => {
+      console.log("请求失败");
+    })
   },
 
 })

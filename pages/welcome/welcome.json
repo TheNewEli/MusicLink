@@ -1,4 +1,7 @@
 {
-  "navigationBarBackgroundColor": "#000",
-  "navigationBarTitleText": "MusicLink"
+  "navigationBarBackgroundColor": "#A4B6CF",
+  "navigationBarTitleText": "MusicLink",
+  "navigationBarTextStyle": "white"
 }
+
+
