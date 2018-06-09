@@ -11,11 +11,11 @@
     </swiper>
     <!--两个目录，一个热门，一个推荐-->
     <view class="songs-template">
-        <template is = "songListTpl" data="{{...inThreaten}}"></template>
+        <template is = "songListTpl" data="{{...inThreaten_P}}"></template>
     </view> 
 
     <view class="songs-template">
-        <template is = "songListTpl" data="{{...ourRecommend}}"></template>
+        <template is = "songListTpl" data="{{...ourRecommend_P}}"></template>
     </view> 
     
 </view>
