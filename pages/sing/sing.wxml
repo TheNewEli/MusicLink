@@ -3,7 +3,7 @@
 <view class="sing-container">
   <view class="lyric-box">
 
-    <view class="progress-bar" hidden="{{!isDownloading||!isUploading}}">
+    <view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}">
       <text class="title">{{propt_motto}}</text>
       <progress percent="{{progress}}" show-info active='{{isDown}}' stroke-width="10" active-mode="forwards" show-info="{{false}}" />
     </view>

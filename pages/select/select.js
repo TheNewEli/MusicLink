@@ -275,7 +275,7 @@ Page({
 
     this.lock();
     wx.setStorageSync("selectedData", this.data);
-    wx.navigateTo({
+    wx.redirectTo({
       url: '../sing/sing?songId=' + this.data.song_id,
     })
   },
