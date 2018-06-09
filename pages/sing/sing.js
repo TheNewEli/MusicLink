@@ -75,6 +75,8 @@ Page({
     animation: {},
     animation_last:{},
     animation_next:{},
+    animation_Org:{},
+    animation_ensemble:{},
 
   },
 
@@ -416,7 +418,7 @@ Page({
       return;
     }
 
-    if (that.data.hasOriginSinger = true) {
+    if (that.data.hasOriginSinger == true) {
       currentBCK_IAC.src = currentOrg_IAC.src;
     }
 
@@ -613,6 +615,18 @@ Page({
 
     var that = this;
 
+    that.animation_ensemble.scale(2).step();
+    that.setData({
+      animation_ensemble: that.animation_ensemble.export(),
+    });
+
+    setTimeout(function () {
+      that.animation_ensemble.scale(1).step();
+      that.setData({
+        animation_ensemble: that.animation_ensemble.export(),
+      });
+    }.bind(that), 300);
+
     if (!that.data.hasCompleted)
       return;
 
@@ -636,7 +650,21 @@ Page({
   playWithOriginalSinger: function () {
     this.setData({
       hasOriginSinger: true,
-    })
+    });
+
+    var that =this;
+
+    that.animation_Org.scale(2).step();
+    that.setData({
+      animation_Org: that.animation_Org.export(),
+    });
+
+    setTimeout(function () {
+      that.animation_Org.scale(1).step();
+      that.setData({
+        animation_Org: that.animation_Org.export(),
+      });
+    }.bind(that), 300);
   },
 
   diffTime: function (now, last) {
@@ -902,5 +930,7 @@ Page({
     this.animation = animaton;
     this.animation_last = animaton;
     this.animation_next = animaton;
+    this.animation_ensemble = animaton;
+    this.animation_Org = animaton;
   },
 })

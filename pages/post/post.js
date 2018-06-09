@@ -91,7 +91,7 @@ Page({
     var songs_p = [];
 
     for(var i in songs){
-      if(i<3){
+      if(i<6){
         songs_p.push(songs[i]);
       }
       else

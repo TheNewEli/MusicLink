@@ -46,7 +46,7 @@
     </scroll-view>
   </view>
   <view class="control-box">
-    <image class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
+    <image animation="{{animation_Org}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
       原唱
     </image>
     <image animation="{{animation_last}}" class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
@@ -57,6 +57,6 @@
     <image animation="{{animation_next}}" class="image-other" catchtap="skipToNextClips" src="/images/icon/nextClips_icon.png">
       下一段
     </image>
-    <image class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
+    <image animation="{{animation_ensemble}}" class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
   </view>
 </view>
