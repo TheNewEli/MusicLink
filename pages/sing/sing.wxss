@@ -26,6 +26,18 @@ page{
   align-items: center;
 
 }
+.upload-btn{
+  margin-top: 70%;
+  margin-left: 40%;
+  z-index: 10;
+  position: fixed;
+}
+
+.upload-btn image{
+  width: 100rpx;
+  height: 100rpx;
+  
+}
 
 .lyric-box{
   display: flex;

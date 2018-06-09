@@ -24,4 +24,5 @@ swiper
 
 .song-template{
     margin-bottom: 30rpx;
+    width:100%;
 }
