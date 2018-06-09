@@ -1,4 +1,5 @@
 {
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "World"
+  "navigationBarTitleText": "World",
+  "enablePullDownRefresh": true
 }

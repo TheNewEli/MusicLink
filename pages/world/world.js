@@ -15,6 +15,13 @@ Page({
     this.getAllDataFromServer();
   },
 
+  onPullDownRefresh:function(){
+    var that=this;
+    that.getAllDataFromServer();
+
+    wx.stopPullDownRefresh();
+  },
+
   getAllDataFromServer: function () {
 
     var that = this;

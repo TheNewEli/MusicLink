@@ -10,7 +10,7 @@ Page({
 
 
   onLoad: function (options) {
-    console.log(options);
+
     var isShare = options.isShare;
     if (isShare) {
       var created_song_id = options.created_song_id;
@@ -66,7 +66,6 @@ Page({
 
   getUserInfo: function (e) {
     
-    console.log(e);
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -124,7 +123,6 @@ Page({
   },
 
   login(userinfo, callback) {
-    console.log(userinfo);
 
     wx.login({
       //login是异步请求

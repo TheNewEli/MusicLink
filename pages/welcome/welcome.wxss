@@ -17,6 +17,7 @@ page{
   margin-top: 100rpx;  
   height: 250rpx;
   width: 250rpx;
+  z-index: 10;
   border-radius: 15%;
   /* border: 2px solid #fff;  */
 }
