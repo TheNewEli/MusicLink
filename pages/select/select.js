@@ -193,36 +193,53 @@ Page({
       requestType: "CreateClips",
       createdSongId: this.data.createdSongId,
       openid: this.data.openId,
-      clips: this.data.clips.sort(),
+      clips: this.data.clips.sort(function (a, b) {
+        return a-b;
+      }),
     }
 
     util.requestFromServer("CreateClips", data).then((res) => {
-      //console.log("select: request success");
-      //console.log(res);
+
       this.processRequestData_Create(res);
 
       var failedString ="";
       var successString ="";
-      var success = res.data.succeed.sort();
-      var failed = res.data.failed.sort();
+      var success = res.data.succeed.sort(function (a, b) {
+        return a - b;
+      });
+      var failed = res.data.failed.sort(function (a, b) {
+        return a - b;
+      });
 
-      for (var i in success){
-        successString = successString + ' '+success[i];
+      if (success.length > 0) {
+        successString = '成功锁定第';
+        for (var i in success) {
+          if (i == 0) {
+            successString = successString + '' + success[i];
+          } else {
+            successString = successString + ',' + success[i];
+          }
+        }
+        successString = successString + "段";
       }
-      successString = successString + "段";
 
-      if (failed.len>0){
-        failedString="，失败锁定第";
+     
+
+      if (failed.length>0){
+        failedString=" 失败锁定第";
         for (var i in failed) {
-          failedString = failedString + ' ' + failed[i];
+          if (i == 0) {
+            failedString = failedString + '' + failed[i];
+          }else{
+            failedString = failedString + ',' + failed[i];
+          }
         }
         failedString = failedString + "段";
       }
 
-
       wx.showModal({
         title: '提示',
-        content: '成功锁定第 ' + successString + failedString,
+        content:  successString + failedString,
         showCancel: false,
         confirmText: "确定",
       })
@@ -241,7 +258,6 @@ Page({
         title:"提示",
         content:"你还没选任何数据喔",
       })
-
       return;
     }
 
