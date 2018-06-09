@@ -10,7 +10,7 @@
   <view class='toplist'>
     <view wx:for="{{toplist.songs}}" wx:for-item="item" wx:for-index="index" >
       <view  catchtap='attendTap' data-index='{{index}}'>
-          <block wx:if="{{index < 3}}">
+          <!-- <block wx:if="{{index < 3}}">
             <view class='item-box'>
               <image src='{{images[index]}}' ></image>
               <view class='item-detail'>
@@ -19,7 +19,7 @@
               </view>
             </view>
           </block>
-          <block wx:else>
+          <block wx:else> -->
             <view class='item-box'>
               <text class='index'>{{index+1}}</text>
               <view class='item-detail'>
@@ -27,7 +27,7 @@
                 <text class='singer'>{{item.singer}}</text>
               </view>
             </view>
-          </block>
+          <!-- </block> -->
 
       </view>
     </view>

@@ -60,10 +60,11 @@
 					"query": "songId=1"
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
-					"query": ""
+					"query": "isShare=true&created_song_id=42&song_id=5&category=Select",
+					"scene": "1007"
 				},
 				{
 					"id": -1,

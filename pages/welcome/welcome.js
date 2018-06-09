@@ -1,4 +1,3 @@
-
 const app = getApp();
 const util = require('../../utils/util');
 Page({
@@ -10,8 +9,20 @@ Page({
   },
 
 
-  onLoad: function () {
-
+  onLoad: function (options) {
+    console.log(options);
+    var isShare = options.isShare;
+    if (isShare) {
+      var created_song_id = options.created_song_id;
+      var song_id = options.song_id;
+      var category = options.category;
+      this.setData({
+        isShare: isShare,
+        created_song_id: created_song_id,
+        song_id: song_id,
+        category: category,
+      })
+    }
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -34,13 +45,29 @@ Page({
     this.getUserInfo(e);
     //获取录音权限
     this.getRecorderAuthority();
-    this.enterPostPage();
+
+    //判断是否是通过分享链接转化来的用户，如果是直接跳到设了category相应界面
+    console.log( "isShare:"+this.data.isShare);
+    if (this.data.isShare) {
+      var created_song_id = this.data.created_song_id;
+      var song_id = this.data.song_id;
+      var category = this.data.category;
+      if (category == "Select") {
+        wx.navigateTo({
+          url: '../select/select?created_song_id=' + created_song_id + '&song_id=' + song_id,
+        })
+      }
+    }else{
+      wx.switchTab({
+        url: '../post/post',
+      })
+    }
   },
 
   getUserInfo: function (e) {
-    //console.log("UserInfo getted");
-    app.globalData.userInfo = e.detail.userInfo
     
+    console.log(e);
+    app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
@@ -61,34 +88,48 @@ Page({
         //console.log("Authorized succeed");
       },
       fail() {
-        console.log("First authorized failed");
-        wx.showModal({
-          title: '提示',
-          content: '未授权，录音发无法使用，请前往"我的"界面设置一栏进行授权',
-          showCancel: true,
-          confirmText: "授权",
-          confirmColor: "#52a2d8",
-          success: function (res) {
-            //确认打开设置界面进行授权
-            if (res.confirm) {
-              wx.switchTab({
-                url: '../me/me',
-              })
-            }
-          },
-          fail: function () {
-            console.log("授权设置录音失败");
-          },
-        });
+        // wx.showModal({
+        //   title: '提示',
+        //   content: '未授权，部分功能无法使用',
+        //   showCancel: true,
+        //   confirmText: "确定",
+        //   confirmColor: "#52a2d8",
+        //   fail: function () {
+        //     console.log("授权设置录音失败");
+        //   },
+        // });
+
+        // console.log("First authorized failed");
+        // wx.showModal({
+        //   title: '提示',
+        //   content: '未授权，录音发无法使用，请前往"我的"界面设置一栏进行授权',
+        //   showCancel: true,
+        //   confirmText: "授权",
+        //   confirmColor: "#52a2d8",
+        //   success: function (res) {
+        //     //确认打开设置界面进行授权
+        //     if (res.confirm) {
+        //       wx.switchTab({
+        //         url: '../me/me',
+        //       })
+        //     }
+        //   },
+        //   fail: function () {
+        //     console.log("授权设置录音失败");
+        //   },
+        // });
       }
     });
 
   },
 
   login(userinfo, callback) {
+    console.log(userinfo);
+
     wx.login({
       //login是异步请求
       success: function (res) {
+        console.log(res);
         var code;
         if (res.code) {
           code = res.code
@@ -106,7 +147,7 @@ Page({
 
           util.requestFromServer("OnLogin",data).then((res)=>{
             //console.log("welcome: Request success");
-            //console.log(res);
+            // console.log(res);
             wx.setStorageSync("openid", res.data.openid);
           }).catch((err)=>{
             console.log("welcome: Request failed");
@@ -133,10 +174,10 @@ Page({
 
         }
         else if (userinfo.detail.errMsg == 'getUserInfo:fail auth deny') { // 当用户点击拒绝时
-          wx.showModal({
-            title: '登陆失败！',
-            content: '微信一键登录失败，请重新登陆并确认允许获取用户信息'
-          }) // 提示用户，需要授权才能登录
+          // wx.showModal({
+          //   title: '登陆失败！',
+          //   content: '微信一键登录失败，请重新登陆并确认允许获取用户信息'
+          // }) // 提示用户，需要授权才能登录
           callback('fail to modify scope', null)
         }
       },
@@ -144,14 +185,27 @@ Page({
       }
     }) //只有需要使用微信登录鉴别用户，才需要用到它，用来获取用户的匿名识别符
   },
-
-  enterPostPage: function (event) {
-    wx.switchTab({
-      url: '../post/post',
-    })
-  }
 })
 
+        // console.log("First authorized failed");
+        // wx.showModal({
+        //   title: '提示',
+        //   content: '未授权，录音发无法使用，请前往"我的"界面设置一栏进行授权',
+        //   showCancel: true,
+        //   confirmText: "授权",
+        //   confirmColor: "#52a2d8",
+        //   success: function (res) {
+        //     //确认打开设置界面进行授权
+        //     if (res.confirm) {
+        //       wx.switchTab({
+        //         url: '../me/me',
+        //       })
+        //     }
+        //   },
+        //   fail: function () {
+        //     console.log("授权设置录音失败");
+        //   },
+        // });
 
 
 

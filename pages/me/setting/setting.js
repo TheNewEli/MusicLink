@@ -1,5 +1,6 @@
 // pages/setting/setting.js
 var app=getApp();
+const util = require('../../../utils/util.js');
 
 Page({
 
@@ -33,10 +34,61 @@ Page({
     })
   },
 
+  onShow:function(){
+
+    // wx.getSetting({
+    //   success: (res) => {
+    //     console.log(res);
+    //     if (res.authSetting['scope.userInfo']){
+    //       wx.getUserInfo({
+            
+    //       })
+    //     }
+    //     // if (res.authSetting.scope.record){
+    //     // }
+    //   }
+    // })
+  },
+
   onReady: function () {
     wx.setNavigationBarTitle({
       title: this.data.navigationText,
     })
+  },
+
+
+  handler:function(e){
+
+    if (e.detail.authSetting['scope.userInfo']) {
+
+      wx.getUserInfo({
+        success: function (res_Info) {
+          app.globalData.userInfo = res_Info.userInfo;
+          var rawData = res_Info.rawData;
+
+          wx.login({
+            success: function (res) {
+
+              var code;
+              if (res.code) {
+                code = res.code
+              }
+              var data = {
+                requestType: 'wechat_login',
+                code: code,
+                userInfo: rawData
+              };
+
+              util.requestFromServer("OnLogin", data).then((res) => {
+                wx.setStorageSync("openid", res.data.openid);
+              }).catch((err) => {
+                console.log("setting: Request failed");
+              })
+            },
+          })
+        }
+      })
+    }
   },
 
   onTapClearStorage:function(){

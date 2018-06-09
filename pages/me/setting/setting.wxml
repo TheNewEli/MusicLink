@@ -12,7 +12,7 @@
 <block wx:elif="{{pagesId==3}}">
   <view class="setting-container">
     <image class="setting-img" src="/images/icon/authorized_icon.png" mode='aspectFill'></image>
-    <button class="authorized-btn" open-type="openSetting" size="default">授权</button>
+    <button class="authorized-btn" open-type="openSetting" bindopensetting="handler" size="default">授权</button>
     <button class="clearStorage-btn" size="default" catchtap='onTapClearStorage'>清除缓存</button>
     <button class="clearAuthorized-btn" size="default" catchtap='onTapClearAuthorized'>清除授权           </button>
   </view>

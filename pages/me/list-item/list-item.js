@@ -47,25 +47,21 @@ Page({
       this.getMyParticipatedDataFromServer();
     } else if (this.data.id == 2) {
       //2为完成的歌曲
-
+      this.getMyFinishedDataFromServer();
     }
 
   },
 
   //获取已发起的歌曲信息
   getMyCreatedDataFromServer: function () {
-
     var that = this;
-
     var data = {
       requestType: "GetMyCreated",
       openid: that.data.openid
     }
-
     wx.showLoading({
       title: '加载中',
     })
-
     util.requestFromServer("GetMyCreated", data).then((res) => {
       that.setAllData(res);
     }).catch((err) => {
@@ -75,20 +71,33 @@ Page({
   
   //获取已参与的歌曲信息
   getMyParticipatedDataFromServer: function () {
-
     var that = this;
-
     var data = {
       requestType: "GetMyParticipated",
       openid:that.data.openid
     }
-
     wx.showLoading({
       title: '加载中',
     })
-
     util.requestFromServer("GetMyParticipated", data).then((res) => {
         that.setAllData(res);
+    }).catch((err) => {
+      console.log("请求失败");
+    })
+  },
+
+  //获取已发起的歌曲信息
+  getMyFinishedDataFromServer: function () {
+    var that = this;
+    var data = {
+      requestType: "GetMyFinished",
+      openid: that.data.openid
+    }
+    wx.showLoading({
+      title: '加载中',
+    })
+    util.requestFromServer("GetMyFinished", data).then((res) => {
+      that.setAllData(res);
     }).catch((err) => {
       console.log("请求失败");
     })

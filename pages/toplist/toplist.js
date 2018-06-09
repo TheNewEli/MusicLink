@@ -45,6 +45,9 @@ Page({
   attendTap:function(event){
     var index=event.currentTarget.dataset.index;
     var songId = this.data.toplist.songs[index].songId;
+
+    wx.setStorageSync("to_create_song", this.data.toplist.songs[index]);
+
     console.log(songId);
     wx.navigateTo({
       url: '../create/create?songId=' + songId,

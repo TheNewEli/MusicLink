@@ -30,18 +30,36 @@ Page({
   onTaptoCreate:function(event){
 
     var songId = this.data.toCreateSong.songId,
-        openid = wx.getStorageSync("openid"),
         recommendWord = this.data.recommendWord,
         world_shared = this.data.createType==true?1:0;
-    if(recommendWord.length<=6){
+        
+    //未授权无法使用该功能
+    var openid = wx.getStorageSync("openid");
+    if(!openid){
+        wx.showModal({
+        title: '提示',
+        content: '未授权，该功能无法使用，请前往"我的-设置-授权"进行授权',
+        showCancel: true,
+        confirmText: "前往",
+        confirmColor: "#52a2d8",
+        success: function (res) {
+          //确认打开设置界面进行授权
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../me/me',
+            })
+          }
+        }
+      });
+      return;
+    }else if(recommendWord.length<=6){
       wx.showModal({
         title: '提示',
         content: '推荐语字数必须多于五个字喔，请重新填写',
         showCancel:false,
       });
       return;
-    }
-    else if(recommendWord.length>=50){
+    }else if(recommendWord.length>=50){
       wx.showModal({
         title: '提示',
         content: '推荐语字数过长，请重新填写',

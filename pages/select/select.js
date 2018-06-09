@@ -16,23 +16,21 @@ Page({
   onLoad: function (options) {
     var createdSongId=options.created_song_id;
     var songId = options.song_id;
-    var openId = wx.getStorageSync('openid');
-    var userAvatar = app.globalData.userInfo.avatarUrl;
 
     //console.log(options);
 
-
     this.setData({
       createdSongId: createdSongId,
-      openId:openId,
-      userAvatar: userAvatar,
       song_id: songId
     })
     this.setSongsLyricsData();
   },
-  // getSelectedClips:function(){
-  // },
 
+  onUnload:function(){
+    wx.switchTab({
+      url: '../post/post',
+    })
+  },
 
   //获取歌曲详细信息
   setSongsLyricsData: function () {
@@ -140,47 +138,50 @@ Page({
 
 
   selectLyrics:function(event){
+
     var lyricId = event.currentTarget.dataset.lyricId;
     var songs = this.data.songs;
     var lyrics = songs.lyrics[lyricId];
     var clipCount = songs.lyrics[lyricId].clipCount;
 
-    if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null){
-      var clips = [];
-      if (lyrics.isSelected){
-        for (var i in this.data.clips){
-          if (this.data.clips[i] != lyrics.clipCount){
+    if(this.check()){
+      if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null) {
+        var clips = [];
+        if (lyrics.isSelected) {
+          for (var i in this.data.clips) {
+            if (this.data.clips[i] != lyrics.clipCount) {
+              clips.push(this.data.clips[i])
+            }
+          }
+        } else {
+          for (var i in this.data.clips) {
             clips.push(this.data.clips[i])
           }
+          clips.push(lyrics.clipCount);
         }
-      }else{
-        for (var i in this.data.clips) {
-            clips.push(this.data.clips[i])
-        }
-        clips.push(lyrics.clipCount);
-      }
 
-      for(var i in songs.lyrics){
-        if (songs.lyrics[i].clipCount == clipCount){
+        for (var i in songs.lyrics) {
+          if (songs.lyrics[i].clipCount == clipCount) {
 
-          var lyric = songs.lyrics[i];
-          //对未选择的歌词换头像,修改OpenId
-          if (!lyric.isSelected) {
-            lyric.selected_user_avatar = this.data.userAvatar;
-            lyric.selected_user_openId = this.data.openId;
-          } else {
-            lyric.selected_user_avatar = null;
-            lyric.selected_user_openId = null;
+            var lyric = songs.lyrics[i];
+            //对未选择的歌词换头像,修改OpenId
+            if (!lyric.isSelected) {
+              lyric.selected_user_avatar = this.data.userAvatar;
+              lyric.selected_user_openId = this.data.openId;
+            } else {
+              lyric.selected_user_avatar = null;
+              lyric.selected_user_openId = null;
+            }
+            lyric.isSelected = !lyric.isSelected;
           }
-          lyric.isSelected = !lyric.isSelected;
         }
+
+        this.setData({
+          songs: songs,
+          clips: clips
+        })
       }
-    
-      this.setData({
-        songs: songs,
-        clips: clips
-      })
-    }
+    }   
   },
 
 
@@ -188,64 +189,75 @@ Page({
   // 对成功锁定的歌词进行成功反馈，对锁定失败的歌词进行失败反馈
   // 锁定后可再次进行，锁定，解锁
   lock:function(){
-    var that = this;
-    var data = {
-      requestType: "CreateClips",
-      createdSongId: this.data.createdSongId,
-      openid: this.data.openId,
-      clips: this.data.clips.sort(function (a, b) {
-        return a-b;
-      }),
-    }
 
-    util.requestFromServer("CreateClips", data).then((res) => {
-
-      this.processRequestData_Create(res);
-
-      var failedString ="";
-      var successString ="";
-      var success = res.data.succeed.sort(function (a, b) {
-        return a - b;
-      });
-      var failed = res.data.failed.sort(function (a, b) {
-        return a - b;
-      });
-
-      if (success.length > 0) {
-        successString = '成功锁定第';
-        for (var i in success) {
-          if (i == 0) {
-            successString = successString + '' + success[i];
-          } else {
-            successString = successString + ',' + success[i];
-          }
-        }
-        successString = successString + "段";
+    if(this.check()){
+      var that = this;
+      var data = {
+        requestType: "CreateClips",
+        createdSongId: this.data.createdSongId,
+        openid: this.data.openId,
+        clips: this.data.clips.sort(function (a, b) {
+          return a - b;
+        }),
       }
 
-     
+      util.requestFromServer("CreateClips", data).then((res) => {
 
-      if (failed.length>0){
-        failedString=" 失败锁定第";
-        for (var i in failed) {
-          if (i == 0) {
-            failedString = failedString + '' + failed[i];
-          }else{
-            failedString = failedString + ',' + failed[i];
+        this.processRequestData_Create(res);
+
+        var failedString = "";
+        var successString = "";
+        var success = res.data.succeed.sort(function (a, b) {
+          return a - b;
+        });
+        var failed = res.data.failed.sort(function (a, b) {
+          return a - b;
+        });
+
+        if (success.length > 0) {
+          successString = '成功锁定第';
+          for (var i in success) {
+            if (i == 0) {
+              successString = successString + '' + success[i];
+            } else {
+              successString = successString + '.' + success[i];
+            }
           }
+          successString = successString + "段";
         }
-        failedString = failedString + "段";
-      }
 
-      wx.showModal({
-        title: '提示',
-        content:  successString + failedString,
-        showCancel: false,
-        confirmText: "确定",
+
+
+        if (failed.length > 0) {
+          failedString = " 失败锁定第";
+          for (var i in failed) {
+            if (i == 0) {
+              failedString = failedString + '' + failed[i];
+            } else {
+              failedString = failedString + '.' + failed[i];
+            }
+          }
+          failedString = failedString + "段";
+        }
+
+        var content = successString + failedString;
+        if (content == "") {
+          wx.showModal({
+            title: "提示",
+            content: "你还没选任何数据喔",
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: successString + failedString,
+            showCancel: false,
+            confirmText: "确定",
+          })
+        }
+      }).catch((err) => {
+        console.log("请求失败");
       })
-    }).catch((err) => {
-      console.log("请求失败");
-    })
+    }
 
   },
 
@@ -266,6 +278,51 @@ Page({
     wx.navigateTo({
       url: '../sing/sing?songId=' + this.data.song_id,
     })
+  },
+
+
+  onShareAppMessage:function(res){
+    if (res.from === 'menu') {
+      console.log(res.target)
+    }
+    var isShare=true;
+    var category='Select';
+    return {
+      title: '连音符', 
+      path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.createdSongId + '&song_id=' + this.data.songs.songId + '&category=' + category,
+      imageUrl:this.data.songs.music.coverImg,
+    }
+  },
+
+
+  check:function(){
+    //未授权无法使用该功能
+    var openid = wx.getStorageSync("openid");
+    if (!openid) {
+      wx.showModal({
+        title: '提示',
+        content: '未授权，该功能无法使用，请前往"我的-设置-授权"进行授权',
+        showCancel: true,
+        confirmText: "前往",
+        confirmColor: "#52a2d8",
+        success: function (res) {
+          //确认打开设置界面进行授权
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../me/me',
+            })
+          }
+        }
+      });
+      return false;
+    }else{
+      var userAvatar = app.globalData.userInfo.avatarUrl;
+      this.setData({
+        openId: openid,
+        userAvatar: userAvatar,
+      })
+      return true;
+    }
   },
 
 
