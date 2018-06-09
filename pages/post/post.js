@@ -20,6 +20,9 @@ Page({
     //推荐
     ourRecommend:{},
 
+    inThreaten_P:{},
+    ourRecommend_p:{},
+
   },
 
   /**
@@ -85,9 +88,24 @@ Page({
 
     //重新绑定准备好的数据
     var readyData = {};
+    var songs_p = [];
+
+    for(var i in songs){
+      if(i<6){
+        songs_p.push(songs[i]);
+      }
+      else
+        break;
+    }
+
     readyData[settedKey] = {
        categoryTitle: categoryTitle,
        songs:songs,
+    }
+
+    readyData[settedKey+"_P"] = {
+      categoryTitle: categoryTitle,
+      songs:songs_p
     }
     wx.hideLoading();
     this.setData(readyData);

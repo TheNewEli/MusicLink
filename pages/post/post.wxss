@@ -2,6 +2,7 @@
 @import "post-item-tpl/tpl-wxss/song-list-tpl.wxss";
 
 page{
+
 }
 
 swiper
@@ -24,4 +25,5 @@ swiper
 
 .song-template{
     margin-bottom: 30rpx;
+    width:100%;
 }

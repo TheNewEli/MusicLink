@@ -10,8 +10,17 @@
                 </view>
             </view>
             <view class="songs-container">
-                <block wx:for="{{songs}}" wx:for-item="song" wx:key="song.song_id">
-                    <template is="singleSongTpl" data="{{song}}"></template>
+                <block wx:for="{{songs}}" wx:for-item="song" wx:key="song.song_id" wx:for-index="idx">
+                    <block wx:if="{{idx<3}}">
+                        <template is="singleSongTpl" data="{{song}}"></template>
+                    </block>
+                </block>
+            </view>
+            <view class="songs-container">
+                <block wx:for="{{songs}}" wx:for-item="song" wx:key="song.song_id" wx:for-index="idx">
+                    <block wx:if="{{idx>=3}}">
+                        <template is="singleSongTpl" data="{{song}}"></template>
+                    </block>
                 </block>
             </view>
         </view>
