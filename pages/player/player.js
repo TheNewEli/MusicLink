@@ -1,4 +1,5 @@
 var util = require('../../utils/util');
+var app=getApp();
 
 //跳转player需要传入 created_songId
 
@@ -13,12 +14,16 @@ Page({
     playUrl:'',
     currentLineNum:0,
     toLineNum: -1,
-    playIcon: 'icon-play',
+    playIcon: 'icon-pause',
     cdCls: 'pause',
     dotsArray: new Array(2),
     currentDot: 0,
     isShare:false,
-    SongList_created:[]
+    //用户完成的歌曲created_songId数组
+    SongList_created:[],
+    //播放的歌曲片段索引
+    clipIndex:0,
+    clipState:'wait'
   },
 
   onLoad:function(options){
@@ -39,37 +44,74 @@ Page({
       currentIndex=-10;
     }
 
-
     this.setData({
       created_songId: created_songId,
       currentIndex: currentIndex,
-      SongList_created: SongList_created
+      SongList_created: SongList_created,
+      isShare: isShare
     })
 
     this.getPlayInfoDataFromServer();
   },
+
+
   
   init: function (currentIndex){
+    if (this.data.manage){
+      this.data.manage.stop();
+    }
+
+    if (this.data.innerAudioContext){
+      this.data.innerAudioContext.destroy();
+    }
+
     var SongList_created = this.data.SongList_created;
-    if (!this.isShare && currentIndex < SongList_created.length && currentIndex > -1) {
+    if (currentIndex < SongList_created.length && currentIndex > -1) {
       this.setData({
         created_songId: SongList_created[currentIndex],
         currentIndex: currentIndex
       })
+    } else if (this.data.isShare){
+      this.setData({
+        created_songId: this.data.created_songId,
+        currentIndex: this.data.currentIndex
+      })
     }
+
+    this.setData({
+      clipState: 'wait',
+      clipIndex: 0,
+      duration_print: null,
+      duration: 0,
+      currentSong: null,
+      currentLyric: '',
+      Lyrics: null,
+      playUrl: '',
+      currentLineNum: 0,
+      toLineNum: -1,
+      playIcon: 'icon-pause',
+      cdCls: 'pause',
+    })
     this.getPlayInfoDataFromServer();
   },
 
   // 创建播放器
   _createAudio: function (playUrl) {
+    var that=this;
     wx.playBackgroundAudio({
       dataUrl: playUrl,
-      title: this.data.currentSong.title,
-      coverImgUrl: this.data.currentSong.cover_url,
+      title: that.data.currentSong.title,
+      coverImgUrl: that.data.currentSong.cover_url,
     })
+
+    this.setData({
+      currentTime_format:"0:00"
+    })
+    wx.pauseBackgroundAudio();
+
     // 监听音乐播放
     wx.onBackgroundAudioPlay(() => {
-      this.setData({
+      that.setData({
         playIcon: 'icon-pause',
         cdCls: 'play'
       })
@@ -77,26 +119,130 @@ Page({
 
     // 监听音乐暂停
     wx.onBackgroundAudioPause(() => {
-      this.setData({
+      that.setData({
         playIcon: 'icon-play',
         cdCls: 'pause'
       })
     })
+
     // 监听音乐停止
     wx.onBackgroundAudioStop(() => {
-      // this.next();
+      that.setData({
+        playIcon: 'icon-play',
+        cdCls: 'pause'
+      })
+      var currentIndex = this.data.currentIndex;
+      this.init(currentIndex);
     })
 
     // 监听播放拿取播放进度
-    const manage = wx.getBackgroundAudioManager()
+    const manage = wx.getBackgroundAudioManager();
+    this.setData({
+      manage:manage
+    })
     manage.onTimeUpdate(() => {
       const currentTime = manage.currentTime
-      this.setData({
-        currentTime: this.formatTime(currentTime),
-        percent: currentTime / this.data.duration
+      that.setData({
+        currentTime_format: that.formatTime(currentTime),
+        percent: currentTime / that.data.duration,
+        currentTime:currentTime
       })
-        this.handleLyric(currentTime * 1000)
+      that.handleLyric(currentTime * 1000);
+      that.clipCount(currentTime * 1000);
     })
+  },
+
+  //片段播放
+  clipCount:function(currentTime){
+    var clipIndex = this.data.clipIndex;
+    var clipInfo=this.data.clipInfo;
+    for(var i in clipInfo){
+      var begin_time = clipInfo[i].begin_time + clipInfo[i].delay/10;
+      var end_time = clipInfo[i].end_time + clipInfo[i].delay / 10;
+      if (currentTime > begin_time && currentTime < end_time){
+        //当前片段还在播放时间段
+        if (clipIndex==i){
+          if (this.data.clipState=='wait'){
+            this.data.innerAudioContext.play();
+          } else if (this.data.clipState == 'end' && clipIndex != clipInfo.length){
+            this._createInnerAudioContext();
+          }
+        } 
+        else if (clipIndex == (i - 1) && this.clipState == 'end'){
+          clipIndex++;
+          this.setData({
+            clipIndex: clipIndex
+          })
+          this._createInnerAudioContext();
+        }
+      }
+    }
+  },
+
+  _createInnerAudioContext: function () {
+    var that=this;
+    var clipIndex = this.data.clipIndex;
+    const innerAudioContext = wx.createInnerAudioContext();
+    innerAudioContext.autoplay = false;
+    innerAudioContext.src = this.data.clipInfo[clipIndex].sang_url;
+    this.setData({
+      innerAudioContext: innerAudioContext,
+      clipState:'wait'
+    })
+
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        clipState:'play'
+      })
+    })
+
+    innerAudioContext.onPause(() => {
+      var clipIndex = that.data.clipIndex;
+      var end_time = that.data.clipInfo[clipIndex].end_time + that.data.clipInfo[clipIndex].delay / 10;
+      var currentTime = that.data.currentTime;
+      if (currentTime > end_time ){
+        if (clipIndex < that.data.clipInfo.length - 1){
+          that.setData({
+            clipState: 'end',
+            clipIndex: clipIndex + 1,
+            innerAudioContext: null
+          })
+        }else{
+          that.setData({
+            clipState: 'wait',
+            clipIndex: 0,
+            innerAudioContext: null
+          })
+        }
+        innerAudioContext.destroy();
+      }else{
+        that.setData({
+          clipState: 'pause'
+        })
+      }
+    })
+
+    innerAudioContext.onEnded(() => {
+      if (clipIndex < that.data.clipInfo.length-1){
+        that.setData({
+          clipState: 'end',
+          clipIndex: clipIndex + 1
+        })
+        
+      } else {
+        that.setData({
+          clipState: 'wait',
+          clipIndex: 0
+        })
+      }
+      innerAudioContext.destroy();
+    })
+
+    innerAudioContext.onError((res) => {
+      console.log(res.errMsg)
+      console.log(res.errCode)
+    })
+
   },
   
   // 歌词滚动回调函数
@@ -117,7 +263,7 @@ Page({
       var endTime = this.analysisTime(lyrics[i].endTime);
       if (currentTime > beginTime  && currentTime < endTime ){
         currentLineNum = i;
-        console.log("currentLineNum:" + currentLineNum + " beginTime:" + beginTime + " currentTime:" + currentTime)
+        // console.log("currentLineNum:" + currentLineNum + " beginTime:" + beginTime + " currentTime:" + currentTime)
         break;
       }
     }
@@ -167,19 +313,6 @@ Page({
     })
   },
 
-  togglePlaying: function () {
-    wx.getBackgroundAudioPlayerState({
-      success: function (res) {
-        var status = res.status
-        if (status == 1) {
-          wx.pauseBackgroundAudio()
-        } else {
-          wx.playBackgroundAudio()
-        }
-      }
-    })
-  },
-  
   Return:function(){
     wx.switchTab({
       url: '../post/post',
@@ -187,38 +320,69 @@ Page({
   },
 
   prev: function () {
-    var currentIndex = this.data.currentIndex-1;
-    this.init(currentIndex);
+    var currentIndex=this.data.currentIndex;
+    var isShare = this.data.isShare;
+    if (!isShare && currentIndex > 0){
+      currentIndex = currentIndex - 1;
+      this.init(currentIndex);
+    }
   },
   
   next: function () {
-    var currentIndex = this.data.currentIndex + 1;
-    this.init(currentIndex);
+    var currentIndex = this.data.currentIndex;
+    var isShare = this.data.isShare;
+    if (!isShare) {
+      if ( currentIndex < this.data.SongList_created.length - 1){
+        currentIndex = currentIndex + 1;
+        this.init(currentIndex);
+      }
+    }
   },
 
-  share:function(){
-
+  togglePlaying: function () {
+    var that=this;
+    wx.getBackgroundAudioPlayerState({
+      success: function (res) {
+        var status = res.status
+        if (status == 1) {
+          wx.pauseBackgroundAudio();
+          if (that.data.clipState == 'play') {
+            that.data.innerAudioContext.pause();
+          }
+        } else {
+          if (that.data.clipState == 'pause') {
+            that.data.innerAudioContext.play();
+          }
+          wx.playBackgroundAudio();
+        }
+      }
+    })
   },
 
-  //获取带有开始和结束时间的歌词数据
+  
+  //获取歌词数据+创建背景音乐播放器
   getPlayInfoDataFromServer: function () {
 
     var that = this;
 
     var data = {
       requestType: "GetPlayInfo",
-      created_song_id: this.data.created_songId,  
+      created_song_id: this.data.created_songId,
     }
 
     util.requestFromServer("GetPlayInfo", data).then((res) => {
+      console.log(res);
       wx.setStorageSync("currentSong", res.data);
       that.setData({
-        currentSong:res.data,
-        duration:res.data.duration,
-        Lyrics:res.data.lyrics,
-        duration_print: that.formatTime(res.data.duration)
+        currentSong: res.data,
+        duration: res.data.duration,
+        Lyrics: res.data.lyrics,
+        duration_print: that.formatTime(res.data.duration),
+        clipInfo: res.data.clipInfo
       })
+      //创建背景音乐播放器
       this._createAudio(res.data.bg_url);
+      this._createInnerAudioContext();
     }).catch((err) => {
       console.log("请求失败");
     })

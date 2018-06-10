@@ -35,9 +35,8 @@ Page({
     // this.setData({
     //   imgUrls:imgUrls,
     // });
-
-    this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"民谣" });
-    this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"民谣" });
+    this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"热门" });
+    this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"推荐" });
 
   },
 
