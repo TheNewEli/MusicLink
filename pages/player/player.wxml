@@ -59,17 +59,23 @@
 <!--操作框  -->
         <view class="operators">
             <view class='control-box'>
-              <image class='image' catchtap='Return' src='/images/icon/return_icon.png' />
-              <image class='image' catchtap='prev' src='/images/icon/playerLast_icon.png' />
+              <!-- <button  plain='true'>
+                <image class='button-icon' src='/images/icon/return_icon.png' />
+              </button> -->
+               <image class='icon' catchtap='Return' src='/images/icon/return_icon.png' /> 
+              <image class='icon' catchtap='prev' src='/images/icon/playerLast_icon.png' />
               <block wx:if="{{playIcon=='icon-play'}}">
-                <image class='image'catchtap='togglePlaying'src='/images/icon/playerPause_icon.png' />
+                <image class='icon'catchtap='togglePlaying'src='/images/icon/playerPause_icon.png' />
               </block>
               <block wx:elif="{{playIcon=='icon-pause'}}">
-                  <image class='image'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />
+                  <image class='icon'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />
               </block>
-              <image class='image'catchtap='next' src='/images/icon/playerNext_icon.png' />
-              <image class='image' catchtap='share' src='/images/icon/share_icon.png' />
-          </view>  
+              <image class='icon'catchtap='next' src='/images/icon/playerNext_icon.png' />
+              <button open-type="share" plain='true'>
+                <image class='button-icon' src='/images/icon/share_icon.png' />
+              </button>
+          </view> 
+
         </view>    
       </view>
     </view>

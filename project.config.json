@@ -52,7 +52,7 @@
 					"id": 2,
 					"name": "player",
 					"pathName": "pages/player/player",
-					"query": "created_songId=43",
+					"query": "created_song_id=6",
 					"scene": "1007"
 				},
 				{

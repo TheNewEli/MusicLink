@@ -5,47 +5,60 @@ var util = require('../../utils/util');
 Page({
   data:{
     created_songId:null,
-    duration_print: '5:28', 
-    duration: 328,
+    duration_print: null, 
+    duration: 0,
     currentSong:null,
     currentLyric: '',
     Lyrics:null,
-    playUrl:'http://dl.stream.qqmusic.qq.com/C400000FR5GV0lwW18.m4a?vkey=8F8E86F58CDEBFBC5F91DC72152A57256F56E5DD3D444AA4242B2AAFD87E2F81312F808E982BFB6A209AC82F7B318F1591AA17EB94DC174B&guid=6322766144&uin=0&fromtag=66',
+    playUrl:'',
     currentLineNum:0,
     toLineNum: -1,
     playIcon: 'icon-play',
     cdCls: 'pause',
     dotsArray: new Array(2),
     currentDot: 0,
+    isShare:false,
+    SongList_created:[]
   },
 
   onLoad:function(options){
-    var created_songId = options.created_songId;
-    var MyFinishedSongs = wx.getStorageSync("MyFinishedSongs");
+    var created_songId = options.created_song_id;
+    var isShare = options.isShare;
+    var SongList_created=[];
+    if(!isShare){
+      var MyFinishedSongs = wx.getStorageSync("MyFinishedSongs");
+      for (var i in MyFinishedSongs) {
 
-    for (var i in MyFinishedSongs.songs){
-      if (created_songId == MyFinishedSongs.songs[i].created_song_id){
-        var currentSong = MyFinishedSongs.songs[i];
-        var currentIndex=i;
+        SongList_created.push(MyFinishedSongs[i].created_song_id);
+
+        if (created_songId == MyFinishedSongs[i].created_song_id) {
+          var currentIndex = i;
+        }
       }
+    }else{
+      currentIndex=-10;
     }
+
 
     this.setData({
       created_songId: created_songId,
-      currentSong: currentSong,
-      currentIndex: currentIndex
+      currentIndex: currentIndex,
+      SongList_created: SongList_created
     })
 
     this.getPlayInfoDataFromServer();
-    this._createAudio(this.data.playUrl);
   },
-  // onShow:function(){
-  //   var selectData = wx.getStorageSync("selectedData");
-  //   this.setData({
-  //     currentSong:selectData.songs,
-  //   })
-  //   this._createAudio(this.data.playUrl);
-  // },
+  
+  init: function (currentIndex){
+    var SongList_created = this.data.SongList_created;
+    if (!this.isShare && currentIndex < SongList_created.length && currentIndex > -1) {
+      this.setData({
+        created_songId: SongList_created[currentIndex],
+        currentIndex: currentIndex
+      })
+    }
+    this.getPlayInfoDataFromServer();
+  },
 
   // 创建播放器
   _createAudio: function (playUrl) {
@@ -70,11 +83,7 @@ Page({
     })
     // 监听音乐停止
     wx.onBackgroundAudioStop(() => {
-      // if (this.data.playMod === SINGLE_CYCLE_MOD) {
-      //   this._init()
-      //   return
-      // }
-      // this.next()
+      this.next();
     })
 
     // 监听播放拿取播放进度
@@ -171,17 +180,19 @@ Page({
   },
   
   Return:function(){
-
+    wx.switchTab({
+      url: '../post/post',
+    })
   },
 
   prev: function () {
-    // app.currentIndex = this.getNextIndex(false)
-    // this._init()
+    var currentIndex = this.data.currentIndex-1;
+    this.init(currentIndex);
   },
   
   next: function () {
-    // app.currentIndex = this.getNextIndex(true)
-    // this._init()
+    var currentIndex = this.data.currentIndex + 1;
+    this.init(currentIndex);
   },
 
   share:function(){
@@ -195,17 +206,33 @@ Page({
 
     var data = {
       requestType: "GetPlayInfo",
-      createdSongId: this.data.created_song_id,  
+      created_song_id: this.data.created_songId,  
     }
 
     util.requestFromServer("GetPlayInfo", data).then((res) => {
-      console.log(res);
+      wx.setStorageSync("currentSong", res.data);
       that.setData({
-        Lyrics: res.data.lyrics
+        currentSong:res.data,
+        duration:res.data.duration,
+        Lyrics:res.data.lyrics,
+        duration_print: that.formatTime(res.data.duration)
       })
+      this._createAudio(res.data.bg_url);
     }).catch((err) => {
       console.log("请求失败");
     })
+  },
+
+  onShareAppMessage: function (res) {
+    var isShare = true;
+    var category = 'Player';
+    var userInfo = app.globalData.userInfo;
+    var titleString = userInfo.nickName + "邀请你欣赏他的作品" + this.data.currentSong.title;
+    return {
+      title: titleString,
+      path: '/pages/player/player?isShare=' + isShare + '&created_song_id=' + this.data.created_songId,
+      imageUrl: this.data.currentSong.cover_url,
+    }
   },
 
 })
