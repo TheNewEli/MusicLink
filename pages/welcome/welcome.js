@@ -43,32 +43,6 @@ Page({
   },
 
   getAllAuthorized: function (e) {
-<<<<<<< HEAD
-
-    console.log(e);
-    //获取用户信息
-    this.getUserInfo(e);
-    //获取录音权限
-    this.getRecorderAuthority();
-
-    //判断是否是通过分享链接转化来的用户，如果是直接跳到设了category相应界面
-    if(this.data.isShare===undefined){
-      wx.switchTab({
-        url: '../post/post',
-      });
-      return;
-    }
-   
-
-    console.log( "isShare:"+this.data.isShare);
-    if (this.data.isShare) {
-      var created_song_id = this.data.created_song_id;
-      var song_id = this.data.song_id;
-      var category = this.data.category;
-      if (category == "Select") {
-        wx.navigateTo({
-          url: '../select/select?created_song_id=' + created_song_id + '&song_id=' + song_id,
-=======
     if(this.data.firstIn){
       this.setData({
         firstIn: false
@@ -92,11 +66,13 @@ Page({
       } else {
         wx.switchTab({
           url: '../post/post',
->>>>>>> 00773c5a7930a469e2b1e127a6a6b92954243654
         })
       }
+    }else{
+      wx.switchTab({
+        url: '../post/post',
+      })
     }
-    
   },
 
   getUserInfo: function (e) {
@@ -116,7 +92,7 @@ Page({
 
   },
 
-  getRecorderAuthority: function () {
+  getRecorderAuthority:function () {
     //获取录音权限
     wx.authorize({
       scope: 'scope.record',

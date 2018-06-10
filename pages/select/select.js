@@ -53,14 +53,6 @@ Page({
     this.setSongsLyricsData();
   },
 
-<<<<<<< HEAD
-  // onUnload:function(){
-  //   wx.switchTab({
-  //     url: '../post/post',
-  //   })
-  // },
-=======
->>>>>>> 00773c5a7930a469e2b1e127a6a6b92954243654
 
   //获取歌曲详细信息
   setSongsLyricsData: function () {
