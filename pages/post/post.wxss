@@ -23,7 +23,6 @@ swiper
     background: #f2f2f2;
 }
 
-.song-template{
-    margin-bottom: 30rpx;
+.songs-template{
     width:100%;
 }

@@ -7,14 +7,14 @@
 }
 
 .song-image{
-    width: 200rpx;
-    height: 200rpx;
+    width: 225rpx;
+    height: 225rpx;
     padding-bottom: 20rpx;
-    padding-right: 30rpx;
+    padding-right: 17rpx;
 }
 
 .song-title{
-    width: 200rpx;
+    width: 220rpx;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
