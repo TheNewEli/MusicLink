@@ -43,13 +43,18 @@ Page({
     var that=this;
 
     //console.log(options);
-
-
     this.setData({
       createdSongId: createdSongId,
       song_id: songId,
-      isShare:isShare
     })
+
+    if(isShare!=undefined){
+      this.setData({
+        isShare:isShare
+      })
+    }
+    
+    
     this.setSongsLyricsData();
   },
 
