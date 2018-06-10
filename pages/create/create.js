@@ -79,7 +79,7 @@ Page({
     util.requestFromServer("CreateSong",data).then((res)=>{
       console.log(res);
       wx.redirectTo({
-        url: '../select/select?created_song_id=' + res.data.created_song_id+'&'+"song_id="+songId,
+        url: '../select/select?created_song_id=' + res.data.created_song_id + '&' + "song_id=" + songId +'&isShare='+'false',
         success: function (res) { },
         fail: function (res) { },
         complete: function (res) { },

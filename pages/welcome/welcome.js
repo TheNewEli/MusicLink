@@ -10,11 +10,11 @@ Page({
     firstIn:true
   },
 
-
   onLoad: function (options) {
 
-    var isShare = options.isShare;
-    if (isShare) {
+    
+    if (options.isShare) {
+      var isShare = options.isShare;
       var created_song_id = options.created_song_id;
       var song_id = options.song_id;
       var category = options.category;
