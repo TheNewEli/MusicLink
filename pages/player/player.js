@@ -74,6 +74,7 @@ Page({
         cdCls: 'play'
       })
     })
+
     // 监听音乐暂停
     wx.onBackgroundAudioPause(() => {
       this.setData({
@@ -83,7 +84,7 @@ Page({
     })
     // 监听音乐停止
     wx.onBackgroundAudioStop(() => {
-      this.next();
+      // this.next();
     })
 
     // 监听播放拿取播放进度

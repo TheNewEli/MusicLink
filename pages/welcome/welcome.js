@@ -10,7 +10,6 @@ Page({
     firstIn:true
   },
 
-
   onLoad: function (options) {
 
     var isShare = options.isShare;
