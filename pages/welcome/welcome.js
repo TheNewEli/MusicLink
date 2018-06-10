@@ -12,9 +12,8 @@ Page({
 
   onLoad: function (options) {
 
-    
-    if (options.isShare) {
-      var isShare = options.isShare;
+    var isShare = options.isShare;
+    if (isShare!=undefined) {
       var created_song_id = options.created_song_id;
       var song_id = options.song_id;
       var category = options.category;

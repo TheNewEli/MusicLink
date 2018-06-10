@@ -13,6 +13,7 @@ page{
  
 }
 .countDown{
+  margin-top: 50%;
   z-index: 1;
   position: fixed;
 }

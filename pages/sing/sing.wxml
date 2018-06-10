@@ -12,7 +12,8 @@
       <template is="countDownTpl" data="{{remainedTime}}"></template>
     </view>
 
-    <view class="upload-btn" hidden="{{false}}">
+  
+    <view class="upload-btn" hidden="{{!hasCompleted}}">
       <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png"catchtap="checkFilesToUpload" />
     </view>
 
@@ -46,7 +47,10 @@
     </scroll-view>
   </view>
   <view class="control-box">
-    <image animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
+    <image wx:if="{{!hasOriginSinger}}" animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
+      原唱
+    </image>
+    <image wx:else animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/has_Org_icon.png">
       原唱
     </image>
     <image animation="{{animationDatas['last'].animationData}}" class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
