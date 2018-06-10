@@ -13,7 +13,7 @@
     </view>
 
     <view class="upload-btn" hidden="{{false}}">
-      <image animation="{{animation}}" src="/images/icon/upload_icon.png"catchtap="checkFilesToUpload" />
+      <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png"catchtap="checkFilesToUpload" />
     </view>
 
     <scroll-view scroll-y="true" scroll-with-animation="true" style="height: {{systemInfo.windowHeight-90}}px" scroll-into-view="{{toCurrentView}}">
@@ -46,17 +46,17 @@
     </scroll-view>
   </view>
   <view class="control-box">
-    <image animation="{{animation_Org}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
+    <image animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
       原唱
     </image>
-    <image animation="{{animation_last}}" class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
+    <image animation="{{animationDatas['last'].animationData}}" class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
       上一段
     </image>
     <image wx:if="{{!hasCompleted}}" class="image-main" catchtap="startRecord" src="/images/icon/start_icon.png">开始</image>
     <image wx:else  class="image-main" catchtap="tryListening" src="/images/icon/try_listening_icon.png">试听</image>
-    <image animation="{{animation_next}}" class="image-other" catchtap="skipToNextClips" src="/images/icon/nextClips_icon.png">
+    <image animation="{{animationDatas['next'].animationData}}" class="image-other" catchtap="skipToNextClips" src="/images/icon/nextClips_icon.png">
       下一段
     </image>
-    <image animation="{{animation_ensemble}}" class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
+    <image animation="{{animationDatas['ensemble'].animationData}}" class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
   </view>
 </view>

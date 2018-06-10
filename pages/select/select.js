@@ -26,11 +26,11 @@ Page({
     this.setSongsLyricsData();
   },
 
-  onUnload:function(){
-    wx.switchTab({
-      url: '../post/post',
-    })
-  },
+  // onUnload:function(){
+  //   wx.switchTab({
+  //     url: '../post/post',
+  //   })
+  // },
 
   //获取歌曲详细信息
   setSongsLyricsData: function () {
