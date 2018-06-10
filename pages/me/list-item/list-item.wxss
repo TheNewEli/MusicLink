@@ -30,8 +30,7 @@
 
 .list-item{
   display: flex;
-  flex-direction: row;
-  border-bottom: 1px solid #ededed;  
+  flex-direction: row;  
 }
 
 .list-initiator-nick{
@@ -42,8 +41,9 @@
 }
 
 .list-initiator-nick image{
-  width: 140rpx;
-  height: 140rpx;
+  margin: 6px;
+  width: 120rpx;
+  height: 120rpx;
 }
 
 .list-initiator-nick text{
@@ -59,8 +59,9 @@
 
 .list-detail{
   padding: 10px 5px 10px 10px;
-  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  /* border-bottom: 1px solid rgba(255,255,255, 0.5); */
   width: 100%;
+  border-bottom: 1px solid #eee;
 }
 
 .list-box{
@@ -75,25 +76,26 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 1px 1px 1px 1px;
+  padding: 1px 1px 1px 6px;
   border-bottom: 1px solid rgba(255,255,255, 0.5);
   width: 300rpx;
 }
 
 .time{
-  margin-left:50rpx; 
+  margin-left:60rpx; 
   margin-top: 5rpx;
-  color: #ccc;
+  color: #a0a0a0;
   font-size: 24rpx;
 }
 
 .list-detail progress{
   margin-top: 20rpx;
+  margin-right: 8rpx;
   color: #ccc;
 }
 
 
 .list-box  image{
-  height: 40rpx;
-  width: 40rpx;
+  height: 35rpx;
+  width: 35rpx;
 }

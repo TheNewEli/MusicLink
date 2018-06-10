@@ -1,6 +1,6 @@
 <view class='list-container'>
   <block wx:for="{{ListItem}}" wx:for-item="item" >
-    <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}'>
+    <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}' data-type='{{id}}'>
         <view class='list-item'>
           <view class='list-initiator-nick' >
             <image src='{{item.cover_url}}'></image>

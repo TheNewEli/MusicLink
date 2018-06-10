@@ -42,16 +42,17 @@
 					"query": ""
 				},
 				{
-					"id": 2,
+					"id": 1,
 					"name": "select",
 					"pathName": "pages/select/select",
-					"query": "id=1"
+					"query": "created_song_id=43&songId=5",
+					"scene": "1007"
 				},
 				{
 					"id": 2,
 					"name": "player",
 					"pathName": "pages/player/player",
-					"query": "created_songId=43",
+					"query": "created_song_id=6",
 					"scene": "1007"
 				},
 				{
@@ -73,6 +74,13 @@
 					"name": "create",
 					"pathName": "pages/create/create",
 					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "toplist",
+					"pathName": "pages/toplist/toplist",
+					"query": "category=热门",
+					"scene": "1007"
 				}
 			]
 		}

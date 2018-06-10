@@ -3,12 +3,12 @@
     <view class="normal-player" wx:if="fullScreen">
 <!--虚化背景设置  -->
       <view class="background">
-        <image src="{{currentSong.music.coverImg}}" style="width: 100%"/>
+        <image src="{{currentSong.cover_url}}" style="width: 100%"/>
       </view>
 <!--顶部 歌名加歌手  -->
       <view class="top">
-        <view class="title">{{currentSong.music.title}}</view>
-        <view class="subtitle">{{currentSong.music.singer}}</view>
+        <view class="title">{{currentSong.title}}</view>
+        <view class="subtitle">{{currentSong.artist}}</view>
       </view>
 <!--中部 旋转img和歌词切换  -->
       <swiper class="middle" style="height: 700rpx" bindchange="changeDot">
@@ -16,7 +16,7 @@
         <swiper-item class="middle-l" style="overflow: visible">
           <view class="cd-wrapper" ref="cdWrapper">
             <view class="cd {{cdCls}}">
-              <image src="{{currentSong.music.coverImg}}"  class="image"/>
+              <image src="{{currentSong.cover_url}}"  class="image"/>
             </view>
           </view>
 <!-- 当前歌词显示 -->
@@ -59,17 +59,23 @@
 <!--操作框  -->
         <view class="operators">
             <view class='control-box'>
-              <image class='image' catchtap='Return' src='/images/icon/return_icon.png' />
-              <image class='image' catchtap='prev' src='/images/icon/playerLast_icon.png' />
+              <!-- <button  plain='true'>
+                <image class='button-icon' src='/images/icon/return_icon.png' />
+              </button> -->
+               <image class='icon' catchtap='Return' src='/images/icon/return_icon.png' /> 
+              <image class='icon' catchtap='prev' src='/images/icon/playerLast_icon.png' />
               <block wx:if="{{playIcon=='icon-play'}}">
-                <image class='image'catchtap='togglePlaying'src='/images/icon/playerPause_icon.png' />
+                <image class='icon'catchtap='togglePlaying'src='/images/icon/playerPause_icon.png' />
               </block>
               <block wx:elif="{{playIcon=='icon-pause'}}">
-                  <image class='image'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />
+                  <image class='icon'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />
               </block>
-              <image class='image'catchtap='next' src='/images/icon/playerNext_icon.png' />
-              <image class='image' catchtap='share' src='/images/icon/share_icon.png' />
-          </view>  
+              <image class='icon'catchtap='next' src='/images/icon/playerNext_icon.png' />
+              <button open-type="share" plain='true'>
+                <image class='button-icon' src='/images/icon/share_icon.png' />
+              </button>
+          </view> 
+
         </view>    
       </view>
     </view>

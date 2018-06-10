@@ -13,7 +13,7 @@
     "pages/toplist/toplist"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#B4CDDA",
+    "navigationBarBackgroundColor": "#8aaed7",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

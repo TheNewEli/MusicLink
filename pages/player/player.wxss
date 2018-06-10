@@ -230,9 +230,22 @@
   background-color: #222; 
 }
 
-.control-box .image{
+.control-box .icon{
   height: 100rpx;
   width: 100rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
+}
+
+.control-box .button-icon{
+  height: 100rpx;
+  width: 100rpx;
+}
+
+.control-box button{
+  height: 100rpx;
+  width: 140rpx;
+  border: 0px;
+  /* margin-left: 20rpx;
+  margin-right: 20rpx; */
 }

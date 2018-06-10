@@ -14,7 +14,10 @@
 }
 
 .song-title{
-
+    width: 200rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-bottom: 16rpx;
     font-size: 24rpx;
     display: block;

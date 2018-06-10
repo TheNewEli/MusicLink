@@ -17,7 +17,7 @@
       <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png"catchtap="checkFilesToUpload" />
     </view>
 
-    <scroll-view scroll-y="true" scroll-with-animation="true" style="height: {{systemInfo.windowHeight-90}}px" scroll-into-view="{{toCurrentView}}">
+    <scroll-view scroll-y="true" scroll-with-animation="true" style="height: {{systemInfo.windowHeight-75}}px" scroll-into-view="{{toCurrentView}}">
       <block wx:for="{{clipsIndex}}" wx:for-item="clipsIndex" wx:for-index="idx" wx:key="" >
         <view id="{{toView[idx]}}">
           <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index">
