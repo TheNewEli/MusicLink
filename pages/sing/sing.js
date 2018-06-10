@@ -252,7 +252,7 @@ Page({
     var index = 0;
     var nowSkipTime = new Date().getTime();
 
-    防止频繁点击
+    //防止频繁点击
     if (!that.diffTime(nowSkipTime, that.data.lastSkipTime))
       return;
 
@@ -1048,5 +1048,18 @@ Page({
         }
       }
     })
+  },
+
+  onShareAppMessage: function (res) {
+    var isShare = true;
+    var category = 'Select';
+    var userInfo = app.globalData.userInfo;
+
+    var titleString =userInfo.nickName+"邀请你和他一起唱"+this.data.title;
+    return {
+      title: titleString,
+      path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.created_songId + '&song_id=' + this.data.songs.songId + '&category=' + category,
+      imageUrl: this.data.songs.music.coverImg,
+    }
   },
 })
