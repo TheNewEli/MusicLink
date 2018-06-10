@@ -65,7 +65,7 @@
 					"id": 4,
 					"name": "welcome",
 					"pathName": "pages/welcome/welcome",
-					"query": "isShare=true&created_song_id=42&song_id=5&category=Select",
+					"query": "",
 					"scene": "1007"
 				},
 				{
