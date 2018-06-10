@@ -43,6 +43,32 @@ Page({
   },
 
   getAllAuthorized: function (e) {
+<<<<<<< HEAD
+
+    console.log(e);
+    //获取用户信息
+    this.getUserInfo(e);
+    //获取录音权限
+    this.getRecorderAuthority();
+
+    //判断是否是通过分享链接转化来的用户，如果是直接跳到设了category相应界面
+    if(this.data.isShare===undefined){
+      wx.switchTab({
+        url: '../post/post',
+      });
+      return;
+    }
+   
+
+    console.log( "isShare:"+this.data.isShare);
+    if (this.data.isShare) {
+      var created_song_id = this.data.created_song_id;
+      var song_id = this.data.song_id;
+      var category = this.data.category;
+      if (category == "Select") {
+        wx.navigateTo({
+          url: '../select/select?created_song_id=' + created_song_id + '&song_id=' + song_id,
+=======
     if(this.data.firstIn){
       this.setData({
         firstIn: false
@@ -66,18 +92,17 @@ Page({
       } else {
         wx.switchTab({
           url: '../post/post',
+>>>>>>> 00773c5a7930a469e2b1e127a6a6b92954243654
         })
       }
-    }else{
-      wx.switchTab({
-        url: '../post/post',
-      })
     }
     
   },
 
   getUserInfo: function (e) {
     
+    if(e.detail.errMsg== 'getUserInfo:fail auth deny')
+      return;
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
@@ -139,7 +164,7 @@ Page({
     wx.login({
       //login是异步请求
       success: function (res) {
-        console.log(res);
+        //console.log(res);
         var code;
         if (res.code) {
           code = res.code
@@ -162,25 +187,7 @@ Page({
           }).catch((err)=>{
             console.log("welcome: Request failed");
           })
-          // 将用户信息、匿名识别符发送给服务器，调用成功时执行 callback(null, res)
-          // wx.request({
-          //   url: getApp().globalData.server_base + '/OnLogin',
-          //   method: 'Get',
-          //   data: {
-          //     requestType: 'wechat_login',
-          //     code: code,
-          //     userInfo: userinfo.detail.rawData
-          //   },
-          //   success:function(res)
-          //   {
-          //     console.log("Request server success");
-          //     console.log(res);
-          //     wx.setStorageSync("openid", res.data.openid);
-          //   },
-          //   fail:function(res){
-          //     console.log("Request failed");
-          //   }
-          // }) 
+      
 
         }
         else if (userinfo.detail.errMsg == 'getUserInfo:fail auth deny') { // 当用户点击拒绝时
@@ -196,28 +203,6 @@ Page({
     }) //只有需要使用微信登录鉴别用户，才需要用到它，用来获取用户的匿名识别符
   },
 })
-
-        // console.log("First authorized failed");
-        // wx.showModal({
-        //   title: '提示',
-        //   content: '未授权，录音发无法使用，请前往"我的"界面设置一栏进行授权',
-        //   showCancel: true,
-        //   confirmText: "授权",
-        //   confirmColor: "#52a2d8",
-        //   success: function (res) {
-        //     //确认打开设置界面进行授权
-        //     if (res.confirm) {
-        //       wx.switchTab({
-        //         url: '../me/me',
-        //       })
-        //     }
-        //   },
-        //   fail: function () {
-        //     console.log("授权设置录音失败");
-        //   },
-        // });
-
-
 
 
 
