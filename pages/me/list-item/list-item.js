@@ -39,17 +39,19 @@ Page({
   },
 
   _init:function(){
-    if (this.data.id == 0) {
-      //0为已发起的歌曲
-      this.getMyCreatedDataFromServer();
-    } else if (this.data.id == 1) {
-      //1为参与的歌曲
-      this.getMyParticipatedDataFromServer();
-    } else if (this.data.id == 2) {
-      //2为完成的歌曲
-      this.getMyFinishedDataFromServer();
+    if(this.data.openid){
+      if (this.data.id == 0) {
+        //0为已发起的歌曲
+        this.getMyCreatedDataFromServer();
+      } else if (this.data.id == 1) {
+        //1为参与的歌曲
+        this.getMyParticipatedDataFromServer();
+      } else if (this.data.id == 2) {
+        //2为完成的歌曲
+        this.getMyFinishedDataFromServer();
+      }
     }
-
+  
   },
 
   //获取已发起的歌曲信息

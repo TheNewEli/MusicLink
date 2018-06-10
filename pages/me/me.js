@@ -24,6 +24,19 @@ Page({
       }
     },
 
+    onShow: function () {
+      if (app.globalData.userInfo) {
+        this.setData({
+          userInfo: app.globalData.userInfo,
+          hasUserInfo: true,
+        })
+      }else{
+        this.setData({
+          hasUserInfo: false,
+        })
+      }
+    },
+
     onTapToDetail:function(event){
       var pagesId = event.currentTarget.dataset.menuitemId;
       if (pagesId == 0 || pagesId == 1 || pagesId == 2){
