@@ -136,10 +136,18 @@ Page({
   onTapToDetail(event) {
     var created_song_id = event.currentTarget.dataset.createdSongId;
     var song_id = event.currentTarget.dataset.songId;
-    console.log(created_song_id + " " + song_id);
-    wx.navigateTo({
-      url: '../../select/select?created_song_id=' + created_song_id + "&song_id=" + song_id,
-    })
+    var Type=event.currentTarget.dataset.type;
+    if(Type==0 || Type==1){
+      wx.navigateTo({
+        url: '../../select/select?created_song_id=' + created_song_id + "&song_id=" + song_id,
+      })
+    }else if(Type==2){
+      wx.setStorageSync("MyFinishedSongs", this.data.ListItem);
+      wx.navigateTo({
+        url: '../../player/player?created_song_id=' + created_song_id,
+      })
+    }
+
   },
 
 })

@@ -53,7 +53,6 @@ Page({
       this.getRecorderAuthority();
 
       //判断是否是通过分享链接转化来的用户，如果是直接跳到设了category相应界面
-      console.log("isShare:" + this.data.isShare);
       if (this.data.isShare) {
         var created_song_id = this.data.created_song_id;
         var song_id = this.data.song_id;

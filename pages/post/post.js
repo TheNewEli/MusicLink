@@ -68,9 +68,9 @@ Page({
     for(var i in songsRequested.songs){
       var song = songsRequested.songs[i];
       var title = song.title;
-      if(title.length>=6){
-        title=title.substring(0,6)+"...";
-      }
+      // if(title.length>=6){
+      //   title=title.substring(0,6)+"...";
+      // }
     
 
     var temp={

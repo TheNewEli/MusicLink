@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 5,
 			"list": [
 				{
 					"id": 1,
@@ -73,6 +73,13 @@
 					"name": "create",
 					"pathName": "pages/create/create",
 					"query": ""
+				},
+				{
+					"id": 6,
+					"name": "toplist",
+					"pathName": "pages/toplist/toplist",
+					"query": "category=热门",
+					"scene": "1007"
 				}
 			]
 		}

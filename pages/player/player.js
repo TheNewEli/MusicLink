@@ -21,31 +21,38 @@ Page({
 
   onLoad:function(options){
     var created_songId = options.created_songId;
+    var MyFinishedSongs = wx.getStorageSync("MyFinishedSongs");
+
+    for (var i in MyFinishedSongs.songs){
+      if (created_songId == MyFinishedSongs.songs[i].created_song_id){
+        var currentSong = MyFinishedSongs.songs[i];
+        var currentIndex=i;
+      }
+    }
+
     this.setData({
-      created_songId: created_songId
+      created_songId: created_songId,
+      currentSong: currentSong,
+      currentIndex: currentIndex
     })
 
-    var selectData = wx.getStorageSync("selectedData");
-    this.setData({
-      currentSong: selectData.songs,
-    })
     this.getPlayInfoDataFromServer();
     this._createAudio(this.data.playUrl);
   },
-  onShow:function(){
-    var selectData = wx.getStorageSync("selectedData");
-    this.setData({
-      currentSong:selectData.songs,
-    })
-    this._createAudio(this.data.playUrl);
-  },
+  // onShow:function(){
+  //   var selectData = wx.getStorageSync("selectedData");
+  //   this.setData({
+  //     currentSong:selectData.songs,
+  //   })
+  //   this._createAudio(this.data.playUrl);
+  // },
 
   // 创建播放器
   _createAudio: function (playUrl) {
     wx.playBackgroundAudio({
       dataUrl: playUrl,
       title: this.data.currentSong.title,
-      coverImgUrl: this.data.currentSong.music.coverImg,
+      coverImgUrl: this.data.currentSong.cover_url,
     })
     // 监听音乐播放
     wx.onBackgroundAudioPlay(() => {
@@ -188,10 +195,11 @@ Page({
 
     var data = {
       requestType: "GetPlayInfo",
-      createdSongId: this.data.created_songId,  
+      createdSongId: this.data.created_song_id,  
     }
 
     util.requestFromServer("GetPlayInfo", data).then((res) => {
+      console.log(res);
       that.setData({
         Lyrics: res.data.lyrics
       })

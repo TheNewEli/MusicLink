@@ -31,7 +31,7 @@ page{
   height: 100%;
   width: 100%;
   z-index: -10;
-  opacity: 0.4;      
+  opacity: 0.7;       
   /* -webkit-filter: blur(30rpx);
   filter: blur(30rpx);    */
 }
