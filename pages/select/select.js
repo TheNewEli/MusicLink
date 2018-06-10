@@ -308,14 +308,15 @@ Page({
       console.log(res.target)
     }
     var isShare=true;
-    var category='Select';
+    var category = 'Select';
+    var userInfo = app.globalData.userInfo;
+    var titleString = userInfo.nickName + "邀请你和他一起唱" + this.data.allOriginData.title;
     return {
-      title: '连音符', 
+      title: titleString, 
       path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.createdSongId + '&song_id=' + this.data.songs.songId + '&category=' + category,
       imageUrl:this.data.songs.music.coverImg,
     }
   },
-
 
   check:function(){
     //未授权无法使用该功能

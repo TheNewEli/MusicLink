@@ -1032,4 +1032,17 @@ Page({
       }
     })
   },
+
+  onShareAppMessage: function (res) {
+    var isShare = true;
+    var category = 'Select';
+    var userInfo = app.globalData.userInfo;
+
+    var titleString =userInfo.nickName+"邀请你和他一起唱"+this.data.title;
+    return {
+      title: titleString,
+      path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.created_songId + '&song_id=' + this.data.songs.songId + '&category=' + category,
+      imageUrl: this.data.songs.music.coverImg,
+    }
+  },
 })
