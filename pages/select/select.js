@@ -14,23 +14,53 @@ Page({
   },
 
   onLoad: function (options) {
+    var openid = wx.getStorageSync('openid');
+    if(openid){
+        var userAvatar = app.globalData.userInfo.avatarUrl;
+        this.setData({
+          openId: openid,
+          userAvatar: userAvatar,
+        })
+    }
+
+    // wx.getSetting({
+    //   success: function (res) {
+    //     console.log(res);
+    //     if (res.authSetting['scope.userInfo']) {
+    //       var userAvatar = app.globalData.userInfo.avatarUrl;
+    //       var openid = wx.getStorageSync('openid');
+    //       that.setData({
+    //         openId: openid,
+    //         userAvatar: userAvatar,
+    //       })
+    //     }
+    //   }
+    // })
+
+    var isShare=options.isShare;
     var createdSongId=options.created_song_id;
     var songId = options.song_id;
+    var that=this;
 
     //console.log(options);
 
+
     this.setData({
       createdSongId: createdSongId,
-      song_id: songId
+      song_id: songId,
+      isShare:isShare
     })
     this.setSongsLyricsData();
   },
 
+<<<<<<< HEAD
   // onUnload:function(){
   //   wx.switchTab({
   //     url: '../post/post',
   //   })
   // },
+=======
+>>>>>>> 00773c5a7930a469e2b1e127a6a6b92954243654
 
   //获取歌曲详细信息
   setSongsLyricsData: function () {
@@ -316,11 +346,6 @@ Page({
       });
       return false;
     }else{
-      var userAvatar = app.globalData.userInfo.avatarUrl;
-      this.setData({
-        openId: openid,
-        userAvatar: userAvatar,
-      })
       return true;
     }
   },

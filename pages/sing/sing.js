@@ -77,6 +77,7 @@ Page({
   },
 
   onLoad: function (options) {
+    this.checkRecord();
     var songId = options.songId;
     this.setData({
       songId: songId
@@ -86,7 +87,7 @@ Page({
   },
 
   onShow: function () {
-
+    this.checkRecord();
     var currentClipNum = this.data.currentClipNum;
     var toView = this.data.toView;
     this.setData({
@@ -328,6 +329,25 @@ Page({
 
   //开始录制 
   startRecord: function () {
+
+    if (!this.data.isGetRecord){
+      wx.showModal({
+        title: '提示',
+        content: '未授权，该功能无法使用，请前往"我的-设置-授权"进行授权',
+        showCancel: true,
+        confirmText: "前往",
+        confirmColor: "#52a2d8",
+        success: function (res) {
+          //确认打开设置界面进行授权
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../me/me',
+            })
+          }
+        }
+      });
+      return;
+    }
 
     var that = this;
 
@@ -992,6 +1012,24 @@ Page({
         });
       }.bind(that), 300);
     }
-  }
+  },
   
+  //检查录音授权信息
+  checkRecord:function(){
+    var that=this;
+    wx.getSetting({
+      success: function (res) {
+        console.log(res);
+        if (!res.authSetting['scope.record']) {
+          that.setData({
+            isGetRecord: false
+          })
+        }else{
+          that.setData({
+            isGetRecord:true
+          })
+        }
+      }
+    })
+  },
 })

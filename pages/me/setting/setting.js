@@ -88,7 +88,10 @@ Page({
           })
         }
       })
-    }
+    }else if (!e.detail.authSetting['scope.userInfo']){
+      wx.clearStorage();
+      app.globalData.userInfo=null;
+    } 
   },
 
   onTapClearStorage:function(){
