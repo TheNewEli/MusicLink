@@ -3,7 +3,7 @@
 page{
     width: 750rpx;
     height: 100%;
-    background-color: #DCDCDC;
+    background-color: #f9f9f9;
 }
  .create-container{
     display: flex;
@@ -21,7 +21,7 @@ page{
     display: flex;
     flex-direction: row;
     align-items: center;
-    background: #DCDCDC;
+    background: #f9f9f9;
     padding: 30rpx 30rpx 30rpx 30rpx;
     width: 100%;
   }
@@ -85,7 +85,7 @@ page{
 .text-promt{
     display: flex;
     flex-direction: column;
-    padding-left: 80rpx;
+    padding-left: 60rpx;
     width: 60%;
 }
 
@@ -111,12 +111,16 @@ page{
 }
 
 .inputDescription text{
-    padding: 5% 80rpx 5% 10%;
+    padding: 5% 80rpx 5% 60rpx;
 }
 
 .textarea{
-  padding: 25rpx 75.5rpx 25rpx 75.5rpx;
-  background-color: #f0ecec;
+  padding: 20rpx 25rpx 20rpx 25rpx; 
+  margin: 0rpx 40rpx 0rpx 40rpx;
+  border: 1rpx solid #8a8a8a;
+  background-color: #fdfdfd;
+  font-size: 15px;
+  color: #8a8a8a;
 }
 
 
@@ -130,13 +134,16 @@ page{
     display: flex;
     flex-direction: row;
     padding-top: 10%;
+    align-items: center;
 }
 .cancel-btn{
-    width: 40%;
-    background-color: #cdcdcd;
+    width: 35%;
+    background-color: #8aaed7;
+    color: #fff;
 }
 .confirm-btn{
-    width: 40%;
-    background-color: #cdcdcd;
+    width: 35%;
+    background-color: #8aaed7;
+    color: #fff;
 }
 

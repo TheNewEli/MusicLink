@@ -12,11 +12,11 @@
 }
 
 .music-detail {
-  padding: 0rpx 0rpx 20rpx 30rpx;
+  padding: 20rpx 0rpx 20rpx 30rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: #D3D3D3;
+  background: #f5f5f5;
 }
 
 .music-detail image{
@@ -48,7 +48,7 @@
   width: 100%;
   padding-top: 200rpx;
   padding-bottom: 100px;
-  background-color: #D3D3D3; /*歌词容器 背景 颜色*/
+  background-color: #f5f5f5; /*歌词容器 背景 颜色*/
 }
 
 .lyrics-item image{
@@ -67,7 +67,7 @@
 }
 
 .selected-self{
-  background-color: #C0C0C0;  /*用户已选择歌词 背景 颜色*/
+  background-color: #e4eff9;  /*用户已选择歌词 背景 颜色*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -77,7 +77,7 @@
 
 .selected-self text{
   font-size: 17px;
-  color: #F5F5F5;     /*用户已选择歌词 文本 颜色*/
+  color: #8aaed7;     /*用户已选择歌词 文本 颜色*/
   font-family: Microsoft YaHei;
   width: 550rpx;
   margin-left: 100rpx;
@@ -92,7 +92,7 @@
 }
 
 .selected{
-  background-color: #C0C0C0;  /*已选择歌词 背景 颜色*/
+  background-color: #f0f0f0;  /*已选择歌词 背景 颜色*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -101,7 +101,7 @@
 }
 
 .selected text{
-  color: #F5F5F5;    /*已选择歌词 文本 颜色*/
+  color: #808080;    /*已选择歌词 文本 颜色*/
   margin-right: 100rpx;
 }
 
@@ -129,10 +129,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color:#D3D3D3;  /*按钮容器背景色*/
-  border-top: 1px solid #808080;
+  background-color:#8aaed7;  /*按钮容器背景色*/
+  border-top: 1px solid #F5F5F5;
 
-  color: #808080;
+  color: #fff;
   font-size: 16px;
 }
 

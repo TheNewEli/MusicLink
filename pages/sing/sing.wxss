@@ -1,6 +1,6 @@
 
 page{
-  background-color: #cdcdcd; 
+  background-color: #f5f5f5; 
 }
 
 @import "sing-item-tpl/tpl-wxss/count-dot-tpl.wxss";
@@ -8,7 +8,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom:200rpx;
+  padding-bottom:150rpx;
   z-index:-1;
  
 }
@@ -59,14 +59,14 @@ page{
   width: 100%;
   text-align: center;
   font-size: 17px;
-  color: #808080;
+  color: 	#808080;
 }
 
 .lyric-toview{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #C0C0C0;
+  background-color: #e4eff9;
   padding: 25rpx 0px 25rpx 0px;
   width: 100%;
 }
@@ -76,38 +76,37 @@ page{
   width: 100%;
   text-align: center;
   font-size: 17px;
-  color: #F5F5F5; 
+  color: #a0a0a0; 
 }
 
 .lyric-toview .current{
   width: 100%;
   text-align: center;
   font-size: 17px;
-  color: #ffcd32; 
+  color: 	#8aaed7; 
 }
 
 
 .control-box{
+  padding: 20rpx 10px 30rpx 10px;
+  position: fixed;
+  bottom: 0;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10rpx 10px 20rpx 10px;
-  position: fixed;
-  bottom: 0;
-  min-height: 150rpx;
 
-  background-color: #cdcdcd; 
+  background-color: #f5f5f5; 
 }
 
 
 .control-box .image-other{
-  height: 100rpx;
-  width: 100rpx;
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  height: 80rpx;
+  width: 80rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
 }
 
 .control-box .image-main{
-  height: 150rpx;
-  width: 150rpx;
+  height: 100rpx;
+  width: 100rpx;
 }
