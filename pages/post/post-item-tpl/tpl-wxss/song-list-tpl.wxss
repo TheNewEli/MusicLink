@@ -7,11 +7,11 @@
 }
 
  .inner-container{
-    margin: 10rpx  20rpx 20rpx 10rpx;
+    margin: 10rpx  10rpx 10rpx 10rpx;
 } 
 
 .song-head {
-  padding: 30rpx 20rpx 22rpx;
+  padding: 5rpx 10rpx 10rpx;
 }
 
 .slogan {
@@ -40,6 +40,6 @@
 .songs-container{
     display:flex;
     flex-direction: row;
-    padding-left: 25rpx;
-    padding-top: 20rpx;
+    padding-left: 10rpx;
+    padding-top: 10rpx;
 }
