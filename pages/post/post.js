@@ -8,12 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
-    //滚动海报数据
-    imgUrls:["https://resource.caoyu.online/songs/song1/song1.jpg",
-    "https://resource.caoyu.online/songs/song1/song1.jpg",
-    "https://resource.caoyu.online/songs/song1/song1.jpg"],
-    
+
     //热门
     inThreaten:{},
 
@@ -23,6 +18,7 @@ Page({
     inThreaten_P:{},
     ourRecommend_p:{},
 
+    swipperPost:{},
   },
 
   /**
@@ -36,8 +32,9 @@ Page({
     //   imgUrls:imgUrls,
     // });
 
-    this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"民谣" });
-    this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"民谣" });
+    this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"热门" });
+    this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"推荐" });
+    this.getSongsListData("GetSongs","swipperPost","海报",{requestType: "GetSongs",category:"海报" });
 
   },
 
@@ -90,12 +87,20 @@ Page({
     var readyData = {};
     var songs_p = [];
 
-    for(var i in songs){
-      if(i<6){
-        songs_p.push(songs[i]);
+    if(settedKey!="swipperPost")
+    {
+      for(var i in songs){
+        if(i<6){
+          songs_p.push(songs[i]);
+        }
+        else
+          break;
       }
-      else
-        break;
+
+      readyData[settedKey+"_P"] = {
+        categoryTitle: categoryTitle,
+        songs:songs_p
+      }
     }
 
     readyData[settedKey] = {
@@ -103,10 +108,7 @@ Page({
        songs:songs,
     }
 
-    readyData[settedKey+"_P"] = {
-      categoryTitle: categoryTitle,
-      songs:songs_p
-    }
+  
     wx.hideLoading();
     this.setData(readyData);
   },
@@ -128,11 +130,20 @@ Page({
 
     wx.setStorageSync("inthreatenData", this.data.inThreaten);
     wx.setStorageSync("recommendData", this.data.ourRecommend);
-
     var category = event.currentTarget.dataset.category;
     wx.navigateTo({
       url: '../toplist/toplist?category=' + category ,
     });
 
+  },
+
+  onSwipperTap(event){
+    var idx =  event.target.dataset.idx;
+    var song = this.data.swipperPost.songs[idx];
+    wx.setStorageSync("to_create_song", song);
+     //页面之间不能传递对象
+     wx.navigateTo({
+      url: '../create/create?songId='+song.songId,
+    });
   }
 })
