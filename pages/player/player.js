@@ -30,6 +30,7 @@ Page({
     var created_songId = options.created_song_id;
     var isShare = options.isShare;
     var SongList_created=[];
+    var currentIndex;
     if(!isShare){
       var MyFinishedSongs = wx.getStorageSync("MyFinishedSongs");
       for (var i in MyFinishedSongs) {
@@ -37,7 +38,7 @@ Page({
         SongList_created.push(MyFinishedSongs[i].created_song_id);
 
         if (created_songId == MyFinishedSongs[i].created_song_id) {
-          var currentIndex = i;
+          currentIndex = i;
         }
       }
     }else{
@@ -107,7 +108,7 @@ Page({
     this.setData({
       currentTime_format:"0:00"
     })
-    wx.pauseBackgroundAudio();
+    // wx.pauseBackgroundAudio();
 
     // 监听音乐播放
     wx.onBackgroundAudioPlay(() => {
@@ -386,6 +387,15 @@ Page({
     }).catch((err) => {
       console.log("请求失败");
     })
+  },
+  onUnload:function(){
+    if (this.data.manage) {
+      this.data.manage.stop();
+    }
+
+    if (this.data.innerAudioContext) {
+      this.data.innerAudioContext.destroy();
+    }
   },
 
   onShareAppMessage: function (res) {
