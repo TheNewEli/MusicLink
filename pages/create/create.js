@@ -52,7 +52,7 @@ Page({
         }
       });
       return;
-    }else if(recommendWord.length<=6){
+    }else if(recommendWord.length<5){
       wx.showModal({
         title: '提示',
         content: '推荐语字数必须多于五个字喔，请重新填写',

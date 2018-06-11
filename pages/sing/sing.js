@@ -598,7 +598,7 @@ Page({
 
     if (!that.data.hasModified) {
       var recordTimeLate = that.data.recordTimeLate;
-      if (recordTimeLate < -2 || recordTimeLate > 2) {
+      if (recordTimeLate < -1 || recordTimeLate > 1) {
         wx.showModal({
           title: "录音不稳定，请重唱",
           icon: "none",
@@ -1026,7 +1026,7 @@ Page({
 
     that.playAnimaton("upload");
 
-    if(that.data.recordTimeLate<-1&&that.recordTimeLate>1)
+    if(that.data.recordTimeLate<-1||that.data.recordTimeLate>1)
     {
       wx.showModal({
         title: "录音延迟过高，即将重置",
@@ -1083,7 +1083,7 @@ Page({
               var data = {
                 requestType: "SingClip",
                 created_song_id: that.data.created_songId,
-                clip_count: that.data.currentClipNum-1,
+                clip_count: that.data.currentClipNum,
                 delay: that.data.recordTimeLate*10000,
               }
               console.log(data);
