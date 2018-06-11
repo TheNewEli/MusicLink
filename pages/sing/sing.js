@@ -1050,7 +1050,8 @@ Page({
           title:"重置成功",
         })
         that.ensemble();
-      })
+      });
+      return;
     }
 
     wx.showModal({
@@ -1089,11 +1090,11 @@ Page({
               console.log(data);
 
               util.requestFromServer("SingClip", data).then((res) => {
-                wx.showToast({
-                  title: "上传完成",
-                  duration: 1500,
-                  mask: true,
-                });
+                // wx.showToast({
+                //   title: "上传完成",
+                //   duration: 1500,
+                //   mask: true,
+                // });
 
                 console.log(res);
 
