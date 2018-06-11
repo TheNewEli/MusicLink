@@ -46,8 +46,8 @@ Page({
       }
       else if (pagesId == 5) {
         wx.previewImage({
-          current: 'https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg', // 当前显示图片的http链接
-          urls: ['https://wx4.sinaimg.cn/mw690/006DLEjfgy1frw8622ul9j30w00w0djz.jpg']
+          current: 'https://oss.caoyu.online/basic/D8F17CDC35F80C6330B3DCBFAEAC0763.jpg', // 当前显示图片的http链接
+          urls: ['https://oss.caoyu.online/basic/D8F17CDC35F80C6330B3DCBFAEAC0763.jpg']
         })
       }else{
           wx.navigateTo({

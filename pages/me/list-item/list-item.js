@@ -3,7 +3,8 @@ var util = require('../../../utils/util.js');
 Page({
   data: {
     openid:null,
-    id: null
+    id: null,
+    finished:'list-item-other'
   },
 
   //生命周期函数--监听页面加载
@@ -12,7 +13,8 @@ Page({
     var openid = wx.getStorageSync("openid");
     this.setData({
       openid:openid,
-      id:id
+      id:id,
+      finished:'list-item-other'
     })
     this._init();
   },
@@ -49,6 +51,10 @@ Page({
       } else if (this.data.id == 2) {
         //2为完成的歌曲
         this.getMyFinishedDataFromServer();
+        this.setData({
+          progress:100,
+          finished:"list-item-finished"
+        })
       }
     }
   

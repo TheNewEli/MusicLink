@@ -12,6 +12,7 @@ Page({
     currentLyric: '',
     Lyrics:null,
     playUrl:'',
+    
     currentLineNum:0,
     toLineNum: -1,
     playIcon: 'icon-pause',
@@ -38,7 +39,7 @@ Page({
         SongList_created.push(MyFinishedSongs[i].created_song_id);
 
         if (created_songId == MyFinishedSongs[i].created_song_id) {
-          currentIndex = i;
+          currentIndex = parseInt(i);
         }
       }
       this.setData({
