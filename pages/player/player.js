@@ -31,7 +31,7 @@ Page({
     var isShare = options.isShare;
     var SongList_created=[];
     var currentIndex;
-    if(!isShare){
+    if (isShare == 'false' || !isShare){
       var MyFinishedSongs = wx.getStorageSync("MyFinishedSongs");
       for (var i in MyFinishedSongs) {
 
@@ -41,15 +41,20 @@ Page({
           currentIndex = i;
         }
       }
+      this.setData({
+        isShare:false
+      })
     }else{
       currentIndex=-10;
+      this.setData({
+        isShare: true
+      })
     }
 
     this.setData({
       created_songId: created_songId,
       currentIndex: currentIndex,
       SongList_created: SongList_created,
-      isShare: isShare
     })
 
     this.getPlayInfoDataFromServer();
@@ -193,7 +198,9 @@ Page({
 
     innerAudioContext.onPlay(() => {
       this.setData({
-        clipState:'play'
+        clipState:'play',
+        playIcon: 'icon-pause',
+        cdCls: 'play'
       })
     })
 
@@ -218,7 +225,9 @@ Page({
         innerAudioContext.destroy();
       }else{
         that.setData({
-          clipState: 'pause'
+          clipState: 'pause',
+          playIcon: 'icon-play',
+          cdCls: 'pause'
         })
       }
     })
@@ -347,6 +356,11 @@ Page({
         var status = res.status
         if (status == 1) {
           wx.pauseBackgroundAudio();
+          that.setData({
+            playIcon: 'icon-play',
+            cdCls: 'pause'
+          })
+
           if (that.data.clipState == 'play') {
             that.data.innerAudioContext.pause();
           }
@@ -354,6 +368,10 @@ Page({
           if (that.data.clipState == 'pause') {
             that.data.innerAudioContext.play();
           }
+          that.setData({
+            playIcon: 'icon-pause',
+            cdCls: 'play'
+          })
           wx.playBackgroundAudio();
         }
       }
