@@ -137,6 +137,7 @@ Page({
     var created_song_id = event.currentTarget.dataset.createdSongId;
     var song_id = event.currentTarget.dataset.songId;
     var Type=event.currentTarget.dataset.type;
+    var isShare=false;
     if(Type==0 || Type==1){
       wx.navigateTo({
         url: '../../select/select?created_song_id=' + created_song_id + "&song_id=" + song_id,
@@ -144,7 +145,7 @@ Page({
     }else if(Type==2){
       wx.setStorageSync("MyFinishedSongs", this.data.ListItem);
       wx.navigateTo({
-        url: '../../player/player?isShare='+'false'+'&created_song_id=' + created_song_id,
+        url: '../../player/player?isShare=' + isShare+'&created_song_id=' + created_song_id,
       })
     }
 
