@@ -144,7 +144,7 @@ Page({
     }else if(Type==2){
       wx.setStorageSync("MyFinishedSongs", this.data.ListItem);
       wx.navigateTo({
-        url: '../../player/player?created_song_id=' + created_song_id,
+        url: '../../player/player?isShare='+'false'+'&created_song_id=' + created_song_id,
       })
     }
 
