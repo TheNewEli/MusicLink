@@ -617,7 +617,10 @@ Page({
           that.data.currentRec_IAC.destroy();
           that.data.currentRec_IAC = wx.createInnerAudioContext();
           that.ensemble();
-        })
+        });
+        setTimeout (function(){
+          console.log("修复中");
+        }, 2000);
         return;
       }
       that.setData({
@@ -833,12 +836,12 @@ Page({
                         }
 
                         wx.setStorageSync("ER", existedResource);
-                        wx.showToast({
-                          title: "数据加载成功",
-                          icon: "success",
-                          duration: 1000,
-                          mask: true,
-                        });
+                        // wx.showToast({
+                        //   title: "数据加载成功",
+                        //   icon: "success",
+                        //   duration: 1000,
+                        //   mask: true,
+                        // });
                       },
                       fail: function (err) {
                         console.log(err);
@@ -1033,7 +1036,9 @@ Page({
         icon: "none",
         showCancel: false,
       });
-      that.data.recordTimeLate = 0;
+      that.setData({
+        recordTimeLate:0,
+      })
       that.data.currentBCK_IAC.volume = 0;
       that.data.currentBCK_IAC.offStop();
       that.data.currentBCK_IAC.offPlay();
@@ -1048,9 +1053,12 @@ Page({
         that.data.currentRec_IAC = wx.createInnerAudioContext();
         wx.showToast({
           title:"重置成功",
-        })
+        });
         that.ensemble();
       });
+     setTimeout (function(){
+        console.log("修复中");
+      }, 2000);
       return;
     }
 
@@ -1090,11 +1098,11 @@ Page({
               console.log(data);
 
               util.requestFromServer("SingClip", data).then((res) => {
-                // wx.showToast({
-                //   title: "上传完成",
-                //   duration: 1500,
-                //   mask: true,
-                // });
+                wx.showToast({
+                  title: "上传完成",
+                  duration: 1500,
+                  mask: true,
+                });
 
                 console.log(res);
 
