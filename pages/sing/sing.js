@@ -371,11 +371,26 @@ Page({
       });
       console.log("录音开始时伴奏音轨时刻：", that.data.recordStartTime);
       console.log(that.data.recordStartTime - that.data.currentBCK_IAC.startTime);
+      var recordTimeLate  = that.data.recordStartTime - that.data.currentBCK_IAC.startTime;
       that.setData({
-        recordTimeLate: that.data.recordStartTime - that.data.currentBCK_IAC.startTime,
-      })
+        recordTimeLate: recordTimeLate,
+      });
+      if(Math.abs(recordTimeLate)>1)
+      {
+        that.data.currentBCK_IAC.stop();
+        wx.getRecorderManager().stop();
+        console.log("伴奏音轨起点异常，重置！");
+        that.startRecord();
+        that.setData({
+          isRecording:false,
+          hasModified:false,
+          startRecordClickAmount:0,
+        });
+        return;
+      }
       that.data.currentBCK_IAC.offPlay();
       that.data.currentBCK_IAC.play();
+      
     })
 
     recorderManager.onStop((res) => {
@@ -600,7 +615,7 @@ Page({
       var recordTimeLate = that.data.recordTimeLate;
       if (recordTimeLate < -1 || recordTimeLate > 1) {
         wx.showModal({
-          title: "录音不稳定，请重唱",
+          title: "录音延迟过高，重置数据中",
           icon: "none",
           showCancel: false,
         });
@@ -788,7 +803,7 @@ Page({
     if(that.data.file_length_OnError!=0)
       setTimeout(function() {
         console.log("等待文件删除中");
-        wx.downloadFiles();
+        that.downloadFiles();
       }, 500);
 
     that.setData({
@@ -1106,6 +1121,8 @@ Page({
 
                 console.log(res);
 
+                that.checkSongisCompeleted();
+
               }).catch((err) => {
                 console.log("上传时通知服务器失败", err);
               })
@@ -1215,4 +1232,68 @@ Page({
       imageUrl: this.data.songs.music.coverImg,
     }
   },
+
+  checkSongisCompeleted:function(){
+    
+    var clips = this.data.clips;
+    var all_Rec_Temp_File = this.data.all_Rec_Temp_File;
+
+    for(var i in clips){
+      if(all_Rec_Temp_File[clips[i]-1]===undefined)
+        return;
+    }
+
+    var data = {
+      requestType: "isCompeleted",
+      created_song_id: this.data.created_songId
+    }
+
+    var that = this;
+
+    util.requestFromServer("isCompeleted",data).then((res)=>{
+       var clipInfo = res.data.clipInfo;
+       console.log(clipInfo);
+       
+         if(res.data=="false"){
+            wx.showModal({
+              title:"提示",
+              content:"恭喜你完成你选择的所有部分，但是这首歌还未被全部完成喔，点击分享邀请更多的人吧",
+              success:function(res){
+                if(res.confirm){
+                  that.onShareAppMessage("");
+                }
+                else{
+                  wx.showModal({
+                    title:"提示",
+                    content:"好吧，现在你可以选择返回到其他人的分享界面查看更多歌曲了！",
+                    success:function(res){
+                      if(res.confirm){
+                        wx.navigateBack({
+                          url: '../world/world'
+                        })
+                      }
+                    }
+                  })
+                }
+              }
+            });
+         }
+         else{
+           wx.showModal({
+             title:"提示",
+             content:"经过你的努力，这首歌由你最后完成了，是否前往试听",
+             success:function(res){
+               if(res.confirm)
+                wx.navigateBack({
+                  url:"../me/me"
+                })
+             }
+           })
+         }
+       
+    }).catch((err)=>{
+      console.log(err);
+    });
+
+  }
 })
