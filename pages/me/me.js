@@ -4,7 +4,8 @@ Page({
     data:{
       userInfo: {},
       hasUserInfo:false,
-      avatarUrl: "https://resource.caoyu.online/songs/song1/song1.jpg",
+      //未授权时显示的用户头像，此处应该为“连音符”logo
+      avatarUrl: "https://oss.caoyu.online/basic/basicprofile.png",
       menuitems: [
         { text: '已发起歌曲', menuitemsId: 0, image:"/images/icon/create_icon.png"},
         { text: '参与的歌曲', menuitemsId: 1, image: "/images/icon/participate_icon.png"},

@@ -149,6 +149,7 @@ function getSortedListByTime(list){
   list.sort(timer.compareWithTime);
   return list;
 }
+
 module.exports = {
   getDiffTime: getDiffTime,
   convertToStarsArray: convertToStarsArray,
