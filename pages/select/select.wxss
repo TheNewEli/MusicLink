@@ -8,11 +8,11 @@
 .music-detail-container{
   position: fixed;
   z-index: 1; 
-  width: 100%;
+  width: 750rpx;
 }
 
 .music-detail {
-  padding: 20rpx 0rpx 20rpx 30rpx;
+  padding: 20rpx 5rpx 20rpx 30rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,16 +28,40 @@
   display: flex;
   flex-direction: column;
   align-items: left;
-  margin-left: 10px;
+  margin-left: 20rpx;
 }
 
 .music-detail-text text{
   font-size: 15px;
   color: #666;   /*歌曲介绍 文本 颜色*/
+  width: 500rpx;
   font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 10px;
 }
 
+.singer-share{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.singer-share button{
+  background-color: #8aaed7;
+  color:#fff;
+  height: 70rpx;
+  width: 250rpx;
+  font-size: 15px;
+  margin-left:50rpx;
+  line-height: 2.5;
+}
+
+.singer-share text{
+  margin-bottom: 0;
+  width: 200rpx;
+}
 
 /***********歌词选择************/
 .lyrics-container{

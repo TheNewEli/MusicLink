@@ -28,7 +28,7 @@
   -webkit-overflow-scrolling: touth;
 }
 
-.list-item{
+.list-item-other{
   display: flex;
   flex-direction: row;  
 }
@@ -98,4 +98,13 @@
 .list-box  image{
   height: 35rpx;
   width: 35rpx;
+}
+
+.list-item-finished{
+  display: flex;
+  flex-direction: row; 
+  background-image: url(https://oss.caoyu.online/basic/finished.png);  
+  background-size: 160rpx 160rpx;
+  background-repeat:no-repeat;
+  background-position:right; 
 }

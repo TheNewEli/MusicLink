@@ -4,9 +4,12 @@
     <view class='music-detail'>
         <image src='{{songs.music.coverImg}}'></image>
         <view class='music-detail-text'>
-        <text>{{songs.music.title}}</text>
-        <text>原唱：{{songs.music.singer}}</text>
-      </view>
+          <text>{{songs.music.title}}</text>
+          <view class='singer-share'>
+            <text>{{songs.music.singer}}</text>
+            <button open-type="share">邀请好友合唱</button>
+          </view>
+        </view>
     </view>
   </view>
 

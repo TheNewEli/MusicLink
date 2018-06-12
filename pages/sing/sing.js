@@ -934,7 +934,7 @@ Page({
     downloadTask1.onProgressUpdate((res) => {
       that.setData({
         progress: res.progress / 2,
-        propt_motto: "加载资源中：",
+        propt_motto: "提示：带上耳机唱歌效果更佳哟.",
       })
     });
   },
@@ -1136,7 +1136,7 @@ Page({
           uploadTask.onProgressUpdate((res) => {
             that.setData({
               progress: res.progress,
-              propt_motto: "上传中：",
+              propt_motto: "提示：整首歌完成后可到“我的-完成”中播放.",
             })
           })
         }
