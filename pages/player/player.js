@@ -16,7 +16,7 @@ Page({
     currentLineNum:0,
     toLineNum: -1,
     playIcon: 'icon-pause',
-    cdCls: 'pause',
+    cdCls: 'play',
     dotsArray: new Array(2),
     currentDot: 0,
     isShare:false,
@@ -97,7 +97,7 @@ Page({
       currentLineNum: 0,
       toLineNum: -1,
       playIcon: 'icon-pause',
-      cdCls: 'pause',
+      cdCls: 'play',
     })
     this.getPlayInfoDataFromServer();
   },
@@ -112,10 +112,9 @@ Page({
     })
 
     this.setData({
-      currentTime_format:"0:00"
+      currentTime_format:"0:00",
     })
-    // wx.pauseBackgroundAudio();
-
+    
     // 监听音乐播放
     wx.onBackgroundAudioPlay(() => {
       that.setData({
