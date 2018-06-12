@@ -1,0 +1,56 @@
+<view class='select-container'>
+
+  <view class='music-detail-container'>
+    <view class='music-detail'>
+        <image src='{{songs.music.coverImg}}'></image>
+        <view class='music-detail-text'>
+          <text>{{songs.music.title}}</text>
+          <view class='singer-share'>
+            <text>{{songs.music.singer}}</text>
+            <button open-type="share">邀请好友合唱</button>
+          </view>
+        </view>
+    </view>
+  </view>
+
+  <view class='lyrics-container'>
+    <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index" wx:key="">
+      <view class='lyrics-item' catchtap='selectLyrics' data-lyric-id='{{index}}'>
+
+        <block wx:if="{{item.selected_user_openId == openId}}">
+          <view class='selected-self'>
+            <text>{{item.lyric}}</text>
+            <image src='{{item.selected_user_avatar}}'></image>
+          </view>
+        </block>  
+
+        <block wx:elif="{{item.isSelected}}">
+          <view class='selected'>
+            <image src='{{item.selected_user_avatar}}'></image>
+            <text>{{item.lyric}}</text>
+          </view>
+        </block>
+
+        <block wx:else>
+          <view class='unselected'>
+            <image src='{{item.selected_user_avatar}}'></image>
+            <text>{{item.lyric}}</text>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>
+
+
+<view class='select-box'>
+  <view class='lock' catchtap='lock'>
+    <image src='/images/icon/lock-1.png'></image>
+    <text>锁 定</text>
+  </view>
+  <image src='/images/icon/longstring_icon.png'></image>
+  <view class='handon' catchtap='handon'>
+    <image src='/images/icon/handon-1.png'></image>
+    <text>提 交</text>
+  </view>
+</view>

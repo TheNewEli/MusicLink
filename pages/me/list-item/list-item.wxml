@@ -1,0 +1,62 @@
+<!-- <block wx:if="{{id<2}}"> -->
+  <view class='list-container'>
+    <block wx:for="{{ListItem}}" wx:for-item="item" >
+      <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}' data-type='{{id}}'>
+          <view class='{{finished}}'>
+            <view class='list-initiator-nick' >
+              <image src='{{item.cover_url}}'></image>
+            </view>
+            <view class='list-detail'>
+              <view class='list-box'>
+                <block wx:if="{{item.world_shared}}">
+                  <image src='/images/icon/public_icon.png'></image>  
+                </block>
+                <block wx:else>
+                  <image src='/images/icon/private_icon.png'></image>
+                </block>
+                <view class='title'> 
+                  <text >{{item.title}}</text> 
+                </view>
+                <view class='time'>
+                  <text>{{item.create_time_read}}</text>
+                </view>
+              </view>
+              <progress percent="{{item.progress|| progress}}" show-info active stroke-width='5'/>
+            </view>
+          </view>
+      </view>
+    </block>
+  </view>
+<!-- </block> -->
+<!-- <block wx:if="{{id==2}}">
+  <view class='list-container'>
+    <block wx:for="{{ListItem}}" wx:for-item="item" >
+      <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}' data-type='{{id}}'>
+          <view class='list-item-finished'>
+            <view class='list-initiator-nick' >
+              <image src='{{item.cover_url}}'></image>
+            </view>
+            <view class='list-detail'>
+              <view class='list-box'>
+                <block wx:if="{{item.world_shared}}">
+                  <image src='/images/icon/public_icon.png'></image>  
+                </block>
+                <block wx:else>
+                  <image src='/images/icon/private_icon.png'></image>
+                </block>
+                <view class='title'> 
+                  <text >{{item.title}}</text> 
+                </view>
+                <view class='time'>
+                  <text>{{item.create_time_read}}</text>
+                </view>
+              </view>
+              <progress percent="{{item.progress|| progress}}" show-info active stroke-width='5'/>
+            </view>
+          </view>
+      </view>
+    </block>
+  </view>
+</block> -->
+
+

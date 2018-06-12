@@ -1,0 +1,28 @@
+/* pages/post.wxss */
+@import "post-item-tpl/tpl-wxss/song-list-tpl.wxss";
+
+page{
+
+}
+
+swiper
+{
+  width: 100%;
+  height: 380rpx;
+  margin-top: 0rpx;
+  background-color: black;
+}
+  
+ swiper image
+{
+  width: 100%;
+  height: 500rpx;
+}
+
+.container{
+    background: #f2f2f2;
+}
+
+.songs-template{
+    width:100%;
+}

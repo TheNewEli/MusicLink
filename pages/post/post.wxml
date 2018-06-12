@@ -1,0 +1,21 @@
+
+<import src="post-item-tpl/tpl-wxml/song-list-tpl.wxml"></import>
+<view>
+    <!--滚动海报-->
+    <swiper catchtap='onSwipperTap' indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" circular='true'>
+        <block wx:for="{{swipperPost.songs}}" wx:for-item="item" wx:for-index="idx">
+            <swiper-item>
+                <image class="swiper-image" src="{{item.coverageUrl}}" mode='widthFix' data-idx='{{idx}}'/>
+            </swiper-item>
+        </block>
+    </swiper>
+    <!--两个目录，一个热门，一个推荐-->
+    <view class="songs-template">
+        <template is = "songListTpl" data="{{...inThreaten_P}}"></template>
+    </view> 
+
+    <view class="songs-template">
+        <template is = "songListTpl" data="{{...ourRecommend_P}}"></template>
+    </view> 
+    
+</view>

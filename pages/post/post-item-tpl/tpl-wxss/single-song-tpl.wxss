@@ -1,0 +1,24 @@
+@import "stars-tpl.wxss";
+
+.song-container{
+    display: flex;
+    flex-direction: column;
+    padding: 0.22rpx;
+}
+
+.song-image{
+    width: 225rpx;
+    height: 225rpx;
+    padding-bottom: 20rpx;
+    padding-right: 17rpx;
+}
+
+.song-title{
+    width: 220rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 16rpx;
+    font-size: 24rpx;
+    display: block;
+}

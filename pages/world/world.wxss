@@ -1,0 +1,104 @@
+page{
+  padding-bottom: 40rpx;
+}
+
+.world-container{
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touth;
+}
+
+.world-item{
+  display: flex;
+  flex-direction: row;
+  border-bottom: 10px solid #F5F5F5;  
+}
+
+.world-initiator{
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.world-initiator image{
+  width: 100rpx;
+  height: 100rpx;
+  margin-left: 15px;
+  border-radius: 50%;
+}
+
+.world-detail{
+  padding: 10px 5px 10px 10px;
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  width: 100%;
+}
+
+.world-box{
+  display: flex;
+  flex-direction: row;
+}
+
+.nick{
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1px 1px 1px 1px;
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  width: 400rpx;
+}
+
+.time{
+  /* margin-left:15px;  */
+  margin-right: 5%;
+  margin-top: 5rpx;
+  width: 95%;
+  color: #ccc;
+  font-size: 24rpx;
+  text-align: right;
+}
+
+.world-detail progress{
+  margin-top: 20rpx;
+  color: #ccc;
+}
+
+.comment{
+  font-size: 13px;
+  font-family: Microsoft YaHei;
+  color: #666;
+}
+
+.music-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #F5F5F5;
+  width: 95%;
+  margin-top: 10px;
+}
+
+.music-box image{
+  height: 150rpx;
+  width: 150rpx;
+}
+
+.music-detail{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.music-detail text{
+  margin-left: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: #666;
+  font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300rpx;
+}
