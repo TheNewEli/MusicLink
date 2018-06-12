@@ -256,7 +256,7 @@ Page({
 
 
         if (failed.length > 0) {
-          failedString = " 失败锁定第";
+          failedString = "你已经唱过";
           for (var i in failed) {
             if (i == 0) {
               failedString = failedString + '' + failed[i];
@@ -264,7 +264,7 @@ Page({
               failedString = failedString + '.' + failed[i];
             }
           }
-          failedString = failedString + "段";
+          failedString = failedString + "段了，现在你可以重唱覆盖它们了";
         }
 
         var content = successString + failedString;
