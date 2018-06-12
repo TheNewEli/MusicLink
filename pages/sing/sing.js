@@ -1121,7 +1121,6 @@ Page({
       })
       return;
     }
-
     //this.checkSongisCompeleted();
 
     var that = this;

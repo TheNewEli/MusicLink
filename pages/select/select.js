@@ -279,7 +279,6 @@ Page({
           wx.showModal({
             title: '提示',
             content: successString + failedString,
-            showCancel: true,
             confirmText: "确定",
             success:function(res){
               if(res.confirm){
