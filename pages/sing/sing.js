@@ -1012,7 +1012,7 @@ Page({
         progress: res.progress / 2,
       });
 
-      if(res.progress-that.data.old_progress>20){
+      if (res.progress % 40 < 20){
         that.setData({
           propt_motto: "提示：戴上耳机唱歌效果更佳哟!",
           old_progress:res.progress,
@@ -1121,8 +1121,7 @@ Page({
       })
       return;
     }
-    //this.checkSongisCompeleted();
-
+  
     var that = this;
     var all_RecordFiles = that.data.all_Rec_Temp_File;
     var temp_path = all_RecordFiles[that.data.currentClipNum - 1].temp_path;
@@ -1338,8 +1337,6 @@ Page({
     var that = this;
 
     util.requestFromServer("IsCompleted",data).then((res)=>{
-       var clipInfo = res.data.clipInfo;
-       console.log(clipInfo);
        
          if(res.data.IsCompleted=="false"){
             wx.showModal({

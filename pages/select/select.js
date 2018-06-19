@@ -176,6 +176,7 @@ Page({
         if (lyrics.isSelected) {
           for (var i in this.data.clips) {
             if (this.data.clips[i] != lyrics.clipCount) {
+              
               clips.push(this.data.clips[i])
             }
           }
@@ -281,7 +282,9 @@ Page({
             confirmText: "确定",
             success:function(res){
               if(res.confirm){
-               
+                wx.redirectTo({
+                  url: '../sing/sing?songId=' + that.data.song_id,
+                })
               }
             }
           })
@@ -308,9 +311,7 @@ Page({
     this.lock();
 
     wx.setStorageSync("selectedData", this.data);
-    wx.redirectTo({
-      url: '../sing/sing?songId=' + this .data.song_id,
-    })
+    
    
   },
 

@@ -22,7 +22,7 @@
 <block wx:elif="{{pagesId==4}}">
   <view class='about'>
     <image src='https://oss.caoyu.online/basic/we.jpg' mode='scaleToFill' ></image>
-    <text>开发团队：WEAT</text>
+    <text>开发团队：EWA</text>
     <text>项目成员：屈志豪 杨鹏宇 曹雨</text>
     <text>学校院系：四川大学 软件学院</text>
     <text>技术顾问：高浩天</text>
