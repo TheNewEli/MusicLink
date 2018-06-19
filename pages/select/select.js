@@ -89,7 +89,7 @@ Page({
 
     util.requestFromServer("GetCreatedClips", data).then((res) => {
       //console.log("select: request success");
-      //console.log(res);
+      console.log(res);
       that.processRequestData_Create(res);
     }).catch((err) => {
       console.log("请求失败");
@@ -112,8 +112,7 @@ Page({
           lyrics[j].selected_user_avatar = selected[i].avatar;
           lyrics[j].selected_user_openId = selected[i].openid;
           lyrics[j].isSelected = true;
-          //isSing变量待确定
-          // lyrics[selected[i].clip_count].isSing = null;
+          lyrics[j].isSing = selected[i].is_sang;
         }
       } 
     }
@@ -152,7 +151,7 @@ Page({
            selected_user_avatar:null,
            selected_user_openId: null,
            isSelected: null,
-           isSing:null,
+           isSing:false,
          }
          songs.lyrics.push(temp);
       }
@@ -172,7 +171,7 @@ Page({
     var clipCount = songs.lyrics[lyricId].clipCount;
 
     if(this.check()){
-      if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null) {
+      if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null || !lyrics.isSing) {
         var clips = [];
         if (lyrics.isSelected) {
           for (var i in this.data.clips) {
