@@ -1012,7 +1012,7 @@ Page({
         progress: res.progress / 2,
       });
 
-      if(res.progress-that.data.old_progress>20){
+      if (res.progress % 40 < 20){
         that.setData({
           propt_motto: "提示：戴上耳机唱歌效果更佳哟!",
           old_progress:res.progress,
