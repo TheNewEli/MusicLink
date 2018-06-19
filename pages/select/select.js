@@ -125,7 +125,7 @@ Page({
   },
 
 
-  //处理数据
+  //处理数据-sing界面使用
   processRequestData:function(res){
     
     var allOriginData = res.data;
