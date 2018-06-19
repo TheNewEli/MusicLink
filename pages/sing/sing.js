@@ -78,6 +78,9 @@ Page({
 
     //下载错误后记录文件个数
     file_length_OnError:0,
+
+    //用于切换动态提示
+    old_progress:0,
   },
 
   onLoad: function (options) {
@@ -102,7 +105,36 @@ Page({
       isRecording: false,
       startRecordClickAmount: 0,
       tryListeningClickAmount: 0,
-    })
+    });
+
+    var prompt_start = wx.getStorageSync("prompt_start");
+    if(!prompt_start){
+      wx.showModal({
+        title:"导航",
+        content:"欢迎来到我们的大合唱界面，在这里你可以充分展示你美妙的歌声，唱完后你可选择分享给你的小伙伴，让他们共同完成这一首歌喔",
+        cancelText:"不再提示",
+        confirmText:"知道了",
+        success:function(res){
+          if(res.cancel){
+            wx.setStorageSync("prompt_start",true);
+          }
+          wx.showModal({
+            title:"导航",
+            content:"如果你不是很熟悉这首歌，我们为你准备了原唱，唱歌过程中建议插着耳机喔，录音过程中是不能切换原唱和伴奏的喔！",
+            cancelText:"不再提示",
+            confirmText:"知道了",
+            success:function(res){
+              if(res.cancel){
+                wx.setStorageSync("prompt_start",true);
+              }
+            }
+          });
+        }
+      });
+
+     
+
+    }
   },
 
   onReady: function () {
@@ -408,6 +440,21 @@ Page({
         temp_path: tempFilePath,
       }
 
+      var prompt_finished = wx.getStorageSync("prompt_finished");
+      if(!prompt_finished){
+        wx.showModal({
+          title:"导航",
+          content:"恭喜你唱完了这段，去点击试听按钮播放你美妙的歌声吧",
+          cancelText:"不再提示",
+          confirmText:"知道了",
+          success:function(res){
+            if(res.cancel){
+              wx.setStorageSync("prompt_finished",true);
+            }
+          }
+        })
+      }
+
       that.data.all_Rec_Temp_File[that.data.currentClipNum - 1] = temp_Record_File;
       console.log(that.data.all_Rec_Temp_File);
       that.setData({
@@ -549,6 +596,7 @@ Page({
     });
 
     currentBCK_IAC.onStop(()=>{
+      
       setTimeout(function() {
         console.log("处理中");
       }, 1000);
@@ -679,6 +727,22 @@ Page({
     currentRec_IAC.onEnded(() => {
       console.log("录音轨道结束");
       currentBCK_IAC.stop();
+
+      var prompt_next_or_last = wx.getStorageSync("prompt_next_or_last");
+      if(!prompt_next_or_last){
+        wx.showModal({
+          title:"导航",
+          content:"试听结束，点击上一段或下一段继续你的演唱吧！",
+          cancelText:"不再提示",
+          confirmText:"知道了",
+          success:function(res){
+            if(res.cancel){
+              wx.setStorageSync("prompt_next_or_last",false);
+            }
+          }
+        })
+      }
+
     })
 
     currentRec_IAC.onPlay(() => {
@@ -910,7 +974,19 @@ Page({
               downloadTask2.onProgressUpdate((res) => {
                 that.setData({
                   progress: res.progress / 2 + 50
-                })
+                });
+
+                if(res.progress%40<20){
+                  that.setData({
+                    propt_motto: "提示：戴上耳机唱歌效果更佳哟!",
+                    old_progress:res.progress,
+                  })
+                }
+                else{
+                  that.setData({
+                    propt_motto: "下载资源中，请耐心等候...",
+                  })
+                }
               });
 
             },
@@ -934,8 +1010,19 @@ Page({
     downloadTask1.onProgressUpdate((res) => {
       that.setData({
         progress: res.progress / 2,
-        propt_motto: "提示：带上耳机唱歌效果更佳哟.",
-      })
+      });
+
+      if(res.progress-that.data.old_progress>20){
+        that.setData({
+          propt_motto: "提示：戴上耳机唱歌效果更佳哟!",
+          old_progress:res.progress,
+        })
+      }
+      else{
+        that.setData({
+          propt_motto: "下载资源中，请耐心等候...",
+        })
+      }
     });
   },
 
@@ -1034,6 +1121,7 @@ Page({
       })
       return;
     }
+    //this.checkSongisCompeleted();
 
     var that = this;
     var all_RecordFiles = that.data.all_Rec_Temp_File;
@@ -1120,7 +1208,6 @@ Page({
                 });
 
                 console.log(res);
-
                 that.checkSongisCompeleted();
 
               }).catch((err) => {
@@ -1136,7 +1223,7 @@ Page({
           uploadTask.onProgressUpdate((res) => {
             that.setData({
               progress: res.progress,
-              propt_motto: "提示：整首歌完成后可到“我的-完成”中播放.",
+              propt_motto: "上传中...",
             })
           })
         }
@@ -1244,20 +1331,20 @@ Page({
     }
 
     var data = {
-      requestType: "isCompeleted",
+      requestType: "IsCompleted",
       created_song_id: this.data.created_songId
     }
 
     var that = this;
 
-    util.requestFromServer("isCompeleted",data).then((res)=>{
+    util.requestFromServer("IsCompleted",data).then((res)=>{
        var clipInfo = res.data.clipInfo;
        console.log(clipInfo);
        
-         if(res.data=="false"){
+         if(res.data.IsCompleted=="false"){
             wx.showModal({
               title:"提示",
-              content:"恭喜你完成你选择的所有部分，但是这首歌还未被全部完成喔，点击分享邀请更多的人吧",
+              content:"恭喜你完成你选择的所有部分，但是这首歌还未被全部完成喔，点击右上角分享邀请更多的人吧",
               success:function(res){
                 if(res.confirm){
                   that.onShareAppMessage("");
@@ -1278,14 +1365,14 @@ Page({
               }
             });
          }
-         else{
+         else if(res.data.IsCompleted=="true"){
            wx.showModal({
              title:"提示",
              content:"经过你的努力，这首歌由你最后完成了，是否前往试听",
              success:function(res){
                if(res.confirm)
-                wx.navigateBack({
-                  url:"../me/me"
+                wx.redirectTo({
+                  url:"../player/player?isShare=true&created_song_id="+that.data.created_songId,
                 })
              }
            })

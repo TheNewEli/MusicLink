@@ -256,7 +256,7 @@ Page({
 
 
         if (failed.length > 0) {
-          failedString = "你已经唱过";
+          failedString = "你已经唱过第";
           for (var i in failed) {
             if (i == 0) {
               failedString = failedString + '' + failed[i];
@@ -274,11 +274,17 @@ Page({
             content: "你还没选任何数据喔",
           })
         } else {
+
+          var that = this;
           wx.showModal({
             title: '提示',
             content: successString + failedString,
-            showCancel: false,
             confirmText: "确定",
+            success:function(res){
+              if(res.confirm){
+               
+              }
+            }
           })
         }
       }).catch((err) => {
@@ -301,10 +307,12 @@ Page({
     }
 
     this.lock();
+
     wx.setStorageSync("selectedData", this.data);
     wx.redirectTo({
-      url: '../sing/sing?songId=' + this.data.song_id,
+      url: '../sing/sing?songId=' + this .data.song_id,
     })
+   
   },
 
 
@@ -347,8 +355,6 @@ Page({
       return true;
     }
   },
-
-
 
 })
 

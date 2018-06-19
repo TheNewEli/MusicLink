@@ -33,9 +33,9 @@ function countDown(that, remainedTime) {
     if (flag < 0) {
       return 1;
     } else if (flag > 0) {
-      return 0;
-    } else {
       return -1;
+    } else {
+      return 0;
     }
   }
 
