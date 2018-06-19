@@ -171,7 +171,7 @@ Page({
     var clipCount = songs.lyrics[lyricId].clipCount;
 
     if(this.check()){
-      if (this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null || !lyrics.isSing) {
+      if ((this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null )&& !lyrics.isSing) {
         var clips = [];
         if (lyrics.isSelected) {
           for (var i in this.data.clips) {
