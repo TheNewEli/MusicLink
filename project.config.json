@@ -59,7 +59,7 @@
 					"id": 3,
 					"name": "sing",
 					"pathName": "pages/sing/sing",
-					"query": "songId=1",
+					"query": "songId=11",
 					"scene": "1007"
 				},
 				{
