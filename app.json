@@ -10,7 +10,8 @@
     "pages/sing/sing",
     "pages/me/list-item/list-item",
     "pages/player/player",
-    "pages/toplist/toplist"
+    "pages/toplist/toplist",
+    "pages/all-toplist/all-toplist"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",
@@ -26,7 +27,7 @@
       },
       {
         "pagePath": "pages/post/post",
-        "text": "唱歌",
+        "text": "点歌",
         "iconPath": "/images/icon/sing.png",
         "selectedIconPath": "/images/icon/sing_selected.png"
       },

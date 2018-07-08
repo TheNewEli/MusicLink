@@ -1,6 +1,7 @@
 
 const CATEGROY_MOD_1 = "热门";
 const CATEGROY_MOD_2 = "推荐";
+const CATEGROY_MOD_3 = "完结";
  
 Page({
 
@@ -30,7 +31,13 @@ Page({
 
       toplist = wx.getStorageSync("recommendData");
       navigationText = "连音符·推荐榜";
-    }else{
+    } else if (category == CATEGROY_MOD_3) {
+      
+      //通过http请求获取完结歌曲信息
+      //待完成 等待接口
+      // toplist = wx.getStorageSync("recommendData");
+      navigationText = "连音符·完结榜";
+    } else{
       console.log("err:Toplist 传参错误");
     }
 

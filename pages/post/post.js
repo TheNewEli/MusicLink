@@ -18,9 +18,15 @@ Page({
     ourRecommend:{},
 
     inThreaten_P:{},
-    ourRecommend_p:{},
 
     swipperPost:{},
+
+    subfieldList:[
+      { subfieldIndex: 0, image: "/images/icon/together_icon.png", text: "合唱" },
+      { subfieldIndex: 1, image: "/images/icon/driftbottle_icon.png", text: "漂流瓶" },
+      { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "完结" },
+      { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
+    ]
   },
 
   /**
@@ -63,15 +69,10 @@ Page({
 
     //console.log(songsRequested);
 
-    //标题过长，进行裁剪
     for(var i in songsRequested.songs){
       var song = songsRequested.songs[i];
       var title = song.title;
-      // if(title.length>=6){
-      //   title=title.substring(0,6)+"...";
-      // }
     
-
     var temp={
       stars: util.convertToStarsArray(song.stars),
       title: title,
@@ -115,37 +116,60 @@ Page({
     this.setData(readyData);
   },
 
-  onSongTap(event){
+  onSongTap: function(event){
    
     var song = event.currentTarget.dataset.song;
     //console.log(song);
-
     wx.setStorageSync("to_create_song", song);
-
-    //页面之间不能传递对象
     wx.navigateTo({
       url: '../create/create?songId='+song.songId,
     });
   },
 
-  onMoreTap(event){
-
+  onMoreTap: function(event){
     wx.setStorageSync("inthreatenData", this.data.inThreaten);
     wx.setStorageSync("recommendData", this.data.ourRecommend);
     var category = event.currentTarget.dataset.category;
     wx.navigateTo({
       url: '../toplist/toplist?category=' + category ,
     });
-
   },
 
-  onSwipperTap(event){
+  onSwipperTap: function(event){
     var idx =  event.target.dataset.idx;
     var song = this.data.swipperPost.songs[idx];
     wx.setStorageSync("to_create_song", song);
-     //页面之间不能传递对象
-     wx.navigateTo({
+    wx.navigateTo({
       url: '../create/create?songId='+song.songId,
     });
+  },
+
+  onSubfieldTap: function(event){
+    var idx = event.currentTarget.dataset.subfieldid;
+    switch(idx){
+      case 0:
+      //合唱
+        break;
+      case 1:
+      //漂流瓶
+        break;
+      case 2:
+      //完结歌曲榜单
+        wx.navigateTo({
+          url: '../toplist/toplist?category=' + "完结",
+        });
+        break;
+      case 3:
+      //排行榜（总）
+      //将所有歌曲信息存到缓存中，方便后面获取。
+        wx.setStorageSync("inthreatenData", this.data.inThreaten);
+        wx.setStorageSync("recommendData", this.data.ourRecommend);
+        wx.navigateTo({
+          url: '/pages/all-toplist/all-toplist',
+        })
+        break;
+      default:
+        break;
+    }
   }
 })
