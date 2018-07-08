@@ -19,10 +19,10 @@ Page({
     var id = options.id;
     var title="";
     switch(id){
-      case '3':
+      case '4':
         title = "设置";
         break;
-      case '4':
+      case '5':
         title = "关于";
         break;
       default:

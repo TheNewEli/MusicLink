@@ -10,9 +10,10 @@ Page({
         { text: '已发起歌曲', menuitemsId: 0, image:"/images/icon/create_icon.png"},
         { text: '参与的歌曲', menuitemsId: 1, image: "/images/icon/participate_icon.png"},
         { text: '完成的歌曲', menuitemsId: 2, image: "/images/icon/finish_icon.png"},
-        { text: '设置', menuitemsId: 3, image: "/images/icon/setting_icon.png"}, 
-        { text: '关于', menuitemsId: 4, image: "/images/icon/about_icon.png"},
-        { text: '打赏开发者', menuitemsId: 5, image: "/images/icon/donate_icon.png"}
+        { text: '联系客服', menuitemsId: 3, image: "/images/icon/service_icon.png" },
+        { text: '设置', menuitemsId: 4, image: "/images/icon/setting_icon.png"}, 
+        { text: '关于', menuitemsId: 5, image: "/images/icon/about_icon.png"},
+        { text: '打赏开发者', menuitemsId: 6, image: "/images/icon/donate_icon.png"}
       ],
     },
 
@@ -45,7 +46,7 @@ Page({
           url: 'list-item/list-item?id=' + pagesId,
         });
       }
-      else if (pagesId == 5) {
+      else if (pagesId == 6) {
         wx.previewImage({
           current: 'https://oss.caoyu.online/basic/D8F17CDC35F80C6330B3DCBFAEAC0763.jpg', // 当前显示图片的http链接
           urls: ['https://oss.caoyu.online/basic/D8F17CDC35F80C6330B3DCBFAEAC0763.jpg']
