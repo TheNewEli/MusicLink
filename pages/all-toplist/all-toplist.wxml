@@ -1,0 +1,35 @@
+<view>
+
+  <view class='container'>
+    <text>完结榜</text>
+    <view class='top-container'>
+      <view class='top-item' catchtap='onCatchTop' data-idx='0'>
+        <image src='{{topList[0].image}}'></image>
+        <view class='songList'>
+          <text>1.{{topList[0].song[0]}}</text>
+          <text>2.{{topList[0].song[0]}}</text>
+          <text>3.{{topList[0].song[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='container'>
+    <text>点歌榜</text>
+    <view class='top-container'>
+      <block wx:for="{{topList}}" wx:for-item="item" wx:for-index="idx">
+        <block wx:if="{{idx!=0}}">
+          <view class='top-item' catchtap='onCatchTop' data-idx='{{idx}}'>
+            <image src='{{item.image}}'></image>
+            <view class='songList'>
+              <text>1.{{item.song[0]}}</text>
+              <text>2.{{item.song[1]}}</text>
+              <text>3.{{item.song[2]}}</text>
+            </view>
+          </view>
+        </block>
+      </block>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,52 @@
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.container text{
+ font-family: Microsoft YaHei;
+ font-style: blod;
+ font-size: 18px;
+ text-align: left;
+ margin: 25rpx 0 25rpx 20rpx;
+}
+
+.top-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-item{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 5rpx;
+}
+
+.top-item image{
+  width: 230rpx;
+  height: 230rpx;
+  border-radius: 5px;
+  margin-left: 20rpx;
+}
+
+.songList{
+  width:500rpx;
+  height: 230rpx;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.songList text{
+  width: 430rpx;
+  height: 42rpx;
+  font-family: Microsoft YaHei;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  color: #696969;
+  margin: 20rpx 0 15rpx 20rpx;
+}
