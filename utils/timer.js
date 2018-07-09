@@ -11,6 +11,7 @@ function countDown(that, remainedTime) {
     
     if(that.data.currentBCK_IAC.paused){
       that.data.currentBCK_IAC.volume=0;
+      that.data.currentOrg_IAC.volume=0;
       that.data.currentBCK_IAC.play();
       console.log(that.data.currentBCK_IAC.currentTime);
       that.data.isReadying = true;
