@@ -12,13 +12,22 @@
 
   <view class='me-settings'>
      <block wx:for="{{menuitems}}" wx:for-item="item" wx:for-index="index" wx:key="{{item.menuitemsId}}">
-      <block wx:if="{{index%3==2 || index==3}}">
+      <block wx:if="{{index==2 || index==4}}">
         <view class='me-menuitems-interval'catchtap='onTapToDetail'data-menuitem-id='{{item.menuitemsId}}'>
           <image class='menuitems-icon' src='{{item.image}}'></image>
           <text  class='menuitems-text'>{{item.text}}</text> 
           <image class='menuitems-image' src='/images/icon/more_icon.png'></image>
         </view>
       </block>
+      <!--联系客服  -->
+      <block wx:elif="{{index==3}}" >
+        <button class='me-menuitems-button' open-type='contact' session-from="weapp">
+          <image class='menuitems-icon' src='{{item.image}}'></image>
+          <text  class='menuitems-text'>{{item.text}}</text> 
+          <image class='menuitems-image' src='/images/icon/more_icon.png'></image>
+        </button> 
+      </block>
+
       <block wx:else> 
         <view class='me-menuitems' catchtap='onTapToDetail' data-menuitem-id='{{item.menuitemsId}}'>
           <image class='menuitems-icon' src='{{item.image}}'></image>
@@ -26,9 +35,8 @@
           <image class='menuitems-image' src='/images/icon/more_icon.png'></image>
         </view>
       </block>   
-    </block> 
-
-  </view>
+    </block>
+  </view> 
 </view>
 
 
