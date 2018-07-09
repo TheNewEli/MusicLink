@@ -11,7 +11,7 @@
 } 
 
 .song-head {
-  padding: 5rpx 10rpx 10rpx;
+  padding: 25rpx 10rpx 10rpx 10rpx;
 }
 
 .slogan {
