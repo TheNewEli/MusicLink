@@ -9,8 +9,13 @@
   <view class="lyric-box">
 
     <view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}">
-      <text class="title">{{propt_motto}}</text>
-      <progress percent="{{progress}}" show-info active='{{isDown}}' stroke-width="10" active-mode="forwards" show-info="{{false}}" />
+    <!-- <view class="progress-bar" hidden="{{false}}"> -->
+      <!-- <text class="title">{{propt_motto}}</text> -->
+      
+      <!-- <progress percent="{{progress}}" show-info active='{{isDown}}' stroke-width="10" active-mode="forwards" show-info="{{false}}" /> -->
+      <canvas class="circleBar"  canvas-id="canvasArc"></canvas>
+      <view class='cc'>加载中</view>
+      <view class="title">{{propt_motto}}</view>
     </view>
 
     <view class="countDown" hidden="{{isReadying}}">
