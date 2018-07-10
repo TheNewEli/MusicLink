@@ -1,5 +1,13 @@
 // pages/sing/sing.js
 const timer = require('../../utils/timer');
+const options = {
+  duration: 300000,
+  sampleRate: 44100,
+  numberOfChannels: 2,
+  encodeBitRate: 192000,
+  format: 'mp3',
+  frameSize: 50
+};
 var util = require('../../utils/util');
 
 var app = getApp();
@@ -47,6 +55,8 @@ Page({
 
     isReadying: true,
     isRecording: false,
+    disableSkip:false,
+    disableOrg:true,
 
     //进度和提示
     progress: 0,
@@ -275,7 +285,8 @@ Page({
 
     var that = this;
     //如果录音已经开始，按键失效
-    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused||that.data.isDownloading)
+    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused||that.data.isDownloading
+      ||that.data.disableSkip)
       return;
 
     that.playAnimaton("last");
@@ -337,7 +348,8 @@ Page({
     var that = this;
 
     //如果录音已经开始，按键失效
-    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused||that.data.isDownloading)
+    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused||that.data.isDownloading||
+    that.data.disableSkip)
       return;
 
     that.playAnimaton("next");
@@ -415,8 +427,16 @@ Page({
     var that = this;
     that.playAnimaton("play");
 
-    if (that.data.startRecordClickAmount == 1 || that.data.isDownloading)
+    if (that.data.startRecordClickAmount == 1 || that.data.isDownloading){
+      wx.showToast({
+        title:"还在录音中喔",
+        icon:"none",
+        mask:true,
+        duration:1500,
+      })
       return;
+    }
+      
 
     const currentBCK_IAC = this.data.currentBCK_IAC;
     const currentRec_IAC = this.data.currentRec_IAC;
@@ -438,6 +458,7 @@ Page({
 
     currentBCK_IAC.onSeeked((res) => {
       console.log("BCK::Seeked");
+      //currentBCK_IAC.pause();
       console.log("重置后伴奏音轨当前位置:" + currentBCK_IAC.currentTime);
       if(!that.data.hasOriginSinger){
         that.data.currentBCK_IAC.volume = 0.7;
@@ -447,21 +468,41 @@ Page({
         that.data.currentBCK_IAC.volume = 0;
         that.data.currentOrg_IAC.volume = 0.7;
       }
+
+  
+      //wx.getRecorderManager().resume();
+      wx.showToast({
+        title:"开始",
+        image: "/images/icon/sing_icon.png",
+        duration:1500,
+        mask:true,
+      })
+
+      that.setData({
+        isRecording:true,
+      })
         
       //that.data.currentOrg_IAC.volume=0.7;
       //currentBCK_IAC.play();
     });
 
-    currentOrg_IAC.onSeeked((res) => {
-      console.log("ORG::Seeked");
-      console.log("重置后伴奏音轨当前位置:" + currentOrg_IAC.currentTime);
-      //that.data.currentBCK_IAC.volume = 0.7;
-      if(that.data.hasOriginSinger)
-        that.data.currentOrg_IAC.volume=0.7;
-      else
-        that.data.currentOrg_IAC.volume=0;
-      //currentBCK_IAC.play();
-    })
+    // currentOrg_IAC.onSeeked((res) => {
+    //   console.log("ORG::Seeked");
+    //   console.log("重置后伴奏音轨当前位置:" + currentOrg_IAC.currentTime);
+    //   //that.data.currentBCK_IAC.volume = 0.7;
+    //   // if(that.data.hasOriginSinger){
+    //   //   that.data.currentOrg_IAC.volume=0.7;
+    //   //   that.data.currentBCK_IAC.volume=0;
+    //   // }
+    //   // else{
+    //   //   that.data.currentOrg_IAC.volume=0;
+    //   //   that.data.currentBCK_IAC.volume=0.7;
+    //   // }
+    //   // that.data.currentBCK_IAC.play();
+       
+     
+    //   //currentBCK_IAC.play();
+    // })
 
     currentBCK_IAC.onError((err) => {
       wx.showToast({
@@ -494,8 +535,12 @@ Page({
 
     currentBCK_IAC.onTimeUpdate((res) => {
 
+      if(!that.data.isRecording)
+        wx.getRecorderManager().start(options);
+
       var currentLineNum = that.data.currentLineNum;
-      console.log("BCK:", currentBCK_IAC.currentTime, "Rec:", that.data.currentRec_IAC.currentTime);
+      console.log("BCK:", currentBCK_IAC.currentTime, "Rec:", that.data.currentRec_IAC.currentTime,
+    "Org:",that.data.currentOrg_IAC.currentTime);
 
       if (currentBCK_IAC.currentTime >= that.data.currentClip.end_time / 1000) {
         //console.log('该段结束');
@@ -526,29 +571,26 @@ Page({
       if (Math.abs(currentBCK_IAC.currentTime - currentBCK_IAC.startTime) > 1) {
         //currentBCK_IAC.stop();
         if (!that.data.isCorrected) {
+          var diffTime =0;
+          if(!currentOrg_IAC.paused)
+              diffTime =currentBCK_IAC.currentTime-currentOrg_IAC.currentTime;
           currentBCK_IAC.seek(currentBCK_IAC.startTime);
-          currentOrg_IAC.seek(currentBCK_IAC.startTime);
+          currentOrg_IAC.seek(currentBCK_IAC.startTime+diffTime);
+          //wx.getRecorderManager().pause();
           that.data.isCorrected = true;
         }
         return;
       }
       //currentBCK_IAC.seek(currentClip.begin_time / 1000);
-      if (!that.data.isRecording) {
-        const options = {
-          duration: 300000,
-          sampleRate: 44100,
-          numberOfChannels: 2,
-          encodeBitRate: 192000,
-          format: 'mp3',
-          frameSize: 50
-        }
-        //console.log("countDown completed");
-        wx.getRecorderManager().start(options);
-        that.data.currentOrg_IAC.play();
-        that.setData({
-          isRecording: true,
-        })
+      if(!that.data.hasOriginSinger){
+        that.data.currentBCK_IAC.volume = 0.7;
+        that.data.currentOrg_IAC.volume = 0;
       }
+      else{
+        that.data.currentBCK_IAC.volume = 0;
+        that.data.currentOrg_IAC.volume = 0.7;
+      }
+      
     });
 
     that.readyToRecord();
@@ -622,6 +664,8 @@ Page({
       endTime: currentClip.end_time / 1000,
       startTime: currentBCK_IAC.startTime,
       hasModified: false,
+      disableSkip:true,
+      disableOrg:true,
     });
 
     timer.countDown(that, remainedTime);
@@ -636,8 +680,26 @@ Page({
 
     that.playAnimaton("TL");
 
-    if (!that.data.hasCompleted)
+    if (!that.data.hasCompleted){
+      wx.showToast({
+        title:"未完成，无法试听",
+        icon:"none",
+        mask:true,
+        duration: 1500,
+      })
       return;
+    }
+    if(!that.data.currentRec_IAC.paused||!that.data.currentBCK_IAC.paused)
+    {
+      wx.showToast({
+        title:"播放中喔",
+        icon:"none",
+        duration:1500,
+        mask:true,
+      })
+      return;
+    }
+      
 
     var currentBCK_IAC = that.data.currentBCK_IAC;
     var currentRec_IAC = that.data.currentRec_IAC;
@@ -723,6 +785,9 @@ Page({
 
     currentRec_IAC.onPlay(() => {
       console.log("合成音轨开始播放");
+      //currentRec_IAC.seek(0.0);
+      currentRec_IAC.offPlay();
+
     });
 
     currentRec_IAC.onWaiting(() => {
@@ -752,7 +817,7 @@ Page({
      // console.log("CurrnetLine: ", currentLineNum, "BCK: ", that.data.currentBCK_IAC.currentTime,
       //  "Rec: ", that.data.currentRec_IAC.currentTime);
 
-      if (that.data.currentBCK_IAC.currentTime >= that.data.currentClip.end_time)
+      if (that.data.currentBCK_IAC.currentTime >= that.data.currentClip.end_time/1000)
         return;
 
       if (that.data.currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
@@ -763,31 +828,41 @@ Page({
       }
     });
 
+    currentBCK_IAC.onTimeUpdate((res)=>{
+
+      console.log("BCK:",currentBCK_IAC.currentTime,
+    "CURRENT:",that.data.currentClip.end_time/1000);
+     if(currentBCK_IAC.currentTime> that.data.currentClip.end_time/1000){
+        currentBCK_IAC.stop();
+     }
+    })
+
 
     if (!that.data.hasModified) {
       var recordTimeLate = that.data.recordTimeLate;
-      if (recordTimeLate < -1 || recordTimeLate > 1) {
-        wx.showModal({
-          title: "录音延迟过高，重置数据中",
-          icon: "none",
-          showCancel: false,
-        });
-        that.data.recordTimeLate = 0;
-        that.data.currentBCK_IAC.volume = 0;
-        that.data.currentBCK_IAC.offStop();
-        that.data.currentBCK_IAC.offPlay();
-        that.data.currentBCK_IAC.play();
-        console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
-        that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
-        that.data.currentBCK_IAC.onSeeked(() => {
-          console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
-          that.data.currentBCK_IAC.stop();
-          that.data.currentRec_IAC.destroy();
-          that.data.currentRec_IAC = wx.createInnerAudioContext();
-          that.ensemble();
-        });
-        return;
-      }
+      // if (recordTimeLate < -1 || recordTimeLate > 1) {
+      //   wx.showModal({
+      //     title: "录音延迟过高，重置数据中",
+      //     icon: "none",
+      //     showCancel: false,
+      //   });
+      //   that.data.recordTimeLate = 0;
+      //   that.data.currentBCK_IAC.volume = 0;
+      //   that.data.currentBCK_IAC.offStop();
+      //   that.data.currentBCK_IAC.offPlay();
+      //   that.data.currentBCK_IAC.play();
+      //   console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
+      //   that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
+      //   that.data.currentBCK_IAC.onSeeked(() => {
+      //     console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
+      //     that.data.currentBCK_IAC.stop();
+      //     that.data.currentRec_IAC.destroy();
+      //     that.data.currentRec_IAC = wx.createInnerAudioContext();
+      //     that.ensemble();
+      //   });
+      //   return;
+      // }
+
       that.setData({
         recordTimeLate: recordTimeLate,
       })
@@ -816,20 +891,15 @@ Page({
       currentBCK_IAC.onSeeked((res) => {
         currentBCK_IAC.volume = 0.5;
         console.log("设置成功");
-        if (currentRec_IAC.paused)
-          if(currentRec_IAC.currentTime==0)
-            currentRec_IAC.play();
-          else{
-            currentRec_IAC.volume=0;
-            currentRec_IAC.stop();
-            currentRec_IAC.onSeeked((res)=>{
-              currentRec_IAC.volume=1;
-              currentRec_IAC.play();
-            });
-            currentRec_IAC.seek(0.0);
-          }
-            
+        currentRec_IAC.volume=0;
+        currentRec_IAC.onSeeked((res)=>{
+          currentRec_IAC.volume=1;
+       });
+
+        currentRec_IAC.play();
+        
       })
+      currentBCK_IAC.volume=0;
       currentBCK_IAC.play();
     }
   },
@@ -841,27 +911,30 @@ Page({
     if (!that.data.hasCompleted)
       return;
 
+    
     that.data.currentRec_IAC.offTimeUpdate();
 
     if (!that.data.currentBCK_IAC.paused) {
       that.data.currentBCK_IAC.offPlay();
       that.data.currentBCK_IAC.offStop();
-      that.data.currentBCK_IAC.volume = 0;
-      that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
-      that.data.currentBCK_IAC.onSeeked(() => {
-        console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime / 1000);
-        that.data.currentBCK_IAC.stop();
-        that.data.currentRec_IAC.stop();
-        that.data.currentRec_IAC.destroy();
-        that.data.currentRec_IAC = wx.createInnerAudioContext();
-        that.data.currentBCK_IAC.offSeeked();
-      });
+      that.data.currentBCK_IAC.stop();
     }
 
-    if (!that.data.currentRec_IAC.paused)
+    if (!that.data.currentRec_IAC.paused){
       that.data.currentRec_IAC.stop();
-
+      that.data.currentRec_IAC.startTime=0;
+    }
     that.playAnimaton("ensemble");
+
+    if(that.data.hasOriginSinger){
+      that.data.currentBCK_IAC.volume=0;
+      that.data.hasOriginSinger=0.7
+    }
+    else{
+      that.data.currentBCK_IAC.volume=0.7;
+      that.data.hasOriginSinger=0;
+    }
+     
     that.setData({
       startRecordClickAmount: 0,
       tryListeningClickAmount: 0,
@@ -875,6 +948,10 @@ Page({
   },
   // 该段原唱播放 
   playWithOriginalSinger: function () {
+
+    if(this.data.disableOrg){
+      return;
+    }
 
     var nowClickTime = new Date().getTime();
     console.log(nowClickTime);
@@ -893,9 +970,9 @@ Page({
 
     if(this.data.tryListeningClickAmount==1||!this.data.currentRec_IAC.paused){
       wx.showToast({
-        title:"无效操作",
+        title:"试听中不能切换",
         icon: 'none',
-        duration:"800",
+        duration:2000,
         mask:true,
       });
       return;
@@ -1066,6 +1143,7 @@ Page({
                 },
                 fail: function (err) {
                   console.log("下载失败");
+                  console.log(err);
                   wx.getSavedFileList({
                     success: function (res) {
                       for (var i in res.fileList) {
@@ -1256,37 +1334,37 @@ Page({
 
     that.playAnimaton("upload");
 
-    if (that.data.recordTimeLate < -1 || that.data.recordTimeLate > 1) {
-      wx.showModal({
-        title: "录音延迟过高，即将重置",
-        icon: "none",
-        showCancel: false,
-      });
-      that.setData({
-        recordTimeLate: 0,
-      })
-      that.data.currentBCK_IAC.volume = 0;
-      that.data.currentBCK_IAC.offStop();
-      that.data.currentBCK_IAC.offPlay();
-      that.data.currentBCK_IAC.play();
-      console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
-      that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
-      that.data.currentBCK_IAC.onSeeked(() => {
+    // if (that.data.recordTimeLate < -1 || that.data.recordTimeLate > 1) {
+    //   wx.showModal({
+    //     title: "录音延迟过高，即将重置",
+    //     icon: "none",
+    //     showCancel: false,
+    //   });
+    //   that.setData({
+    //     recordTimeLate: 0,
+    //   })
+    //   that.data.currentBCK_IAC.volume = 0;
+    //   that.data.currentBCK_IAC.offStop();
+    //   that.data.currentBCK_IAC.offPlay();
+    //   that.data.currentBCK_IAC.play();
+    //   console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
+    //   that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
+    //   that.data.currentBCK_IAC.onSeeked(() => {
 
-        console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
-        that.data.currentBCK_IAC.stop();
-        that.data.currentRec_IAC.destroy();
-        that.data.currentRec_IAC = wx.createInnerAudioContext();
-        wx.showToast({
-          title: "重置成功",
-        });
-        that.ensemble();
-      });
-      setTimeout(function () {
-        console.log("修复中");
-      }, 2000);
-      return;
-    }
+    //     console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
+    //     that.data.currentBCK_IAC.stop();
+    //     that.data.currentRec_IAC.destroy();
+    //     that.data.currentRec_IAC = wx.createInnerAudioContext();
+    //     wx.showToast({
+    //       title: "重置成功",
+    //     });
+    //     that.ensemble();
+    //   });
+    //   setTimeout(function () {
+    //     console.log("修复中");
+    //   }, 2000);
+    //   return;
+    // }
 
     wx.showModal({
       title: '提示',
@@ -1373,24 +1451,25 @@ Page({
     var animationDatas = {};
 
     if (key == "upload") {
-      that.animation.scale(1.5).step();
-      //that.animation.translate3d(100, 100, 20).step({ duration: 1000 })
-      animationDatas[key] = {
-        animationData: that.animation.export(),
-      }
-      that.setData({
-        animationDatas: animationDatas,
-      });
 
-      setTimeout(function () {
-        that.animation.scale(1).step();
+        that.animation.scale(1.5).step();
+        //that.animation.translate3d(100, 100, 20).step({ duration: 1000 })
         animationDatas[key] = {
           animationData: that.animation.export(),
         }
         that.setData({
           animationDatas: animationDatas,
         });
-      }.bind(that), 300);
+  
+        setTimeout(function () {
+          that.animation.scale(1).step();
+          animationDatas[key] = {
+            animationData: that.animation.export(),
+          }
+          that.setData({
+            animationDatas: animationDatas,
+          });
+        }.bind(that), 300);
     }
     else {
       that.animation.scale(1.2).step();
@@ -1514,43 +1593,44 @@ Page({
 
     const recorderManager = wx.getRecorderManager();
     if (firstTime) {
-      recorderManager.onStart((res) => {
-        console.log("录音开始");
-        console.log("暂停前时间", that.data.currentBCK_IAC.currentTime);
-        that.data.currentBCK_IAC.pause();
-        console.log("暂停后时间", that.data.currentBCK_IAC.currentTime);
-        var recordStartTime = that.data.currentBCK_IAC.currentTime;
-        that.setData({
-          recordStartTime: recordStartTime,
-          isRecording: true,
-          hasModified: false,
-        });
-        console.log("录音开始时伴奏音轨时刻：", that.data.recordStartTime);
-        console.log(that.data.recordStartTime - that.data.currentBCK_IAC.startTime);
-        var recordTimeLate = that.data.recordStartTime - that.data.currentBCK_IAC.startTime;
-        that.setData({
-          recordTimeLate: recordTimeLate,
-        });
-        if (Math.abs(recordTimeLate) > 1) {
-          that.data.currentBCK_IAC.stop();
-          wx.getRecorderManager().stop();
-          console.log("伴奏音轨起点异常，重置！");
-          that.setData({
-            isRecording: false,
-            hasModified: false,
-            startRecordClickAmount: 0,
-          });
-          return;
-        }
-        that.data.currentBCK_IAC.offPlay();
-        that.data.currentBCK_IAC.play();
+      // recorderManager.onStart((res) => {
+      //   console.log("录音开始");
+      //   console.log("暂停前时间", that.data.currentBCK_IAC.currentTime);
+      //   that.data.currentBCK_IAC.pause();
+      //   console.log("暂停后时间", that.data.currentBCK_IAC.currentTime);
+      //   var recordStartTime = that.data.currentBCK_IAC.currentTime;
+      //   that.setData({
+      //     recordStartTime: recordStartTime,
+      //     isRecording: true,
+      //     hasModified: false,
+      //   });
+      //   console.log("录音开始时伴奏音轨时刻：", that.data.recordStartTime);
+      //   console.log(that.data.recordStartTime - that.data.currentBCK_IAC.startTime);
+      //   var recordTimeLate = that.data.recordStartTime - that.data.currentBCK_IAC.startTime;
+      //   that.setData({
+      //     recordTimeLate: recordTimeLate,
+      //   });
+      //   if (Math.abs(recordTimeLate) > 1) {
+      //     that.data.currentBCK_IAC.stop();
+      //     wx.getRecorderManager().stop();
+      //     console.log("伴奏音轨起点异常，重置！");
+      //     that.setData({
+      //       isRecording: false,
+      //       hasModified: false,
+      //       startRecordClickAmount: 0,
+      //     });
+      //     return;
+      //   }
+      //   that.data.currentBCK_IAC.offPlay();
+      //   that.data.currentBCK_IAC.play();
 
-      })
+      // })
 
       recorderManager.onStop((res) => {
 
         if (!that.data.hasCompleted)
           return;
+
         console.log("Recorder stop", res);
         const { tempFilePath } = res
         var temp_IAC = that.data.currentRec_IAC;
@@ -1586,6 +1666,8 @@ Page({
           isReadying: true,
           hasCompleted: true,
           isCorrected: false,
+          disableSkip:false,
+          isRecording:false,
         });
       });
 
