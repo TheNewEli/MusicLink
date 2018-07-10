@@ -1,10 +1,15 @@
 var util = require('../../../utils/util.js');
+var app=getApp();
 
 Page({
   data: {
     openid:null,
     id: null,
-    finished:'list-item-other'
+    finished:'list-item-other',
+
+    //兼容
+    compatibility: app.globalData.compatibility
+
   },
 
   //生命周期函数--监听页面加载
@@ -28,7 +33,7 @@ Page({
   onReady: function () {
     var navigationText;
     if (this.data.id == 0){
-      navigationText="我发起的歌曲";
+      navigationText = "我发起的歌曲";
     } else if (this.data.id == 1){
       navigationText = "我参与的歌曲";
     } else if (this.data.id == 2) {
@@ -38,7 +43,24 @@ Page({
     wx.setNavigationBarTitle({
       title: navigationText,
     })
+
+    this.setData({
+      Comp: {
+        statusBarHeight: app.globalData.statusBarHeight,
+        iSback: true,
+        color: "#000",
+        text: navigationText,
+        background: "#8aaed7"
+      }
+    })
   },
+
+  onBackTap:function(){
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
 
   _init:function(){
     if(this.data.openid){
@@ -138,7 +160,7 @@ Page({
     })
   },
 
-  //world-detail界面待完成
+  //world-detail界面
   onTapToDetail(event) {
     var created_song_id = event.currentTarget.dataset.createdSongId;
     var song_id = event.currentTarget.dataset.songId;

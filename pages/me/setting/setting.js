@@ -10,6 +10,8 @@ Page({
   data: {
     pagesId:null,
     navigationText:"",
+
+    compatibility: app.globalData.compatibility,
   },
 
   /**
@@ -19,10 +21,10 @@ Page({
     var id = options.id;
     var title="";
     switch(id){
-      case '3':
+      case '4':
         title = "设置";
         break;
-      case '4':
+      case '5':
         title = "关于";
         break;
       default:
@@ -30,32 +32,29 @@ Page({
     }
     this.setData({
       pagesId:id,
-      navigationText:title
+      navigationText:title,
+      Comp: {
+        statusBarHeight: app.globalData.statusBarHeight,
+        iSback: true,
+        color: "#000",
+        text: title,
+        background: "#fff"
+      }
     })
   },
 
-  onShow:function(){
-
-    // wx.getSetting({
-    //   success: (res) => {
-    //     console.log(res);
-    //     if (res.authSetting['scope.userInfo']){
-    //       wx.getUserInfo({
-            
-    //       })
-    //     }
-    //     // if (res.authSetting.scope.record){
-    //     // }
-    //   }
-    // })
-  },
 
   onReady: function () {
     wx.setNavigationBarTitle({
       title: this.data.navigationText,
     })
   },
-
+  
+  onBackTap: function () {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
 
   handler:function(e){
 

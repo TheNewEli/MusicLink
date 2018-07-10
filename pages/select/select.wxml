@@ -1,3 +1,8 @@
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <view class='select-container'>
 
   <view class='music-detail-container'>

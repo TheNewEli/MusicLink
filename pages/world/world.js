@@ -1,13 +1,38 @@
 var util = require('../../utils/util');
+var app=getApp();
 
 Page({
-  data: {
 
+  data: {
+    // tab切换  
+    currentTab: 1,
+    compatibility: app.globalData.compatibility,
+    statusBarHeight: app.globalData.statusBarHeight,
+    windowHeight: app.globalData.windowHeight
   },
+
 
   //生命周期函数--监听页面加载
   onLoad: function (options) {
     this.getAllDataFromServer();
+  },
+
+  swichNav: function (e) {
+    var that = this;
+    var current = e.target.dataset.current;
+    if (this.data.currentTab === current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: current,
+      })
+    }
+  },
+
+  swiperChange: function (e) {
+    this.setData({
+      currentTab: e.detail.current,
+    })
   },
 
   //重新绑定数据，刷新world界面

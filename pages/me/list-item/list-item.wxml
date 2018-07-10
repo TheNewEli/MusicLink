@@ -1,5 +1,12 @@
+
+<import src="../../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+  
 <!-- <block wx:if="{{id<2}}"> -->
   <view class='list-container'>
+
     <block wx:for="{{ListItem}}" wx:for-item="item" >
       <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}' data-type='{{id}}'>
           <view class='{{finished}}'>

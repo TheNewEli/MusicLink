@@ -1,14 +1,29 @@
-
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+  
 <import src="post-item-tpl/tpl-wxml/song-list-tpl.wxml"></import>
-<view>
+<view class='container'>
     <!--滚动海报-->
     <swiper catchtap='onSwipperTap' indicator-dots="{{true}}" autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" circular='true'>
         <block wx:for="{{swipperPost.songs}}" wx:for-item="item" wx:for-index="idx">
             <swiper-item>
-                <image class="swiper-image" src="{{item.coverageUrl}}" mode='widthFix' data-idx='{{idx}}'/>
+                <image class="swiper-image" src="https://oss.caoyu.online/basic/poster{{idx+1}}.jpg" mode='widthFix' data-idx='{{idx}}'/>
             </swiper-item>
         </block>
     </swiper>
+
+    <!--分栏-->
+    <view class='post-subfield'>
+      <block wx:for='{{subfieldList}}' wx:for-item="item" wx:for-index="index">
+        <view class='subfield-item' catchtap='onSubfieldTap' data-subfieldid="{{index}}">
+          <image src='{{item.image}}'></image>
+          <text>{{item.text}}</text>
+        </view>
+      </block>
+    </view>
+
     <!--两个目录，一个热门，一个推荐-->
     <view class="songs-template">
         <template is = "songListTpl" data="{{...inThreaten_P}}"></template>

@@ -10,6 +10,15 @@ Page({
     toCreateSong:{},
     createType:false,
     recommendWord:"",
+
+    compatibility: app.globalData.compatibility,
+    Comp: {
+      statusBarHeight: app.globalData.statusBarHeight,
+      iSback: true,
+      color: "#000",
+      text: "",
+      background: "#8aaed7"
+    }
   },
 
   /**
@@ -23,6 +32,12 @@ Page({
     this.data.toCreateSong = wx.getStorageSync("to_create_song");
     this.setData({
       song:this.data.toCreateSong,
+    })
+  },
+
+  onBackTap: function () {
+    wx.navigateBack({
+      delta: 1
     })
   },
 

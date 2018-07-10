@@ -1,4 +1,3 @@
-// pages/select/select.js
 var util = require('../../utils/util');
 var app=getApp();
 
@@ -11,6 +10,15 @@ Page({
     clips:[],
     createdSongId:"",
     allOriginData:[],
+
+    compatibility: app.globalData.compatibility,
+    Comp: {
+      statusBarHeight: app.globalData.statusBarHeight,
+      iSback: true,
+      color: "#000",
+      text: "选择歌词",
+      background: "#8aaed7"
+    }
   },
 
   onLoad: function (options) {
@@ -22,20 +30,6 @@ Page({
           userAvatar: userAvatar,
         })
     }
-
-    // wx.getSetting({
-    //   success: function (res) {
-    //     console.log(res);
-    //     if (res.authSetting['scope.userInfo']) {
-    //       var userAvatar = app.globalData.userInfo.avatarUrl;
-    //       var openid = wx.getStorageSync('openid');
-    //       that.setData({
-    //         openId: openid,
-    //         userAvatar: userAvatar,
-    //       })
-    //     }
-    //   }
-    // })
 
     var isShare=options.isShare;
     var createdSongId=options.created_song_id;
@@ -54,10 +48,14 @@ Page({
       })
     }
     
-    
     this.setSongsLyricsData();
   },
 
+  onBackTap: function () {
+    wx.navigateBack({
+      delta: 1
+    })
+  },
 
   //获取歌曲详细信息
   setSongsLyricsData: function () {

@@ -1,3 +1,8 @@
+<import src="../../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <!--已发起歌曲 界面  -->
 <block wx:if="{{pagesId==0}}">
 
@@ -9,7 +14,7 @@
 </block>
 
 <!--设置 界面  -->
-<block wx:elif="{{pagesId==3}}">
+<block wx:elif="{{pagesId==4}}">
   <view class="setting-container">
     <image class="setting-img" src="/images/icon/authorized_icon.png" mode='aspectFill'></image>
     <button class="authorized-btn" open-type="openSetting" bindopensetting="handler" size="default">授权</button>
@@ -19,7 +24,7 @@
 </block>
 
 <!--关于 界面  -->
-<block wx:elif="{{pagesId==4}}">
+<block wx:elif="{{pagesId==5}}">
   <view class='about'>
     <image src='https://oss.caoyu.online/basic/we.jpg' mode='scaleToFill' ></image>
     <text>开发团队：EWA</text>

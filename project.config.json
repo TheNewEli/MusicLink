@@ -11,7 +11,7 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.0.9",
+	"libVersion": "2.1.1",
 	"appid": "wx42fc2e8b4292d25f",
 	"projectname": "MusicLink",
 	"isGameTourist": false,
@@ -45,7 +45,7 @@
 					"id": 1,
 					"name": "select",
 					"pathName": "pages/select/select",
-					"query": "created_song_id=43&songId=5",
+					"query": "created_song_id=28&songId=8&isShare=false",
 					"scene": "1007"
 				},
 				{
@@ -81,6 +81,37 @@
 					"pathName": "pages/toplist/toplist",
 					"query": "category=热门",
 					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "post",
+					"pathName": "pages/post/post",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "all-toplist",
+					"pathName": "pages/all-toplist/all-toplist",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "drift-bottle",
+					"pathName": "pages/drift-bottle/drift-bottle",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "navigationBar-tpl",
+					"pathName": "pages/navigationBar-tpl/navigationBar-tpl",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "world",
+					"pathName": "pages/world/world",
+					"query": ""
 				}
 			]
 		}

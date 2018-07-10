@@ -1,10 +1,6 @@
 /* pages/post.wxss */
 @import "post-item-tpl/tpl-wxss/song-list-tpl.wxss";
-
-page{
-
-}
-
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
 swiper
 {
   width: 100%;
@@ -20,9 +16,45 @@ swiper
 }
 
 .container{
-    background: #f2f2f2;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .songs-template{
     width:100%;
+}
+
+
+
+.post-subfield{
+  width: 720rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 15rpx 0 15rpx;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.subfield-item{
+  display: flex;
+  flex-direction: column;
+  width: 80rpx;
+  padding: 40rpx 50rpx 20rpx 50rpx;
+  align-items: center; 
+}
+
+.subfield-item image{
+  height: 80rpx;
+  width: 80rpx;
+}
+
+.subfield-item text{
+  font-family: Microsoft YaHei;
+  font-size: 14px;
+  color: #696969;
+  padding-top: 20rpx;
+  width: 160rpx;
+  text-align: center;
 }

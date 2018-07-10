@@ -6,15 +6,15 @@
   .stars {
     display: flex;
     flex-direction: row;
-    height: 17rpx;
+    height: 20rpx;
     margin-right: 24rpx;
     margin-top: 6rpx;
   }
   
   .stars image {
     padding-left: 3rpx;
-    height: 17rpx;
-    width: 17rpx;
+    height: 20rpx;
+    width: 20rpx;
   }
   
   .star-score{

@@ -10,11 +10,15 @@
     "pages/sing/sing",
     "pages/me/list-item/list-item",
     "pages/player/player",
-    "pages/toplist/toplist"
+    "pages/toplist/toplist",
+    "pages/all-toplist/all-toplist",
+    "pages/drift-bottle/drift-bottle",
+    "pages/navigationBar-tpl/navigationBar-tpl"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "list": [
@@ -26,7 +30,7 @@
       },
       {
         "pagePath": "pages/post/post",
-        "text": "唱歌",
+        "text": "点歌",
         "iconPath": "/images/icon/sing.png",
         "selectedIconPath": "/images/icon/sing_selected.png"
       },

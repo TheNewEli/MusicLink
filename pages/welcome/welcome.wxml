@@ -7,6 +7,9 @@
   </view>  
 
   <view class='detail'>
+    <!--兼容  -->
+    <view wx:if="{{compatibility}}"  style='height:{{statusBarHeight+45}}px'></view>
+
     <image class='sign' src="/images/cover/cover.png" /> 
     <text class='theme' >连音符</text>
     <text class='introduction'>分段合唱，让你我与世界相连！</text>

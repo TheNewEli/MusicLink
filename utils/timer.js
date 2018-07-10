@@ -10,7 +10,27 @@ function countDown(that, remainedTime) {
   if(remainedTime<=0){
     
     if(that.data.currentBCK_IAC.paused){
+      that.data.currentBCK_IAC.volume=0;
+      that.data.currentOrg_IAC.volume=0;
       that.data.currentBCK_IAC.play();
+      if (!that.data.isRecording) {
+        const options = {
+          duration: 300000,
+          sampleRate: 44100,
+          numberOfChannels: 2,
+          encodeBitRate: 192000,
+          format: 'mp3',
+          frameSize: 50
+        }
+        //console.log("countDown completed");
+        wx.getRecorderManager().start(options);
+        that.data.currentOrg_IAC.play();
+        that.setData({
+          isRecording: true,
+          disableOrg:false,
+        })
+      }
+      console.log(that.data.currentBCK_IAC.currentTime);
       that.data.isReadying = true;
     }
     return;

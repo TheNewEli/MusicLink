@@ -2,9 +2,9 @@
 <template name="songListTpl">
     <view class="song-list-container">
         <view class="inner-container">
-            <view class="song-head">
+            <view class="song-head" catchtap="onMoreTap"  data-category="{{categoryTitle}}">
                 <text class="slogan">{{categoryTitle}}</text>
-                <view catchtap="onMoreTap" class="more" data-category="{{categoryTitle}}">
+                <view class="more">
                     <text class="more-text">更多</text>
                     <image class="more-img" src="/images/icon/more_icon.png"></image>
                 </view>

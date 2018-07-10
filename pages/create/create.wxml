@@ -1,4 +1,8 @@
 <import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
 
 <view class="create-container">
     <!-- 歌曲所有信息视图层 -->

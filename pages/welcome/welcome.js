@@ -7,7 +7,11 @@ Page({
     hasUserInfo: false,
     isShare:false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    firstIn:true
+    firstIn:true,
+
+    // 兼容
+    compatibility: app.globalData.compatibility,
+    statusBarHeight: app.globalData.statusBarHeight
   },
 
   onLoad: function (options) {

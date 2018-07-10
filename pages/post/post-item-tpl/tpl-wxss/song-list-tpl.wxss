@@ -6,12 +6,12 @@
   flex-direction: column;
 }
 
- .inner-container{
+.inner-container{
     margin: 10rpx  10rpx 10rpx 10rpx;
 } 
 
 .song-head {
-  padding: 5rpx 10rpx 10rpx;
+  padding: 25rpx 10rpx 10rpx 10rpx;
 }
 
 .slogan {
@@ -40,6 +40,5 @@
 .songs-container{
     display:flex;
     flex-direction: row;
-    padding-left: 10rpx;
-    padding-top: 10rpx;
+    width: 100%;
 }

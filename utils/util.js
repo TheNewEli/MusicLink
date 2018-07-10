@@ -150,10 +150,11 @@ function getSortedListByTime(list){
   return list;
 }
 
+
 module.exports = {
   getDiffTime: getDiffTime,
   convertToStarsArray: convertToStarsArray,
   requestFromServer: requestFromServer,
-  getSortedListByTime: getSortedListByTime,
+  getSortedListByTime: getSortedListByTime
 }
 
