@@ -10,14 +10,14 @@
 .authorized-btn{
     margin-top: 40px;
     width: 400rpx;
-    background-color: #87CEFA;
-    color: #fff;
+    background-color: #8dc21f;
+    color: 767575;
   }
 
 .clearStorage-btn{
     margin-top: 20px;
     width: 400rpx;
-    background-color: #87CEFA;
+    background-color: #8dc21f;
     color: #fff;
 }
 .clearAuthorized-btn{
@@ -33,7 +33,7 @@
   margin-top: 10%;
   width: 80%;
   height: 400rpx;
-  margin-right: 5%;
+  /* margin-right: 5%; */
 }
 
 /**********关于**************/

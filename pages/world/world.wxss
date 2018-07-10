@@ -6,20 +6,20 @@ page{
 .swiper-tab {
   display: flex;
   flex-direction: row;
-  line-height: 40px;
+  line-height: 45px;
   top:0;
   width: 750rpx;
-  border-bottom: 2rpx solid #8aaed7;
-  background: #cdcdcd;
+  border-bottom: 1rpx solid #f8f8f8; 
+  background: #ffffff;
   position: fixed;
   z-index: 10;
 }
  
 .tab-item {
-  width: 25%;
+  width: 20%;
   text-align: center;
-  font-size: 15px;
-  color: #8aaed7;
+  font-size: 16px;
+  color: #ccc;
 }
  
 .swiper {
@@ -29,8 +29,10 @@ page{
 }
  
 .on {
-  color: blue;
-  border-bottom: 5rpx solid blue;
+  color: #e44929; /***#e44929 #f2765d***/ 
+  font-size: 23px;
+  font-weight: 700;
+  /* border-bottom: 5rpx solid blue; */
 }
 
 

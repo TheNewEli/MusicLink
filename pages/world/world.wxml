@@ -17,7 +17,7 @@
 
 <!--世界-->
     <swiper-item>
-      <scroll-view class='world-container' scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >
+      <scroll-view class='world-container'  bindscrolltoupper="upper" scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >
         <block wx:for="{{worldList}}" wx:for-item="item" wx:key="item.worldId">
           <view catchtap='onTapToDetail' data-ids='{{item.ids}}' >
               <view class='world-item'>
@@ -46,6 +46,7 @@
               </view>
           </view>
         </block>
+        <view style='padding-top:{{statusBarHeight+45}}px'></view>
       </scroll-view>
     </swiper-item>
   </swiper>

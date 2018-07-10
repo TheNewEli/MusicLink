@@ -32,7 +32,6 @@ Page({
     compatibility: app.globalData.compatibility,
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
-      iSback: false,
       color: "#000",
       text: "点歌",
       background: "#8aaed7"

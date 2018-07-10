@@ -43,7 +43,12 @@ Page({
   onPullDownRefresh:function(){
     var that=this;
     that.getAllDataFromServer();
+    wx.stopPullDownRefresh();
+  },
 
+  upper: function (e) {
+    var that = this;
+    that.getAllDataFromServer();
     wx.stopPullDownRefresh();
   },
 

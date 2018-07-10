@@ -1,7 +1,7 @@
 <template name="navigationBarTpl">
   <view class='nav-container' style=' background:{{background}}; padding-top:{{statusBarHeight}}px'>
     <block wx:if="{{iSback}}">
-        <image catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
+        <image class='image-back' catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
       <text class='text-back-true' style='color:{{color}}' >{{text}}</text>
     </block>
     <block wx:else>
