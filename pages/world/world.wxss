@@ -2,11 +2,47 @@ page{
   padding-bottom: 40rpx;
 }
 
+/*******自定义导航栏***********/
+.swiper-tab {
+  display: flex;
+  flex-direction: row;
+  line-height: 40px;
+  top:0;
+  width: 750rpx;
+  border-bottom: 2rpx solid #8aaed7;
+  background: #cdcdcd;
+  position: fixed;
+  z-index: 10;
+}
+ 
+.tab-item {
+  width: 25%;
+  text-align: center;
+  font-size: 15px;
+  color: #8aaed7;
+}
+ 
+.swiper {
+  width: 750rpx;
+  background: #fff;
+  position: fixed;
+}
+ 
+.on {
+  color: blue;
+  border-bottom: 5rpx solid blue;
+}
+
+
+/********世界****************/
+
 .world-container{
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touth;
+   overflow-y: auto;
+  -webkit-overflow-scrolling: touth; 
+  /* vertical-align: top;
+  position: relative; */
 }
 
 .world-item{
