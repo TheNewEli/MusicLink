@@ -15,6 +15,15 @@ Page({
         { text: '关于', menuitemsId: 5, image: "/images/icon/about_icon.png"},
         { text: '打赏开发者', menuitemsId: 6, image: "/images/icon/donate_icon.png"}
       ],
+
+      compatibility: app.globalData.compatibility,
+      Comp:{
+        statusBarHeight: app.globalData.statusBarHeight,
+        iSback:false,
+        color: "#000",
+        text:"个人中心",
+        background:"#fff"
+      }
     },
 
     onLoad: function (){

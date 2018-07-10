@@ -1,5 +1,10 @@
 <import src="sing-item-tpl/tpl-wxml/count-dot-tpl.wxml"></import>
 
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <view class="sing-container">
   <view class="lyric-box">
 

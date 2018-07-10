@@ -1,4 +1,11 @@
+
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <view class='me-container'>
+
   <view class='me-userInfo'>
     <block wx:if="{{hasUserInfo}}">
       <image src='{{userInfo.avatarUrl}}'></image>

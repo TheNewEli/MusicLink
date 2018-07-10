@@ -1,3 +1,4 @@
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
 .select-container{
   display: flex;
   flex-direction: column;

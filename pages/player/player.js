@@ -24,7 +24,7 @@ Page({
     SongList_created:[],
     //播放的歌曲片段索引
     clipIndex:0,
-    clipState:'wait'
+    clipState:'wait',
   },
 
   onLoad:function(options){
@@ -52,17 +52,30 @@ Page({
       })
     }
 
+    //兼容
+    var compatibility = app.globalData.compatibility;
+    var statusBarHeight = app.globalData.statusBarHeight;
+
+    if (compatibility){
+      statusBarHeight = statusBarHeight+20;
+    }else{
+      statusBarHeight = 0;
+    }
+
+
+
     this.setData({
       created_songId: created_songId,
       currentIndex: currentIndex,
       SongList_created: SongList_created,
+      compatibility: compatibility,
+      statusBarHeight: statusBarHeight
     })
 
     this.getPlayInfoDataFromServer();
   },
 
 
-  
   init: function (currentIndex){
     if (this.data.manage){
       this.data.manage.stop();

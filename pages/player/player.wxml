@@ -1,5 +1,7 @@
+
 <view>
   <view class="player" >
+
     <view class="normal-player">
 <!--虚化背景设置  -->
       <view class="background">
@@ -7,11 +9,11 @@
       </view>
 <!--顶部 歌名加歌手  -->
       <view class="top">
-        <view class="title">{{currentSong.title}}</view>
+        <view class="title" style='margin-top: {{statusBarHeight}}px'>{{currentSong.title}}</view>
         <view class="subtitle">{{currentSong.artist}}</view>
       </view>
 <!--中部 旋转img和歌词切换  -->
-      <swiper class="middle" style="height: 700rpx" bindchange="changeDot">
+      <swiper class="middle" style="height: 700rpx;margin-top: {{statusBarHeight}}px" bindchange="changeDot">
 <!--旋转img  -->
         <swiper-item class="middle-left" style="overflow: visible">
           <view class="cd-container">

@@ -1,15 +1,16 @@
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
 
 .container{
   display: flex;
   flex-direction: column;
 }
 
-.container text{
- font-family: Microsoft YaHei;
- font-style: blod;
- font-size: 18px;
+.title{
+ font-family: FangSong;
+ font-size: 15px;
  text-align: left;
- margin: 25rpx 0 25rpx 20rpx;
+ margin: 25rpx 0 25rpx 10rpx;
+ font-weight: bold;
 }
 
 .top-container{
@@ -21,32 +22,37 @@
 .top-item{
   display: flex;
   flex-direction: row;
-  align-items: center;
   margin-bottom: 5rpx;
 }
 
 .top-item image{
-  width: 230rpx;
-  height: 230rpx;
+  width: 240rpx;
+  height: 240rpx;
   border-radius: 5px;
-  margin-left: 20rpx;
+  margin-left: 10rpx;
+  /* opacity: 0.9; */
 }
 
 .songList{
   width:500rpx;
-  height: 230rpx;
+  height: 180rpx;
   display: flex;
   flex-direction: column;
+  padding: 30rpx 0 30rpx 0;
   border-bottom: 1px solid #f8f8f8;
 }
 
 .songList text{
   width: 430rpx;
-  height: 42rpx;
+  height: 60rpx;
   font-family: Microsoft YaHei;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 14px;
+  font-size: 12px;
   color: #696969;
-  margin: 20rpx 0 15rpx 20rpx;
+  margin-left: 20rpx;
+  /*文字垂直居中  */
+  display: flex;
+  align-items: center;
 }

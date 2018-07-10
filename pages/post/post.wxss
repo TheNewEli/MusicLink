@@ -1,6 +1,6 @@
 /* pages/post.wxss */
 @import "post-item-tpl/tpl-wxss/song-list-tpl.wxss";
-
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
 swiper
 {
   width: 100%;

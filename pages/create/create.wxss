@@ -1,5 +1,6 @@
 /* pages/create/create.wxss */
 @import "../post/post-item-tpl/tpl-wxss/stars-tpl.wxss";
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
 page{
     width: 750rpx;
     height: 100%;

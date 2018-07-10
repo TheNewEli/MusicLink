@@ -26,7 +26,17 @@ Page({
       { subfieldIndex: 1, image: "/images/icon/driftbottle_icon.png", text: "漂流瓶" },
       { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "完结" },
       { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
-    ]
+    ],
+
+    //兼容
+    compatibility: app.globalData.compatibility,
+    Comp: {
+      statusBarHeight: app.globalData.statusBarHeight,
+      iSback: false,
+      color: "#000",
+      text: "点歌",
+      background: "#8aaed7"
+    }
   },
 
   /**
@@ -152,6 +162,9 @@ Page({
         break;
       case 1:
       //漂流瓶
+        wx.navigateTo({
+          url: '../drift-bottle/drift-bottle',
+        });
         break;
       case 2:
       //完结歌曲榜单

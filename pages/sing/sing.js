@@ -84,6 +84,9 @@ Page({
 
     //记录是否纠错中
     isCorrected: false,
+
+    //兼容设置
+    compatibility: app.globalData.compatibility,
   },
 
   onLoad: function (options) {
@@ -141,9 +144,20 @@ Page({
   },
 
   onReady: function () {
+    var title = this.data.title
     wx.setNavigationBarTitle({
-      title: this.data.title,
+      title: title,
     })
+    app.globalData.navigationText = this.data.title;
+    this.setData({
+      Comp: {
+        statusBarHeight: app.globalData.statusBarHeight,
+        iSback: true,
+        color: "#000",
+        text: title,
+        background: "#8aaed7"
+      }
+    }) 
   },
 
   onHide: function () {
@@ -172,6 +186,12 @@ Page({
         console.log(res.fileList)
       }
     });
+  },
+
+  onBackTap: function () {
+    wx.navigateBack({
+      delta: 1
+    })
   },
 
   /*由于页面每次被重新打开需要重新设置数据，

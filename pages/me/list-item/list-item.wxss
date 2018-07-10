@@ -1,4 +1,4 @@
-
+@import "../../navigationBar-tpl/navigationBar-tpl.wxss";
 .list-title{
   display: flex;
   flex-direction: row;
@@ -59,7 +59,6 @@
 
 .list-detail{
   padding: 10px 5px 10px 10px;
-  /* border-bottom: 1px solid rgba(255,255,255, 0.5); */
   width: 100%;
   border-bottom: 1px solid #eee;
 }
@@ -78,14 +77,15 @@
   text-overflow: ellipsis;
   padding: 1px 1px 1px 6px;
   border-bottom: 1px solid rgba(255,255,255, 0.5);
-  width: 300rpx;
+  width: 340rpx;
 }
 
 .time{
-  margin-left:60rpx; 
+  width: 160rpx;
   margin-top: 5rpx;
   color: #a0a0a0;
   font-size: 24rpx;
+  text-align: right;
 }
 
 .list-detail progress{
