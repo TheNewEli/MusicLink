@@ -1,3 +1,11 @@
+
+<!--顶部导航栏-自定义-->
+<block wx:if="{{compatibility}}">
+  
+</block>
+
+
+
 <view class='world-container'>
   <block wx:for="{{worldList}}" wx:for-item="item" wx:key="item.worldId">
     <view catchtap='onTapToDetail' data-ids='{{item.ids}}' >

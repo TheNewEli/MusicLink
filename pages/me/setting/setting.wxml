@@ -1,3 +1,8 @@
+<import src="../../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <!--已发起歌曲 界面  -->
 <block wx:if="{{pagesId==0}}">
 

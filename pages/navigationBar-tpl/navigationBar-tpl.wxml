@@ -1,16 +1,3 @@
-
- <!-- <template name="navigationBarTpl">
-  <view class='nav-container' style='padding-top:{{item.statusBarHeight}}px'>
-    <block wx:if="{{item.iSback}}">
-        <image catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
-      <text class='text-back-true' style='color:{{item.color}}' >{{item.text}}</text>
-    </block>
-    <block wx:else>
-      <text class='text-back-false' style='color:{{item.color}}' >{{item.text}}</text>
-    </block> 
-  </view>
- </template>  -->
-
 <template name="navigationBarTpl">
   <view class='nav-container' style=' background:{{background}}; padding-top:{{statusBarHeight}}px'>
     <block wx:if="{{iSback}}">
@@ -25,7 +12,7 @@
 </template>    
 
 
-   <!-- <view class='nav-container' style='background:{{background}};padding-top:{{statusBarHeight}}px'>
+<!-- <view class='nav-container' style='background:{{background}};padding-top:{{statusBarHeight}}px'>
     <block wx:if="{{iSback}}">
         <image catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
       <text class='text-back-true' style='color:{{color}}' >{{text}}</text>

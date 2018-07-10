@@ -1,3 +1,5 @@
+
+@import "../../navigationBar-tpl/navigationBar-tpl.wxss";
 /***********设置***********/
 .setting-container{
     display: flex;
