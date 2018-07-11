@@ -1,16 +1,28 @@
 <import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+
   <block wx:if="{{compatibility}}">
     <!-- <template is="navigationBarTpl" data="{{...Comp}}"></template> -->
     <view class='nav-container' style=' background:{{Comp.background}}; padding-top:{{Comp.statusBarHeight}}px'>
       <!-- <text class='text-back-false' style='color:{{Comp.color}}' >{{Comp.text}}</text> -->
       <view class='search' catchtap='onSearchTap'>
         <image class='search-image' src='/images/icon/search.png'></image>
-        <textarea placeholder='搜索' placeholder-style="font-size: 12px; color: #f5f5f5;" fixed show-confirm-bar=''></textarea>
+        <textarea placeholder='搜索' catchtap='onSearchTap' bindinput="inputChange" placeholder-style="font-size: 12px; color: #f5f5f5;" fixed show-confirm-bar=''></textarea>
       </view>
     </view>
     <view style='padding-top:{{Comp.statusBarHeight+45}}px'></view>
+    
+    <!--搜索结果  scroll-view中height为5个搜索结果的高度 -->
+      <scroll-view  class='searchResult' hidden='{{!showSearchResult}}' scroll-y style='height:205px'>
+        <block wx:for="{{searchResult}}" wx:for-index='idx'>
+          <view class='searchItem' catchtap='onSearchItemTap' data-id='{{idx}}'>
+            <text>{{item.title}} {{item.singer}}</text>
+          </view>
+        </block>
+      </scroll-view>
+
+      <view  class='StopSearch' catchtap='onStopSearchTap'  hidden='{{!showSearchResult}}'></view>
+
   </block>
-  
 <import src="post-item-tpl/tpl-wxml/song-list-tpl.wxml"></import>
 <view class='container'>
     <!--滚动海报-->

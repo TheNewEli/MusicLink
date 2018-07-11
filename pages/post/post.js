@@ -13,8 +13,6 @@ Page({
     inThreaten:{},
 
     //推荐
-
-    
     ourRecommend:{},
 
     inThreaten_P:{},
@@ -28,6 +26,9 @@ Page({
       { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
     ],
 
+    //搜索
+    searchResult:[],
+    showSearchResult:false,
     //兼容
     compatibility: app.globalData.compatibility,
     Comp: {
@@ -76,7 +77,7 @@ Page({
   processRequestData:function(songsRequested, settedKey, categoryTitle){
     var songs = [];
 
-    //console.log(songsRequested);
+    // console.log(songsRequested);
 
     for(var i in songsRequested.songs){
       var song = songsRequested.songs[i];
@@ -89,7 +90,7 @@ Page({
       coverageUrl:song.cover_url,
       singer:song.artist,
       songId: song.song_id,
-      album:"lalala",
+      album:song.album,
     };
 
     songs.push(temp);
@@ -134,6 +135,38 @@ Page({
       url: '../create/create?songId='+song.songId,
     });
   },
+
+  onSearchItemTap: function (event) {
+
+    var index = event.currentTarget.dataset.id;
+    var song=this.data.searchResult[index];
+    this.setData({
+      showSearchResult: false
+    })
+    wx.setStorageSync("to_create_song",  song);
+    wx.navigateTo({
+      url: '../create/create?songId=' + song.songId,
+    });
+  },
+
+  onSearchTap: function () {
+    this.setData({
+      showSearchResult: true
+    })
+  },
+
+  onStopSearchTap: function () {
+    this.setData({
+      showSearchResult: false
+    })
+  },
+
+  onPageScroll: function (e) {
+    this.setData({
+      showSearchResult: false
+    })
+  },
+
 
   onMoreTap: function(event){
     wx.setStorageSync("inthreatenData", this.data.inThreaten);
@@ -183,5 +216,52 @@ Page({
       default:
         break;
     }
+  },
+
+  inputChange:function(event){
+    var searchWord = event.detail.value; 
+    this.setData({
+      showSearchResult :true
+    })
+    if (searchWord !=""){
+      this.Search(searchWord);
+    }else{
+      //重置
+      this.setData({
+        searchResult: []
+      })
+    }
+  },
+
+  Search: function (searchWord){
+    var searchResult=[];
+    var inThreaten_songs = this.data.inThreaten.songs;
+    var ourRecommend_songs = this.data.ourRecommend.songs;
+    var swipperPost_songs = this.data.swipperPost.songs;
+    
+    //检索热门
+    for (var i in inThreaten_songs){
+      if (inThreaten_songs[i].title.search(searchWord) != -1){
+        searchResult.push(inThreaten_songs[i]);
+      }
+    }
+
+    //检索推荐
+    for (var i in ourRecommend_songs) {
+      if (ourRecommend_songs[i].title.search(searchWord) != -1) {
+        searchResult.push(ourRecommend_songs[i]);
+      }
+    }
+
+    //检索海报
+    for (var i in swipperPost_songs) {
+      if (swipperPost_songs[i].title.search(searchWord) != -1) {
+        searchResult.push(swipperPost_songs[i]);
+      }
+    }
+
+    this.setData({
+      searchResult: searchResult
+    })
   }
 })

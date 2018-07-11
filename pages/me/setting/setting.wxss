@@ -5,26 +5,41 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
+    }
   
 .authorized-btn{
     margin-top: 40px;
     width: 400rpx;
     background-color: #8dc21f;
-    color: 767575;
+    color: #767575;
+
+    border-radius: 50px;
+    font-size: 13px;
+    height: 90rpx;
+    line-height: 90rpx;
   }
 
 .clearStorage-btn{
     margin-top: 20px;
     width: 400rpx;
     background-color: #8dc21f;
-    color: #fff;
+    color: #767575;
+
+    border-radius: 50px;
+    font-size: 13px;
+    height: 90rpx;
+    line-height: 90rpx;
 }
 .clearAuthorized-btn{
   margin-top: 20px;
   width: 400rpx;
   background-color:#ff0033;
   color: #fff;
+
+  border-radius: 50px;
+  font-size: 13px;
+  height: 90rpx;
+  line-height: 90rpx;
 }
 
 

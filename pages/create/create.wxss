@@ -142,14 +142,13 @@ page{
     padding-top: 10%;
     align-items: center;
 }
-.cancel-btn{
-    width: 35%;
+.btn{
+    width: 40%;
+    height: 90rpx;
+    line-height: 90rpx;
     background-color: #8aaed7;
-    color: #fff;
-}
-.confirm-btn{
-    width: 35%;
-    background-color: #8aaed7;
-    color: #fff;
+    color: #f8f7ff;
+    border-radius: 50px;
+    font-size: 13px;
 }
 

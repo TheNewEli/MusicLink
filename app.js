@@ -22,7 +22,7 @@ App({
        that.globalData.windowHeight = res.windowHeight;
      }
    })
-   console.log("windowHeight:"+that.globalData.windowHeight);
+  //  console.log("windowHeight:"+that.globalData.windowHeight);
 
    if (this.compareVersion(that.globalData.version,'6.6.0')){
      that.globalData.compatibility = true;
