@@ -106,7 +106,7 @@ page{
 .comment{
   font-size: 13px;
   font-family: Microsoft YaHei;
-  
+
   color: #666;
 }
 
@@ -140,4 +140,24 @@ page{
   overflow: hidden;
   text-overflow: ellipsis;
   width: 300rpx;
+}
+
+
+
+.detail-box{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 20rpx;
+}
+
+.icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.detail-box-text{
+  padding-left: 20rpx;
+  width: 220rpx;
+  font-size: 13px;
 }
