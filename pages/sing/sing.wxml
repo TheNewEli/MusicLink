@@ -24,7 +24,7 @@
 </view>
 
 <view class="dialog" hidden="{{!showDialog}}">
-  <template is="dialogTpl" ></template>
+  <template is="dialogTpl" data="{{score:score, progress: currentProgress,stars:starsArray,reaminedClipCnt:totalChoosedClipsCount- completedClipsNum}}" ></template>
 </view>
 
 <view class="sing-container" >

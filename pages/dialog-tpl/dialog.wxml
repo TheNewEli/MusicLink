@@ -6,14 +6,14 @@
     </view>
     <view class='messageBox'>
       <text class='title-d'>该段得分：</text>
-      <text class='score'>1000</text>
+      <text class='score'>{{score}}</text>
       <!-- <text class='title-cg'>获得的星级是</text> -->
-      <template is="starsTpl" data="{{stars:[1,1,1,1,0.5],score:10}}"></template>
+      <template is="starsTpl" data="{{stars:stars,score:score}}"></template>
       <text class='title-progress'>完成进度：</text>
-      <progress percent="40" stroke-width="12" class='progress-bar-d' show-info backgroundColor='#4c4c4c' />
+      <progress percent="{{progress}}" stroke-width="12" class='progress-bar-d' show-info backgroundColor='#4c4c4c' />
       <view class='text-progress'>
         <text class='title-remain'>你还有</text>
-        <text class='remained-num'>10</text>
+        <text class='remained-num'>{{reaminedClipCnt}}</text>
         <text class='title-remain'>段未完成</text>
       </view>
     </view>

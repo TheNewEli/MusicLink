@@ -64,6 +64,11 @@ Page({
     isDownloading: false,
     isUploading: false,
     cxt_arc: "",
+    score:0,
+    completedClipsNum:0,
+    totalChoosedClipsCount:0,
+    starsArray:[],
+    currentProgress:0,
 
     //延迟修正
     hasModified: false,
@@ -231,6 +236,13 @@ Page({
     for (var i = 0; i < totalClipsCount; i++) {
       toView.push("ClipCount" + i);
       clipsIndex.push(i);
+
+      var temp_Record_File={
+        createdSongId: -1,
+        clipCount:-1,
+        temp_path: "",
+      }
+      that.data.all_Rec_Temp_File[i]=temp_Record_File;
     }
 
     var ER = wx.getStorageSync("ER");
@@ -296,6 +308,7 @@ Page({
       toCurrentView: toView[0],
       title: songs.music.title,
       hasModified: false,
+      totalChoosedClipsCount:selectedData.clips.length,
     })
 
     that.getPlayInfoDataFromServer();
@@ -407,8 +420,7 @@ Page({
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
       var hasCompleted = false;
 
-      if (that.data.all_Rec_Temp_File[currentClipNum - 1] != undefined &&
-        that.data.all_Rec_Temp_File[currentClipNum - 1] != null)
+      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path!="")
         hasCompleted = true;
       that.setData({
         currentLineNum: currentLineNum,
@@ -1350,7 +1362,7 @@ Page({
     var all_RecordFiles = that.data.all_Rec_Temp_File;
     var temp_path = all_RecordFiles[that.data.currentClipNum - 1].temp_path;
 
-    if (temp_path === undefined)
+    if (temp_path === undefined||temp_path =="")
       return;
 
     that.playAnimaton("upload");
@@ -1428,14 +1440,16 @@ Page({
                 //   duration: 1500,
                 //   mask: true,
                 // });
-                that.setData({
-                  showDialog:true,
-                })
 
                 console.log(res);
                 that.checkSongisCompeleted();
+
+
                 that.setData({
                   hasUploaded:true,
+                  score:res.data.score,
+                  showDialog:true,
+                  starsArray:util.convertToStarsArray(res.data.score/1000),
                 });
 
               }).catch((err) => {
@@ -1669,6 +1683,15 @@ Page({
         if (!that.data.hasCompleted)
           return;
 
+        var completedClipsNum = that.data.completedClipsNum;
+        var currentProgress;
+
+          
+        if(that.data.all_Rec_Temp_File[that.data.currentClipNum-1].temp_path==""){
+            completedClipsNum++;
+            currentProgress=parseInt(completedClipsNum/that.data.totalChoosedClipsCount*100);
+        }
+
         console.log("Recorder stop", res);
         const { tempFilePath } = res
         var temp_IAC = that.data.currentRec_IAC;
@@ -1706,6 +1729,8 @@ Page({
           isCorrected: false,
           disableSkip: false,
           isRecording: false,
+          completedClipsNum:completedClipsNum,
+          currentProgress:currentProgress,
         });
       });
 
