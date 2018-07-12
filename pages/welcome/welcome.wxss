@@ -1,7 +1,7 @@
 /* #A4B6CF  淡蓝色 */
 /* 3  #CBEFEB */
 page{
-  background-color: #A4B6CF;
+  /* background-color: #A4B6CF; */
 }
 
 .container{
@@ -32,7 +32,7 @@ page{
   height: 100%;
   width: 100%;
   z-index: -10;
-  opacity: 0.7;       
+  /* opacity: 0.7;        */
   /* -webkit-filter: blur(30rpx);
   filter: blur(30rpx);    */
 }
@@ -67,10 +67,7 @@ page{
   border-radius: 50%;
 }
 
-.userinfo-nickname{
-   position: fixed;
-   top: 35%;
-}
+
 
 .userInfo-box{
   display: flex;
@@ -98,4 +95,17 @@ page{
 .button-color{
    /* font-weight: bold;
   color: #ddd;  */
+}
+
+.start-btn-cmpa{
+  position: fixed;
+  bottom: 8%;
+  border: 1px solid #fff; 
+  width: 220rpx;
+  border-radius: 0px; 
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px; 
+  background:none;  
+  color:#fff; 
 }

@@ -49,11 +49,12 @@ Page({
     // this.setData({
     //   imgUrls:imgUrls,
     // });
-
+    this.getSongsListData("GetSongs", "foreign", "外语", { requestType: "GetSongs", category: "外语" });
     this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"热门" });
     this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"推荐" });
     this.getSongsListData("GetSongs","swipperPost","海报",{requestType: "GetSongs",category:"海报" });
 
+    this.getFinishedData();
   },
 
   getSongsListData:function(servelet, settedKey,categoryTitle,data){  
@@ -126,6 +127,22 @@ Page({
     this.setData(readyData);
   },
 
+  getFinishedData: function () {
+    var that = this;
+    var data = {
+      requestType: "GetWorldPosted"
+    }
+
+    util.requestFromServer("GetWorldPosted", data).then((res) => {
+      // console.log(res.data);
+      that.setData({
+        WorldPosted: res.data
+      })
+    }).catch((err) => {
+      console.log("请求失败");
+    })
+  },
+
   onSongTap: function(event){
    
     var song = event.currentTarget.dataset.song;
@@ -171,6 +188,7 @@ Page({
   onMoreTap: function(event){
     wx.setStorageSync("inthreatenData", this.data.inThreaten);
     wx.setStorageSync("recommendData", this.data.ourRecommend);
+    wx.setStorageSync("foreignData", this.data.foreign);
     var category = event.currentTarget.dataset.category;
     wx.navigateTo({
       url: '../toplist/toplist?category=' + category ,
@@ -200,6 +218,7 @@ Page({
         break;
       case 2:
       //完结歌曲榜单
+        wx.setStorageSync("WorldPostedData", this.data.WorldPosted);
         wx.navigateTo({
           url: '../toplist/toplist?category=' + "完结",
         });
@@ -209,6 +228,7 @@ Page({
       //将所有歌曲信息存到缓存中，方便后面获取。
         wx.setStorageSync("inthreatenData", this.data.inThreaten);
         wx.setStorageSync("recommendData", this.data.ourRecommend);
+        wx.setStorageSync("foreignData", this.data.foreign);
         wx.navigateTo({
           url: '/pages/all-toplist/all-toplist',
         })

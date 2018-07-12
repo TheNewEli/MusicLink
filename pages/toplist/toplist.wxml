@@ -10,6 +10,7 @@
   <view class='toplist'>
     <view wx:for="{{toplist.songs}}" wx:for-item="item" wx:for-index="index" >
       <view  catchtap='attendTap' data-index='{{index}}'>
+      <!--top3是否需要添图-->
            <!-- <block wx:if="{{index < 3}}">
             <view class='item-box'>
               <image src='{{images[index]}}' ></image>

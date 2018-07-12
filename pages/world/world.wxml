@@ -12,7 +12,40 @@
 
 <!--动态-->
     <swiper-item>
-      <scroll-view class='world-container' scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >动态</scroll-view>
+      <scroll-view class='world-container' scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >
+        <block wx:for="{{FinishedList}}" wx:for-item="item" wx:key="item.worldId">
+          <view catchtap='onTapToPlay' data-ids='{{item.ids}}'>
+              <view class='world-item'>
+                <view class='world-initiator'>
+                  <image src='{{item.avatar}}'></image>
+                </view>
+                <view class='world-detail'>
+                  <view class='world-box'>
+                    <view class='nick'> 
+                      <text >{{item.initiatorNick}}</text> 
+                    </view>
+                    <view class='time'>
+                      <text>{{item.create_time_read}}</text>
+                    </view>
+                  </view>
+                  <text class='comment' >{{item.comment}}</text>
+                  
+                  <view class='music-box'>
+                    <image src='{{item.music.coverImg}}'></image>
+                    <view class='music-detail'>
+                      <text>{{item.music.title}}</text>
+                      <text>原唱：{{item.music.singer}}</text>
+                    </view>
+                  </view>
+
+                </view>
+              </view>
+
+
+          </view>
+        </block>
+        <view style='padding-top:{{statusBarHeight+45}}px'></view>      
+      </scroll-view>
     </swiper-item>
 
 <!--世界-->

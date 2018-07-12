@@ -52,5 +52,9 @@
     <view class="songs-template">
         <template is = "songListTpl" data="{{...ourRecommend_P}}"></template>
     </view> 
+
+    <view class="songs-template">
+        <template is = "songListTpl" data="{{...foreign_P}}"></template>
+    </view> 
     
 </view>
