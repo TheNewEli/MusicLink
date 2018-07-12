@@ -18,6 +18,7 @@ Page({
   onLoad:function(){
     var inthreatenSongs = wx.getStorageSync("inthreatenData").songs;
     var recommendSongs = wx.getStorageSync("recommendData").songs;
+    var foreignSongs = wx.getStorageSync("foreignData").songs;
     var topList=[
       { 
         toplistIndex: 0, 
@@ -58,10 +59,18 @@ Page({
       },
       { 
       toplistIndex: 3,
-      image: "/images/cover/japanesemusic.jpg",
-      song: ["song1", "song2", "song3"],
-      singer: ["singer1", "singer2", "singer3"],
-      category: "日语"
+      image: "/images/cover/foreignmusic.jpg",
+      song: [
+        foreignSongs[0].title,
+        foreignSongs[1].title
+        // foreign[2].title
+      ],
+      singer: [
+        foreignSongs[0].singer,
+        foreignSongs[1].singer
+        // foreign[2].singer
+      ],
+      category: "外语"
       }
     ];
     this.setData({
