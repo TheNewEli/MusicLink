@@ -7,6 +7,7 @@ page {
 .score-box {
   
   height: 100%;
+  width: 100%;
   z-index: 10;
   opacity: 0.9;
   background-color: #474747;
@@ -18,13 +19,13 @@ page {
   display: flex;
   position: absolute;
   opacity: 0.7;
-  z-index: 16;
+  z-index: 10;
   
   
 }
 
 .bck-bottom image {
-  margin-top: 30%;
+  margin-top: 40%;
   margin-left: 15%;
   width:  70%;
   height: 50%;
@@ -37,8 +38,8 @@ page {
   width: 70%;
   height: 50%;
   position: absolute;
-  z-index: 17;
-  margin-top: 30%;
+  z-index: 15;
+  margin-top: 40%;
   margin-left: 15%;
   border-radius: 5%;
 }
@@ -145,11 +146,11 @@ page {
 }
 
 .cancel-btn {
-  margin-top: 130%;
+  margin-top: 140%;
   margin-left: 45%;
   height: 80rpx;
   width: 80rpx;
-  z-index: 3;
+  z-index: 16;
   position: absolute;
 }
 

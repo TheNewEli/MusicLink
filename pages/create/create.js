@@ -74,7 +74,7 @@ Page({
         showCancel:false,
       });
       return;
-    }else if(recommendWord.length>=50){
+    }else if(recommendWord.length>=201){
       wx.showModal({
         title: '提示',
         content: '推荐语字数过长，请重新填写',
