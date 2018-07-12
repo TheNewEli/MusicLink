@@ -1,7 +1,11 @@
- /* @import "../navigationBar-tpl/navigationBar-tpl.wxss";  */
+/* @import "../navigationBar-tpl/navigationBar-tpl.wxss"; */
+
+@import "../dialog-tpl/dialog.wxss";
+@import "sing-item-tpl/tpl-wxss/count-dot-tpl.wxss";
 
 page{
-  background-color: #f5f5f5; 
+  width: 100%;
+  height: 100%;
 }
 
 @import "sing-item-tpl/tpl-wxss/count-dot-tpl.wxss";
@@ -74,7 +78,7 @@ page{
   align-items: center; 
 }
 .title{
-  margin-top: 18%;
+  margin-top: 95%;
   margin-left: 0rpx;
   height: 50rpx;
   width: 100%;
@@ -88,24 +92,12 @@ page{
   margin-top: -35%;
   z-index: 5;
   margin-left: 40.5%;
+  margin-top: 65%;
   font-size: 20px;
   color: #f5f5f5;
   background-color: rgba(128,128,128,0);
   font-family: "MicroSoft-YaHei";
-}
-
-
-.upload-btn{
-  margin-top: 70%;
-  margin-left: 40%;
-  z-index: 10;
-  position: fixed;
-}
-
-.upload-btn image{
-  width: 100rpx;
-  height: 100rpx;
-  
+  position: absolute;
 }
 
 .lyric-box{
@@ -114,7 +106,7 @@ page{
   align-items: center;
   width: 100%;
   height: 100%;
-}
+} 
 
 .lyric{
   display: flex;
@@ -163,8 +155,7 @@ page{
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  background-color: #f5f5f5; 
+  /* background-color: #f5f5f5;  */
 }
 
 
@@ -178,4 +169,37 @@ page{
 .control-box .image-main{
   height: 100rpx;
   width: 100rpx;
+}
+
+.upload-btn{
+  margin-top:140%;
+  margin-left: -7%;
+  z-index: 11;
+  position: fixed;
+  background-color: #f5f5f5;
+  opacity: 0.8;
+ 
+}
+
+.upload{
+  width: 110rpx;
+  height: 110rpx;
+  z-index: 11;
+  position: absolute;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+}
+.wave-style{
+  width: 110rpx;
+  height: 110rpx;
+  z-index: 10;
+  position: absolute;
+}
+
+.dialog{
+  width: 100%;
+  height: 100%;
+  z-index: 16;
+  margin-top: 0rpx;
+  position: fixed;
 }
