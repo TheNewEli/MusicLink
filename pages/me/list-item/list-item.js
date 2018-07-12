@@ -116,7 +116,7 @@ Page({
     })
   },
 
-  //获取已发起的歌曲信息
+  //获取已完成的歌曲信息
   getMyFinishedDataFromServer: function () {
     var that = this;
     var data = {
@@ -128,13 +128,13 @@ Page({
     })
     util.requestFromServer("GetMyFinished", data).then((res) => {
       that.setAllData(res);
+      console.log(res.data);
     }).catch((err) => {
       console.log("请求失败");
     })
   },
 
   setAllData:function(res){
-    console.log(res.data);
     var ListItem=[];
     var songs = res.data.songs;
     var progress, create_time_read;
@@ -157,6 +157,33 @@ Page({
     wx.hideLoading();
     this.setData({
       ListItem:ListItem
+    })
+  },
+
+  setFinishedData: function (res) {
+    var FinishedItem = [];
+    var songs = res.data.songs;
+    var progress, create_time_read;
+    for (var i in songs) {
+      var song = songs[i];
+      create_time_read = util.getDiffTime(song.song_created_time / 1000, true);
+      var temp = {
+        create_time_read: create_time_read,
+        avatar_url: song.avatar_url,
+        cover_url: song.cover_url,
+        created_song_id: song.created_song_id,
+        song_id: song.song_id,
+        title: song.title,
+        world_shared: song.world_shared,
+        world_posted: song.world_psted,   //此处服务器给错了
+        listened_time: 7,     //暂时固定
+        grade:1000    //暂时固定
+      }
+      FinishedItem.push(temp);
+    }
+    wx.hideLoading();
+    this.setData({
+      FinishedItem: FinishedItem
     })
   },
 

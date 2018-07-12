@@ -100,6 +100,8 @@
   width: 35rpx;
 }
 
+
+/* 完成戳 */
 .list-item-finished{
   display: flex;
   flex-direction: row; 

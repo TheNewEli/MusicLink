@@ -19,6 +19,7 @@
                 <view class='world-initiator'>
                   <image src='{{item.avatar}}'></image>
                 </view>
+
                 <view class='world-detail'>
                   <view class='world-box'>
                     <view class='nick'> 
@@ -29,7 +30,7 @@
                     </view>
                   </view>
                   <text class='comment' >{{item.comment}}</text>
-                  
+
                   <view class='music-box'>
                     <image src='{{item.music.coverImg}}'></image>
                     <view class='music-detail'>
@@ -38,6 +39,12 @@
                     </view>
                   </view>
 
+                  <view class='detail-box'>
+                    <image class='icon' src='/images/icon/listen.png'></image>
+                    <text class='detail-box-text'>{{item.listened_time}}</text>
+                    <image class='icon' src='/images/icon/grade.png'></image>
+                    <text class='detail-box-text'>1000分</text>
+                  </view>
                 </view>
               </view>
 
