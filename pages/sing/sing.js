@@ -173,9 +173,9 @@ Page({
       Comp: {
         statusBarHeight: app.globalData.statusBarHeight,
         iSback: true,
-        color: "#000",
+        color: "#fff",
         text: title,
-        background: "#8aaed7"
+        background: "#dd1d10"
       }
     });
 

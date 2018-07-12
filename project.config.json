@@ -70,10 +70,11 @@
 					"scene": "1007"
 				},
 				{
-					"id": -1,
+					"id": 5,
 					"name": "create",
 					"pathName": "pages/create/create",
-					"query": ""
+					"query": "songId=7",
+					"scene": "1007"
 				},
 				{
 					"id": 6,

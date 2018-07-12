@@ -122,6 +122,7 @@ Page({
   },
 
   setFinishedData: function (data) {
+    console.log(data);
     var songs = data.songs;
     var FinishedList = [];
 
@@ -139,6 +140,7 @@ Page({
         create_time_read: create_time_read,
         comment: song.post_message,
         listened_time: song.listened_time,
+        song_score: song.song_score,
         music: {
           coverImg: song.cover_url,
           singer: song.artist,

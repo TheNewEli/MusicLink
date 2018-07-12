@@ -15,9 +15,9 @@ Page({
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
       iSback: true,
-      color: "#000",
+      color: "#fff",
       text: "选择歌词",
-      background: "#8aaed7"
+      background: "#de4137"
     }
   },
 

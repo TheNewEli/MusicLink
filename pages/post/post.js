@@ -36,7 +36,7 @@ Page({
       statusBarHeight: app.globalData.statusBarHeight,
       color: "#000",
       text: "点歌",
-      background: "#8aaed7"
+      background: "#de4137"
     }
   },
 

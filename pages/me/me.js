@@ -7,9 +7,9 @@ Page({
       //未授权时显示的用户头像，此处应该为“连音符”logo
       avatarUrl: "https://oss.caoyu.online/basic/basicprofile.png",
       menuitems: [
-        { text: '已发起歌曲', menuitemsId: 0, image:"/images/icon/create_icon.png"},
+        { text: '发起的歌曲', menuitemsId: 0, image:"/images/icon/create_icon.png"},
         { text: '参与的歌曲', menuitemsId: 1, image: "/images/icon/participate_icon.png"},
-        { text: '完成的歌曲', menuitemsId: 2, image: "/images/icon/finish_icon.png"},
+        { text: '作品', menuitemsId: 2, image: "/images/icon/finish_icon.png"},
         { text: '联系客服', menuitemsId: 3, image: "/images/icon/service_icon.png" },
         { text: '设置', menuitemsId: 4, image: "/images/icon/setting_icon.png"}, 
         { text: '关于', menuitemsId: 5, image: "/images/icon/about_icon.png"},

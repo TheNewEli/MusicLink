@@ -11,7 +11,7 @@ Page({
       iSback: true,
       color: "#000",
       text: "排行榜",
-      background: "#8aaed7"
+      background: "#de4137"
     }
   },
 

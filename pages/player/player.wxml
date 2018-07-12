@@ -53,7 +53,7 @@
         <view class="progress-container-box">
           <text class="time time-l">{{currentTime_format}}</text>
           <view class="progress-container">
-            <progress percent="{{percent*100}}" activeColor="#ffcd32" backgroundColor="#000" />
+            <progress percent="{{percent*100}}" activeColor="#fff" backgroundColor="#000" />
           </view>
           <text class="time time-r">{{duration_print}}</text>
         </view>
@@ -64,7 +64,7 @@
               <!-- <button  plain='true'>
                 <image class='button-icon' src='/images/icon/return_icon.png' />
               </button> -->
-               <image class='icon' catchtap='Return' src='/images/icon/return_icon.png' /> 
+               <image class='icon-return' catchtap='Return' src='/images/icon/return_icon.png' /> 
               <image class='icon' catchtap='prev' src='/images/icon/playerLast_icon.png' />
               <block wx:if="{{playIcon=='icon-play'}}">
                 <image class='icon'catchtap='togglePlaying'src='/images/icon/playerBegin_icon.png' />

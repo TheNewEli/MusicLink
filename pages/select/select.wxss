@@ -50,13 +50,14 @@
 }
 
 .singer-share button{
-  background-color: #8aaed7;
+  background-color: #d93e35;
   color:#fff;
   height: 70rpx;
   width: 250rpx;
   font-size: 15px;
   margin-left:50rpx;
   line-height: 2.5;
+  border-radius: 50px;
 }
 
 .singer-share text{
@@ -92,7 +93,7 @@
 }
 
 .selected-self{
-  background-color: #e4eff9;  /*用户已选择歌词 背景 颜色*/
+  background-color: #ffd8d5;  /*用户已选择歌词 背景 颜色*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -102,7 +103,7 @@
 
 .selected-self text{
   font-size: 17px;
-  color: #8aaed7;     /*用户已选择歌词 文本 颜色*/
+  color: #db736c;     /*用户已选择歌词 文本 颜色 #db736c*/
   font-family: Microsoft YaHei;
   width: 550rpx;
   margin-left: 100rpx;
@@ -117,7 +118,7 @@
 }
 
 .selected{
-  background-color: #f0f0f0;  /*已选择歌词 背景 颜色*/
+  background-color: #fceeed;  /*已选择歌词 背景 颜色*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -126,7 +127,7 @@
 }
 
 .selected text{
-  color: #808080;    /*已选择歌词 文本 颜色*/
+  color: #da9f9c;    /*已选择歌词 文本 颜色*/
   margin-right: 100rpx;
 }
 
@@ -154,7 +155,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color:#8aaed7;  /*按钮容器背景色*/
+  background-color:#d93e35;  /*按钮容器背景色*/
   border-top: 1px solid #F5F5F5;
 
   color: #fff;

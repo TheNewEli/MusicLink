@@ -1,12 +1,47 @@
-<import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
+<!--version 2-->
+<view class='shader'>
+  <image class='background' src='{{song.coverageUrl}}'></image>
+</view>
+  
+<view class='container'>
+<!--顶部  -->
+  <view class='top-background'>
+      <button class='cancel' catchtap='onBackTap' plain="true" style='margin-top:{{Comp.statusBarHeight+10}}px;  border: 0px;' >取消</button>
+     <image class='cover' style='margin-top:{{70-Comp.statusBarHeight}}px' src='{{song.coverageUrl}}'></image> 
+  </view>
+
+<!--下部-->
+  <view class="setCreatingType">
+    <view class="text-promt">
+        <text class="text-main">是否公开</text>
+        <text class="Hint">允许他人参加你的合唱</text>
+    </view>
+    <switch class="switch-btn" color="#f05b41" bindchange="setCreatingType"></switch>
+  </view>
+
+  <view class="inputDescription">
+     <text class="text-main"></text>  
+    <view class='textarea'>
+      <textarea bindinput="inputChange" style="height: 6em" placeholder='说些什么吧！' placeholder-style="font-size: 15px; color: #8a8a8a;" maxlength='200' cursor-spacing="77" show-confirm-bar="" />
+    </view>
+  </view>
+
+  <button class='publish' catchtap='onTaptoCreate' hover-class="button-hover">创建</button>
+
+</view>
+
+
+<!--version 1-->
+<!-- <import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
 <import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
   <block wx:if="{{compatibility}}">
     <template is="navigationBarTpl" data="{{...Comp}}"></template>
   </block>
 
-<view class="create-container">
+
+<view class="create-container"> -->
     <!-- 歌曲所有信息视图层 -->
-    <view class="songInfo">
+    <!-- <view class="songInfo">
         <view class='music-box'>
             <image class='cover' src='{{song.coverageUrl}}'></image>
             <view class='music-detail'>
@@ -19,9 +54,10 @@
                 </view>
             </view>
       </view>
-    </view>
+    </view> -->
+
     <!-- 创建歌曲相关设置视图层 -->
-    <view class="settings">
+    <!-- <view class="settings">
         <view class="setCreatingType">
             <view class="text-promt">
                 <text class="text-main">是否公开</text>
@@ -33,7 +69,8 @@
             <view class="text-promt">
                 <text class="text-main">活动时间选择</text>
                 <text class="Hint">你的合唱活动的有效时间</text>
-            </view>
+            </view> -->
+
             <!-- <view class="datePicker">
                 <view class="startDatePicker">
                     <picker mode="date" value="{{startDate}}"></picker>
@@ -42,7 +79,7 @@
                     <picker mode="date" value="{{endDate}}"></picker>
                 </view>
             </view> -->
-        </view>
+        <!-- </view>
         <view class="inputDescription">
              <text class="text-main"></text> 
             <view class='textarea'>
@@ -56,4 +93,4 @@
         <button class="btn" catchtap="onTaptoCreate">创建</button>
    </view>
 
-</view>
+</view> -->
