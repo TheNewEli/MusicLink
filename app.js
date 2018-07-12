@@ -7,6 +7,7 @@ App({
     compatibility: false,
     //状态栏高度
     statusBarHeight: 0,
+    windowHeight:0
   },
 
   // 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
@@ -17,10 +18,11 @@ App({
    wx.getSystemInfo({
      success: function(res) {
        that.globalData.version=res.version;
-       that.globalData.statusBarHeight = res.statusBarHeight;
+       that.globalData.statusBarHeight = res.statusBarHeight; 
+       that.globalData.windowHeight = res.windowHeight;
      }
    })
-   console.log(that.globalData.statusBarHeight);
+  //  console.log("windowHeight:"+that.globalData.windowHeight);
 
    if (this.compareVersion(that.globalData.version,'6.6.0')){
      that.globalData.compatibility = true;

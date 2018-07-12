@@ -321,7 +321,7 @@ Page({
     var isShare=true;
     var category = 'Select';
     var userInfo = app.globalData.userInfo;
-    var titleString = userInfo.nickName + "邀请你和他一起唱" + this.data.allOriginData.title;
+    var titleString = userInfo.nickName + "邀请你和他一起唱 《" + this.data.allOriginData.title+ "》";
     return {
       title: titleString, 
       path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.createdSongId + '&song_id=' + this.data.songs.songId + '&category=' + category,

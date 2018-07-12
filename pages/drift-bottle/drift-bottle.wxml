@@ -1,2 +1,16 @@
-
 <image class='background' src="/images/cover/driftbottle_cover.jpg" ></image>
+
+<view class='control'>
+ <view class='item'>
+    <image src='/images/cover/bottle.png'></image>
+    <text>扔一个</text>
+ </view>
+  <view class='item'>
+    <image src='/images/cover/fishhook.png'></image>
+    <text>捡一个</text>
+ </view>
+  <view class='item'>
+    <image src='/images/cover/mine.png'></image>
+    <text>我的</text>
+ </view>
+</view>

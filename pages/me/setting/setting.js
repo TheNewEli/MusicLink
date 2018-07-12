@@ -96,8 +96,8 @@ Page({
   onTapClearStorage:function(){
     wx.showModal({
       title: '提示',
-      content: '清楚缓存将会清除你在小程序中产生所有数据',
-      cancelText:"后悔了",
+      content: '清楚缓存将会清除你在小程序中产生的所有数据',
+      cancelText:"取消",
       confirmText:"确认清除",
       success:function(res){
         if(res.confirm){
@@ -138,7 +138,6 @@ Page({
         }
       }
     });
-   
    
   },
   

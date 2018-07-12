@@ -17,7 +17,7 @@ Page({
       iSback: true,
       color: "#000",
       text: "",
-      background: "#8aaed7"
+      background: "#8aaed7" 
     }
   },
 

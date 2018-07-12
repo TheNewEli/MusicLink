@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 7,
 			"list": [
 				{
 					"id": 1,
@@ -109,8 +109,14 @@
 				},
 				{
 					"id": -1,
-					"name": "test",
-					"pathName": "pages/test/test",
+					"name": "world",
+					"pathName": "pages/world/world",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "drift-bottle",
+					"pathName": "pages/drift-bottle/drift-bottle",
 					"query": ""
 				}
 			]

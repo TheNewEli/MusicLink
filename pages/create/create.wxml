@@ -24,14 +24,14 @@
     <view class="settings">
         <view class="setCreatingType">
             <view class="text-promt">
-                <text>是否公开</text>
+                <text class="text-main">是否公开</text>
                 <text class="Hint">允许他人参加你的合唱</text>
             </view>
-            <switch class="switch-btn" bindchange="setCreatingType"></switch>
+            <switch class="switch-btn" color="#97b9de" bindchange="setCreatingType"></switch>
         </view>
         <view class="setDateSchedule">
             <view class="text-promt">
-                <text>活动时间选择</text>
+                <text class="text-main">活动时间选择</text>
                 <text class="Hint">你的合唱活动的有效时间</text>
             </view>
             <!-- <view class="datePicker">
@@ -44,16 +44,16 @@
             </view> -->
         </view>
         <view class="inputDescription">
-            <text>推荐语</text>
+             <text class="text-main"></text> 
             <view class='textarea'>
-               <textarea bindinput="inputChange" style="height: 5em" cursor-spacing="77" show-confirm-bar=""   />
+               <textarea bindinput="inputChange" style="height: 5em" placeholder='说些什么吧！' placeholder-style="font-size: 15px; color: #8a8a8a;" cursor-spacing="77" show-confirm-bar=""   />
             </view>
         </view>
     </view>
 
     <view class="all-btns">
-        <button class="cancel-btn" catchtap="onTaptoCancel">取消</button>
-        <button class="confirm-btn" catchtap="onTaptoCreate">创建</button>
+        <button class="btn" catchtap="onTaptoCancel">取消</button>
+        <button class="btn" catchtap="onTaptoCreate">创建</button>
    </view>
 
 </view>

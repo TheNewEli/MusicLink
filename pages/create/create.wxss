@@ -46,7 +46,7 @@ page{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 300rpx;
+    width: 400rpx;
   }
 
 .title{
@@ -78,6 +78,11 @@ page{
     padding-top: 20rpx;
 }
 
+.text-main{
+   font-size: 16px;
+   color: #666; 
+}
+
 .setCreatingType{
     display: flex;
     flex-direction: row;
@@ -92,7 +97,7 @@ page{
 
 .Hint{
     font-size: 25rpx;
-    color: 	#696969;
+    color: 	#a8a6a8;
 }
 
 .switch-btn{
@@ -118,7 +123,7 @@ page{
 .textarea{
   padding: 20rpx 25rpx 20rpx 25rpx; 
   margin: 0rpx 40rpx 0rpx 40rpx;
-  border: 1rpx solid #8a8a8a;
+  /* border: 1rpx solid #8a8a8a; */
   background-color: #fdfdfd;
   font-size: 15px;
   color: #8a8a8a;
@@ -137,14 +142,13 @@ page{
     padding-top: 10%;
     align-items: center;
 }
-.cancel-btn{
-    width: 35%;
+.btn{
+    width: 40%;
+    height: 90rpx;
+    line-height: 90rpx;
     background-color: #8aaed7;
-    color: #fff;
-}
-.confirm-btn{
-    width: 35%;
-    background-color: #8aaed7;
-    color: #fff;
+    color: #f8f7ff;
+    border-radius: 50px;
+    font-size: 13px;
 }
 
