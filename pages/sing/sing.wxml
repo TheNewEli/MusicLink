@@ -78,8 +78,10 @@
     <image animation="{{animationDatas['ensemble'].animationData}}" class="image-other" catchtap="ensemble" src="/images/icon/freshen_icon.png">重唱</image>
   </view>
 
+  <view class='dialog' hidden="{{!showDialog}}" catchtap='cancel'>
+    <template is = "dialogTpl"></template>
+  </view>
+
 </view>
 
- <view class='dialog' hidden="{{!showDialog}}" catchtap='cancel'>
-    <template is = "dialogTpl"></template>
-</view>
+ 
