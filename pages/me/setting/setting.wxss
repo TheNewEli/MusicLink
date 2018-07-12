@@ -51,6 +51,15 @@
   /* margin-right: 5%; */
 }
 
+.button-hover{
+  background-color: #83b31d;
+  color: #666363;
+}
+
+.button-hover-clearAuthorized{
+  background-color:#ed0533;
+  color: #e6e6e6;
+}
 /**********关于**************/
 .about{
   display: flex;

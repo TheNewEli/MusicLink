@@ -5,7 +5,6 @@ Page({
   data: {
     openid:null,
     id: null,
-    finished:'list-item-other',
 
     //兼容
     compatibility: app.globalData.compatibility
@@ -18,8 +17,7 @@ Page({
     var openid = wx.getStorageSync("openid");
     this.setData({
       openid:openid,
-      id:id,
-      finished:'list-item-other'
+      id:id
     })
     this._init();
   },
@@ -61,6 +59,13 @@ Page({
     })
   },
 
+  onPublishTap:function(event){
+    var index = event.currentTarget.dataset.id;
+    wx.setStorageSync("publishSong", this.data.FinishedItem[index]);
+    wx.navigateTo({
+      url: '../../publish/publish',
+    })
+  },
 
   _init:function(){
     if(this.data.openid){
@@ -73,10 +78,6 @@ Page({
       } else if (this.data.id == 2) {
         //2为完成的歌曲
         this.getMyFinishedDataFromServer();
-        this.setData({
-          progress:100,
-          finished:"list-item-finished"
-        })
       }
     }
   
@@ -127,7 +128,7 @@ Page({
       title: '加载中',
     })
     util.requestFromServer("GetMyFinished", data).then((res) => {
-      that.setAllData(res);
+      that.setFinishedData(res);
       console.log(res.data);
     }).catch((err) => {
       console.log("请求失败");
@@ -177,7 +178,7 @@ Page({
         world_shared: song.world_shared,
         world_posted: song.world_psted,   //此处服务器给错了
         listened_time: 7,     //暂时固定
-        grade:1000    //暂时固定
+        grade: song.song_score    
       }
       FinishedItem.push(temp);
     }

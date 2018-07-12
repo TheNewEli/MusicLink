@@ -29,6 +29,7 @@ Page({
     //搜索
     searchResult:[],
     showSearchResult:false,
+    showNoResult:false,
     //兼容
     compatibility: app.globalData.compatibility,
     Comp: {
@@ -255,6 +256,7 @@ Page({
 
   Search: function (searchWord){
     var searchResult=[];
+    var showNoResult;
     var inThreaten_songs = this.data.inThreaten.songs;
     var ourRecommend_songs = this.data.ourRecommend.songs;
     var swipperPost_songs = this.data.swipperPost.songs;
@@ -279,9 +281,15 @@ Page({
         searchResult.push(swipperPost_songs[i]);
       }
     }
+    if (searchResult.length == 0){
+      showNoResult = true;
+    }else{
+      showNoResult = false;
+    }
 
     this.setData({
-      searchResult: searchResult
+      searchResult: searchResult,
+      showNoResult: showNoResult
     })
   }
 })

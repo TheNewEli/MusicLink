@@ -11,7 +11,7 @@
 
     <view class='nav-container' style=' background:{{Comp.background}}; padding-top:{{Comp.statusBarHeight}}px'>
       <block wx:if="{{Comp.iSback}}">
-          <image class='image-back' catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
+        <image class='image-back' catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
         <text class='text-back-true' style='color:{{Comp.color}}' >{{Comp.text}}</text>
       </block>
       <block wx:else>
@@ -19,22 +19,16 @@
       </block> 
     </view>
     <!-- <view style='padding-top:{{Comp.statusBarHeight+45}}px'></view>   -->
-  </block>
     <view class="progress-bar"  hidden="{{!isDownloading&&!isUploading}}">
       <canvas class="circleBar"  canvas-id="canvasArc"></canvas>
       <view class='cc'>加载中</view>
       <view class="title">{{propt_motto}}</view>
     </view>
-
-
-
-<view class="sing-container" >
-  <view class="lyric-box">
+    
     <view class="countDown" hidden="{{isReadying}}">
       <template is="countDownTpl" data="{{remainedTime}}"></template>
     </view>
 
-  
     <view class="upload-btn" hidden="{{hasUploaded}}">
       <image class="upload" animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png" catchtap="checkFilesToUpload" />
       <image class="wave-style" animation="{{animation_wave}}" src="/images/icon/circle_icon.png"/>
@@ -45,7 +39,7 @@
         <view id="{{toView[idx]}}">
           <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index"  wx:key="">
           <!--让每一段歌词依次输出  -->
-             <block wx:if="{{(idx+1)==item.clipCount}}"> 
+            <block wx:if="{{(idx+1)==item.clipCount}}"> 
              <!--在每次渲染时，将当前段特别显示（更改背景和字体颜色） -->
               <block wx:if="{{(idx+1)==currentClipNum}}">
                 <view class="lyric-toview">
@@ -57,18 +51,22 @@
                  </block>
                 </view> 
               </block>
+
               <block wx:else>
                 <view class="lyric">
                   <text>{{item.lyric}}</text>
                   <text></text>
                 </view>
               </block>
-             </block> 
+
+            </block>
+
           </block>
         </view>
       </block>
     </scroll-view>
   </view>
+
   <view class="control-box">
     <image wx:if="{{!hasOriginSinger}}" animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
       原唱

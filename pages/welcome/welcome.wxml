@@ -40,7 +40,7 @@
       <text class='introduction'>用音乐让你我相连</text>
     </view>
     <block wx:if="{{true}}">
-      <button class="start-btn" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
+      <button class="start-btn" hover-class="button-hover" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
         开启音乐之旅
       </button>
     </block>

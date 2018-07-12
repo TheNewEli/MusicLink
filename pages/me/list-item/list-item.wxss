@@ -35,15 +35,16 @@
 
 .list-initiator-nick{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   margin-top: 5rpx;
   margin-bottom: 5rpx;
 }
 
 .list-initiator-nick image{
   margin: 6px;
-  width: 120rpx;
-  height: 120rpx;
+  width: 140rpx;
+  height: 140rpx;
 }
 
 .list-initiator-nick text{
@@ -80,6 +81,17 @@
   width: 340rpx;
 }
 
+.title-finished{
+  font-size: 16px;
+  font-family: Microsoft YaHei;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1px 1px 1px 6px;
+  border-bottom: 1px solid rgba(255,255,255, 0.5);
+  width: 300rpx;
+}
+
 .time{
   width: 160rpx;
   margin-top: 5rpx;
@@ -88,6 +100,7 @@
   text-align: right;
 }
 
+
 .list-detail progress{
   margin-top: 20rpx;
   margin-right: 8rpx;
@@ -95,7 +108,7 @@
 }
 
 
-.list-box  image{
+.list-box image{
   height: 35rpx;
   width: 35rpx;
 }
@@ -109,4 +122,39 @@
   background-size: 160rpx 160rpx;
   background-repeat:no-repeat;
   background-position:right; 
+}
+
+.list-box-second{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 20rpx;
+}
+
+
+
+.icon{
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.detail-box-text{
+  padding-left: 10rpx;
+  width: 100rpx;
+  font-size: 12px;
+}
+
+.publish{
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 50px;
+  font-size: 13px;
+  background: #f05b41;
+  color: white;
+}
+
+.button-hover{
+  background: #cc0000;
+  color: #dbcece;
 }
