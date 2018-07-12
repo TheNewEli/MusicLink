@@ -118,6 +118,20 @@
 					"name": "drift-bottle",
 					"pathName": "pages/drift-bottle/drift-bottle",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "list-item",
+					"pathName": "pages/me/list-item/list-item",
+					"query": "id=2",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "publish",
+					"pathName": "pages/publish/publish",
+					"query": "",
+					"scene": "1007"
 				}
 			]
 		}

@@ -53,6 +53,7 @@
                   </block>
                 </view>
               </block>
+
               <block wx:else>
                 <view class="lyric">
                   <text>{{item.lyric}}</text>
@@ -65,6 +66,7 @@
       </block>
     </scroll-view>
   </view>
+
   <view class="control-box">
     <image wx:if="{{!hasOriginSinger}}" animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
       原唱

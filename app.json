@@ -13,7 +13,8 @@
     "pages/toplist/toplist",
     "pages/all-toplist/all-toplist",
     "pages/drift-bottle/drift-bottle",
-    "pages/navigationBar-tpl/navigationBar-tpl"
+    "pages/navigationBar-tpl/navigationBar-tpl",
+    "pages/publish/publish"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",
