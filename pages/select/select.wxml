@@ -48,13 +48,13 @@
 </view>
 
 
-<view class='select-box'>
+<view class='select-box' data-entrance="lock">
   <view class='lock' catchtap='lock'>
     <image src='/images/icon/lock-1.png'></image>
     <text>锁 定</text>
   </view>
   <image src='/images/icon/longstring_icon.png'></image>
-  <view class='handon' catchtap='handon'>
+  <view class='handon' catchtap='handon' data-entrance="handon">
     <image src='/images/icon/handon-1.png'></image>
     <text>提 交</text>
   </view>

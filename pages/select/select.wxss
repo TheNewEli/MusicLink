@@ -172,6 +172,7 @@
   flex-direction: row;
   align-items: center;
   width: 350rpx;
+  height:70rpx;
 }
 
 .lock image{
@@ -189,6 +190,7 @@
   flex-direction: row;
   align-items: center;
   width: 350rpx;
+  height:70rpx;
 }
 
 .handon image{
