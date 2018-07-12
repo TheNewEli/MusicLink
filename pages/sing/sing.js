@@ -241,7 +241,7 @@ Page({
         Org_url: selectedData.allOriginData.origin_url,
       })
       if (!that.data.isDownloading) {
-       that.downloadFiles();
+     that.downloadFiles();
       }
 
     }
@@ -541,7 +541,7 @@ Page({
         tryListeningClickAmount: 0,
       });
       if (!that.data.isDownloading) {
-       that.downloadFiles();
+     that.downloadFiles();
       }
 
     });
@@ -652,7 +652,7 @@ Page({
         mask: true,
       });
       if (!that.data.isDownloading) {
-       that.downloadFiles();
+     that.downloadFiles();
         thats.setData({
           startRecordClickAmount: 0,
           tryListeningClickAmount: 0,
@@ -1075,7 +1075,7 @@ Page({
     if (that.data.file_length_OnError != 0)
       setTimeout(function () {
         console.log("等待文件删除中");
-       that.downloadFiles();
+     that.downloadFiles();
       }, 500);
 
     that.setData({
@@ -1142,7 +1142,7 @@ Page({
                               wx.removeSavedFile({
                                 filePath: res.fileList[i].filePath,
                                 success: function () {
-                                 that.downloadFiles();
+                               that.downloadFiles();
                                 },
                                 complete: function (res) {
                                 }
@@ -1223,7 +1223,7 @@ Page({
       },
       fail: function (err) {
         console.log(err);
-       that.downloadFiles();
+     that.downloadFiles();
       }
     });
     downloadTask1.onProgressUpdate((res) => {
@@ -1334,6 +1334,8 @@ Page({
   },
 
   checkFilesToUpload: function () {
+
+    this.play(3,this);
 
 
     if (!this.data.hasCompleted) {
@@ -1748,7 +1750,7 @@ Page({
 
   },
 
-  //播放Radio动画
+  //播放上传波纹动画
   play: function (count,that) {
 
     if (count < 0) {
@@ -1756,7 +1758,7 @@ Page({
       return;
     }
     console.log("点击中");
-    setTimeout(function () {
+
       //波纹放大,淡出动画
       var animation = wx.createAnimation({
         timingFunction: "ease-in-out",
@@ -1768,12 +1770,16 @@ Page({
         animation_wave: animation.export()
       });
       count--;
+
+    setTimeout(function () {
+      
       that.play(count,that);
-    }, 1500)
+    }, 1200)
 
   },
 
-  cancel:function(){
+  cancel:function(event){
+    //console.log(event);
     this.setData({
       showDialog:false,
     })
