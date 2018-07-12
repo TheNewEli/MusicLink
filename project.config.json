@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 1,
@@ -45,7 +45,7 @@
 					"id": 1,
 					"name": "select",
 					"pathName": "pages/select/select",
-					"query": "created_song_id=28&songId=8&isShare=false",
+					"query": "created_song_id=57&song_id=4&isShare='false'",
 					"scene": "1007"
 				},
 				{

@@ -16,7 +16,7 @@ Page({
       iSback: true,
       color: "#fff",
       text: "选择歌词",
-      background: "#de4137"
+      background: "#010102"
     }
   },
 
