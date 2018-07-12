@@ -1,16 +1,15 @@
 var util = require('../../utils/util');
-var app=getApp();
+var app = getApp();
 
 Page({
   data: {
-    songs:[],
-    song_id:null,
+    songs: [],
+    song_id: null,
     openId: "",
     userAvatar: "",
-    clips:[],
-    createdSongId:"",
-    allOriginData:[],
-
+    clips: [],
+    createdSongId: "",
+    allOriginData: [],
     compatibility: app.globalData.compatibility,
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
@@ -23,18 +22,18 @@ Page({
 
   onLoad: function (options) {
     var openid = wx.getStorageSync('openid');
-    if(openid){
-        var userAvatar = app.globalData.userInfo.avatarUrl;
-        this.setData({
-          openId: openid,
-          userAvatar: userAvatar,
-        })
+    if (openid) {
+      var userAvatar = app.globalData.userInfo.avatarUrl;
+      this.setData({
+        openId: openid,
+        userAvatar: userAvatar,
+      })
     }
 
-    var isShare=options.isShare;
-    var createdSongId=options.created_song_id;
+    var isShare = options.isShare;
+    var createdSongId = options.created_song_id;
     var songId = options.song_id;
-    var that=this;
+    var that = this;
 
     //console.log(options);
     this.setData({
@@ -42,12 +41,12 @@ Page({
       song_id: songId,
     })
 
-    if(isShare!=undefined){
+    if (isShare != undefined) {
       this.setData({
-        isShare:isShare
+        isShare: isShare
       })
     }
-    
+
     this.setSongsLyricsData();
   },
 
@@ -60,8 +59,8 @@ Page({
   //获取歌曲详细信息
   setSongsLyricsData: function () {
 
-    var that=this;
-    var data={
+    var that = this;
+    var data = {
       requestType: "GetClips",
       song_id: this.data.song_id
     }
@@ -93,26 +92,26 @@ Page({
       console.log("请求失败");
     })
   },
-  
+
   //绑定请求后的数据
-  processRequestData_Create:function(res){
+  processRequestData_Create: function (res) {
     var selected = res.data.selected_info;
     var songs = this.data.songs;
     var lyrics = songs.lyrics;
-    var clips=[];
-    for(var i in selected){
+    var clips = [];
+    for (var i in selected) {
 
-      if (selected[i].openid == this.data.openId){
+      if (selected[i].openid == this.data.openId) {
         clips.push(selected[i].clip_count);
       }
-      for(var j in lyrics){
-        if (lyrics[j].clipCount == selected[i].clip_count){
+      for (var j in lyrics) {
+        if (lyrics[j].clipCount == selected[i].clip_count) {
           lyrics[j].selected_user_avatar = selected[i].avatar;
           lyrics[j].selected_user_openId = selected[i].openid;
           lyrics[j].isSelected = true;
           lyrics[j].isSing = selected[i].is_sang;
         }
-      } 
+      }
     }
 
     this.setData({
@@ -123,58 +122,58 @@ Page({
 
 
   //处理数据-sing界面使用
-  processRequestData:function(res){
-    
+  processRequestData: function (res) {
+
     var allOriginData = res.data;
 
     var that = this;
-    var songs={
-      songId:res.data.song_id,
-      music:{
-        title:res.data.title,
-        coverImg:res.data.cover_url,
-        singer:res.data.artist,
+    var songs = {
+      songId: res.data.song_id,
+      music: {
+        title: res.data.title,
+        coverImg: res.data.cover_url,
+        singer: res.data.artist,
       },
-      lyrics:[],
+      lyrics: [],
     }
 
 
-    for (var i in res.data.songs){
-      var song =res.data.songs[i];
+    for (var i in res.data.songs) {
+      var song = res.data.songs[i];
       //console.log(song);
       for (var j in song.lyric.lyrics) {
-         var temp={
-           lyric: song.lyric.lyrics[j].lyric,
-           clipCount: song.clipCount,
-           selected_user_avatar:null,
-           selected_user_openId: null,
-           isSelected: null,
-           isSing:false,
-         }
-         songs.lyrics.push(temp);
+        var temp = {
+          lyric: song.lyric.lyrics[j].lyric,
+          clipCount: song.clipCount,
+          selected_user_avatar: null,
+          selected_user_openId: null,
+          isSelected: null,
+          isSing: false,
+        }
+        songs.lyrics.push(temp);
       }
     }
     that.setData({
-      songs:songs,
-      allOriginData:allOriginData,
+      songs: songs,
+      allOriginData: allOriginData,
     })
   },
 
 
-  selectLyrics:function(event){
+  selectLyrics: function (event) {
 
     var lyricId = event.currentTarget.dataset.lyricId;
     var songs = this.data.songs;
     var lyrics = songs.lyrics[lyricId];
     var clipCount = songs.lyrics[lyricId].clipCount;
 
-    if(this.check()){
-      if ((this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null )&& !lyrics.isSing) {
+    if (this.check()) {
+      if ((this.data.openId == lyrics.selected_user_openId || lyrics.selected_user_openId == null) && !lyrics.isSing) {
         var clips = [];
         if (lyrics.isSelected) {
           for (var i in this.data.clips) {
             if (this.data.clips[i] != lyrics.clipCount) {
-              
+
               clips.push(this.data.clips[i])
             }
           }
@@ -206,16 +205,16 @@ Page({
           clips: clips
         })
       }
-    }   
+    }
   },
 
 
   // 锁定已选择歌词，给出交互信息，
   // 对成功锁定的歌词进行成功反馈，对锁定失败的歌词进行失败反馈
   // 锁定后可再次进行，锁定，解锁
-  lock:function(){
+  lock: function (event) {
 
-    if(this.check()){
+    if (this.check()) {
       var that = this;
       var data = {
         requestType: "CreateClips",
@@ -266,6 +265,7 @@ Page({
         }
 
         var content = successString + failedString;
+      
         if (content == "") {
           wx.showModal({
             title: "提示",
@@ -273,19 +273,22 @@ Page({
           })
         } else {
 
-          var that = this;
           wx.showModal({
             title: '提示',
-            content: successString + failedString,
+            content: content,
             confirmText: "确定",
             success:function(res){
-              if(res.confirm){
-                wx.redirectTo({
-                  url: '../sing/sing?songId=' + that.data.song_id,
-                })
-              }
+              if(res.confirm)
+                if(event.currentTarget.dataset.entrance=="handon"){
+                  wx.setStorageSync("selectedData", that.data);
+                  wx.redirectTo({
+                    url: '../sing/sing?songId=' + that.data.song_id,
+                  })
+                }
+
             }
           })
+         
         }
       }).catch((err) => {
         console.log("请求失败");
@@ -296,40 +299,36 @@ Page({
 
   // 对整个选择整体提交服务器，点击后不能再选
   //提交后跳转至唱歌界面
-  handon:function(){
+  handon: function (event) {
 
-    if(this.data.clips.length==0){
+    if (this.data.clips.length == 0) {
       wx.showModal({
-        title:"提示",
-        content:"你还没选任何数据喔",
+        title: "提示",
+        content: "你还没选任何数据喔",
       })
       return;
     }
 
-    this.lock();
-
-    wx.setStorageSync("selectedData", this.data);
-    
-   
+     this.lock(event);
   },
 
 
-  onShareAppMessage:function(res){
+  onShareAppMessage: function (res) {
     if (res.from === 'menu') {
       console.log(res.target)
     }
-    var isShare=true;
+    var isShare = true;
     var category = 'Select';
     var userInfo = app.globalData.userInfo;
-    var titleString = userInfo.nickName + "邀请你和他一起唱 《" + this.data.allOriginData.title+ "》";
+    var titleString = userInfo.nickName + "邀请你和他一起唱 《" + this.data.allOriginData.title + "》";
     return {
-      title: titleString, 
+      title: titleString,
       path: '/pages/welcome/welcome?isShare=' + isShare + '&created_song_id=' + this.data.createdSongId + '&song_id=' + this.data.songs.songId + '&category=' + category,
-      imageUrl:this.data.songs.music.coverImg,
+      imageUrl: this.data.songs.music.coverImg,
     }
   },
 
-  check:function(){
+  check: function () {
     //未授权无法使用该功能
     var openid = wx.getStorageSync("openid");
     if (!openid) {
@@ -349,7 +348,7 @@ Page({
         }
       });
       return false;
-    }else{
+    } else {
       return true;
     }
   },

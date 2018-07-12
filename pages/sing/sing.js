@@ -56,7 +56,7 @@ Page({
     isReadying: true,
     isRecording: false,
     disableSkip: false,
-    disableOrg: true,
+    disableOrg: false,
 
     //进度和提示
     progress: 0,
@@ -1595,31 +1595,7 @@ Page({
 
     util.requestFromServer("IsCompleted", data).then((res) => {
 
-      if (res.data.IsCompleted == "false") {
-        wx.showModal({
-          title: "提示",
-          content: "恭喜你完成你选择的所有部分，但是这首歌还未被全部完成喔，点击右上角分享邀请更多的人吧",
-          success: function (res) {
-            if (res.confirm) {
-              that.onShareAppMessage("");
-            }
-            else {
-              wx.showModal({
-                title: "提示",
-                content: "好吧，现在你可以选择返回到其他人的分享界面查看更多歌曲了！",
-                success: function (res) {
-                  if (res.confirm) {
-                    wx.navigateBack({
-                      url: '../world/world'
-                    })
-                  }
-                }
-              })
-            }
-          }
-        });
-      }
-      else if (res.data.IsCompleted == "true") {
+      if (res.data.IsCompleted == "true") {
         wx.showModal({
           title: "提示",
           content: "经过你的努力，这首歌由你最后完成了，是否前往试听",
