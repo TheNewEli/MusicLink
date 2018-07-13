@@ -39,10 +39,25 @@ Page({
       toplist = wx.getStorageSync("foreignData");
       navigationText = "连音符·外语榜";
     } else if (category == CATEGROY_MOD_4) {
+      var songs=[];
+      var Temp = wx.getStorageSync("BillboardListData").songs;
+      //数据处理
+      for (var i in Temp){
+        var singer = Temp[i].nickname + " (Cover " + Temp[i].artist + ")";
+        var temp={
+          coverageUrl:Temp[i].cover_url,
+          title: Temp[i].title,
+          singer: singer,
+          created_song_id: Temp[i].created_song_id
+        }
+        songs.push(temp);
+      }
+
+      var toplist={
+        songs: songs,
+        categoryTitle: "完结"
+      };
       
-      //通过http请求获取完结歌曲信息
-      //待完成 等待接口
-      toplist = wx.getStorageSync("WorldPosted");
       navigationText = "连音符·完结榜";
     } else{
       console.log("err:Toplist 传参错误");

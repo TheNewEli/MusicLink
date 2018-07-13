@@ -131,13 +131,13 @@ Page({
   getFinishedData: function () {
     var that = this;
     var data = {
-      requestType: "GetWorldPosted"
+      requestType: "GetBillboardList"
     }
 
-    util.requestFromServer("GetWorldPosted", data).then((res) => {
+    util.requestFromServer("GetBillboardList", data).then((res) => {
       // console.log(res.data);
       that.setData({
-        WorldPosted: res.data
+        BillboardList: res.data
       })
     }).catch((err) => {
       console.log("请求失败");
@@ -219,7 +219,7 @@ Page({
         break;
       case 2:
       //完结歌曲榜单
-        wx.setStorageSync("WorldPostedData", this.data.WorldPosted);
+        wx.setStorageSync("BillboardListData", this.data.BillboardList);
         wx.navigateTo({
           url: '../toplist/toplist?category=' + "完结",
         });

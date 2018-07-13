@@ -22,13 +22,16 @@ page{
   bottom: 0;
   z-index: 150;
   width: 100%;
-  height: 300px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .background{
   top: 0;
   width: 750rpx;
-  height: 300px;
+  height: 340px;
   z-index: -1;
   opacity: 0.3;   
   -webkit-filter: blur(10rpx); 
@@ -47,7 +50,7 @@ page{
 
 .shader{
   width: 100%;
-  height: 300px;
+  height: 340px;
   background: #222; 
   opacity: 0.3; 
   z-index: 1;
@@ -96,7 +99,7 @@ page{
   border-radius: 50px;
   background: #f05b41;
   color: white; 
-  margin-top: 25%;
+  margin-top: 10%;
 }
 
 .button-hover{
@@ -131,7 +134,31 @@ page{
 }
 
 
+.title{
+    padding: 30rpx 0 20rpx 0;
+    font-size: 17px;
+    width: 600rpx;
+    /* height: 30px;
+    line-height: 30px; */
+    color: #ffffff;
+    font-weight: 700;
+    text-align: center;
 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.other{
+    font-size: 15px;
+    padding: 7rpx 0 7rpx 0;
+    color: #f0f0f0;
+    width: 600rpx;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 
 
