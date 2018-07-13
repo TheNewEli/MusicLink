@@ -102,7 +102,6 @@ page{
  margin-top: 140%;
  z-index: 10;
  position: fixed;
- background-color: #e4eff9;
  border-radius: 50%;
  opacity: 0.9;
  
