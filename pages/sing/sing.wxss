@@ -148,7 +148,7 @@ page{
  display: flex;
  flex-direction: column;
  align-items: center;
- background-color: #e4eff9;
+ background-color: #ecc2bf;
  padding: 25rpx 40rpx 25rpx 40rpx;
  /* width: 100%; */
 }
@@ -158,14 +158,14 @@ page{
  /* width: 100%; */
  text-align: center;
  font-size: 17px;
- color: #a0a0a0; 
+ color: #fff; 
 }
 
 .lyric-toview .current{
  width: 100%;
  text-align: center;
  font-size: 17px;
- color: 	#8aaed7; 
+ color: 	#cc5048; 
 }
 
 

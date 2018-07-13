@@ -12,7 +12,7 @@
 
 <!--动态-->
     <swiper-item>
-      <scroll-view class='world-container' scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >
+      <scroll-view class='world-container' scroll-y bindscrolltoupper="upper" style="height: {{windowHeight-statusBarHeight-40}}px;" >
         <block wx:for="{{FinishedList}}" wx:for-item="item" wx:key="item.worldId">
           <view catchtap='onTapToPlay' data-ids='{{item.ids}}'>
               <view class='world-item'>

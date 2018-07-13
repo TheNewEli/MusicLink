@@ -56,12 +56,14 @@ Page({
   onPullDownRefresh:function(){
     var that=this;
     that.getAllDataFromServer();
+    that.getFinishedData();
     wx.stopPullDownRefresh();
   },
 
   upper: function (e) {
     var that = this;
     that.getAllDataFromServer();
+    that.getFinishedData();
     wx.stopPullDownRefresh();
   },
 

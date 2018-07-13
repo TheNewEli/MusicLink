@@ -19,12 +19,19 @@ Page({
     var inthreatenSongs = wx.getStorageSync("inthreatenData").songs;
     var recommendSongs = wx.getStorageSync("recommendData").songs;
     var foreignSongs = wx.getStorageSync("foreignData").songs;
+    var BillboardList = wx.getStorageSync("BillboardListData").songs;
     var topList=[
       { 
         toplistIndex: 0, 
         image: "/images/cover/finishedmusic.jpg", 
-        song: ["song1", "song2", "song3"], 
-        singer: ["singer1", "singer2", "singer3"],
+        song: [
+          BillboardList[0].title,
+          BillboardList[1].title
+        ],
+        singer: [
+          BillboardList[0].nickname +" (Cover " + BillboardList[0].artist + ")",
+          BillboardList[1].nickname + " (Cover " + BillboardList[1].artist + ")"
+        ],
         category: "完结" 
       },
       {
