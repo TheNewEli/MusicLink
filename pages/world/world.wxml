@@ -12,7 +12,7 @@
 
 <!--动态-->
     <swiper-item>
-      <scroll-view class='world-container' scroll-y style="height: {{windowHeight-statusBarHeight-40}}px;" >
+      <scroll-view class='world-container' scroll-y bindscrolltoupper="upper" style="height: {{windowHeight-statusBarHeight-40}}px;" >
         <block wx:for="{{FinishedList}}" wx:for-item="item" wx:key="item.worldId">
           <view catchtap='onTapToPlay' data-ids='{{item.ids}}'>
               <view class='world-item'>
@@ -43,7 +43,7 @@
                     <image class='icon' src='/images/icon/listen.png'></image>
                     <text class='detail-box-text'>{{item.listened_time}}</text>
                     <image class='icon' src='/images/icon/grade.png'></image>
-                    <text class='detail-box-text'>1000分</text>
+                    <text class='detail-box-text'>{{item.song_score}}分</text>
                   </view>
                 </view>
               </view>

@@ -179,11 +179,11 @@
 }
 .text{
     line-height: 32px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #969090;
     font-size: 14px;
 }
 .current {
-    color: #ffcd32;
+    color: #fff;
 }
 
 .currentLyricContainer {
@@ -194,7 +194,7 @@
     line-height: 70rpx;
     text-align: center;
     width: 100%;
-    color: #ffcd32;
+    color: #fff;
 }
 
 /*********swiper切换dots************/
@@ -239,14 +239,21 @@
 }
 
 .control-box .button-icon{
-  height: 100rpx;
-  width: 100rpx;
+  height: 60rpx;
+  width: 60rpx;
 }
 
 .control-box button{
-  height: 100rpx;
+  height: 60rpx;
   width: 140rpx;
   border: 0px;
   /* margin-left: 20rpx;
   margin-right: 20rpx; */
+}
+
+.icon-return{
+  height: 60rpx;
+  width: 60rpx;
+  margin-left: 40rpx;
+  margin-right: 40rpx;
 }

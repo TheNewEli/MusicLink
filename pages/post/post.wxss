@@ -34,7 +34,7 @@
   /* border: 1px solid #cdcdcd;   */
   border-radius: 30px; 
   margin-left: 50rpx;
-  background: #7aa2cc; 
+  background: #d33228; 
   /* opacity: 0.5; */
 }
 .search .search-image{

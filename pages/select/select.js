@@ -11,12 +11,13 @@ Page({
     createdSongId: "",
     allOriginData: [],
     compatibility: app.globalData.compatibility,
+    windowHeight: app.globalData.windowHeight,
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
       iSback: true,
-      color: "#000",
+      color: "#fff",
       text: "选择歌词",
-      background: "#8aaed7"
+      background: "#010102"
     }
   },
 

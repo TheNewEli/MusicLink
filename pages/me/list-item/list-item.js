@@ -31,11 +31,11 @@ Page({
   onReady: function () {
     var navigationText;
     if (this.data.id == 0){
-      navigationText = "我发起的歌曲";
+      navigationText = "发起的歌曲";
     } else if (this.data.id == 1){
-      navigationText = "我参与的歌曲";
+      navigationText = "参与的歌曲";
     } else if (this.data.id == 2) {
-      navigationText = "我完成的歌曲";
+      navigationText = "作品";
     }
 
     wx.setNavigationBarTitle({
@@ -46,9 +46,9 @@ Page({
       Comp: {
         statusBarHeight: app.globalData.statusBarHeight,
         iSback: true,
-        color: "#000",
+        color: "#fff",
         text: navigationText,
-        background: "#8aaed7"
+        background: "#de4137"
       }
     })
   },
@@ -176,8 +176,8 @@ Page({
         song_id: song.song_id,
         title: song.title,
         world_shared: song.world_shared,
-        world_posted: song.world_psted,   //此处服务器给错了
-        listened_time: 7,     //暂时固定
+        world_posted: song.world_posted,   //此处服务器给错了
+        listened_time: song.listened_time,     //暂时固定
         grade: song.song_score    
       }
       FinishedItem.push(temp);
