@@ -14,12 +14,13 @@
     "pages/all-toplist/all-toplist",
     "pages/drift-bottle/drift-bottle",
     "pages/navigationBar-tpl/navigationBar-tpl",
-    "pages/publish/publish"
+    "pages/publish/publish",
+    "pages/dialog-oprated/dialog-oprated"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",
     "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "list": [

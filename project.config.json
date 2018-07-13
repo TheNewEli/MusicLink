@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 15,
 			"list": [
 				{
 					"id": 1,
@@ -132,6 +132,11 @@
 					"pathName": "pages/publish/publish",
 					"query": "",
 					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "dialog-oprated",
+					"pathName": "pages/dialog-oprated/dialog-oprated"
 				}
 			]
 		}
