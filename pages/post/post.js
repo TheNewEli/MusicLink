@@ -227,6 +227,7 @@ Page({
       case 3:
       //排行榜（总）
       //将所有歌曲信息存到缓存中，方便后面获取。
+        wx.setStorageSync("BillboardListData", this.data.BillboardList);
         wx.setStorageSync("inthreatenData", this.data.inThreaten);
         wx.setStorageSync("recommendData", this.data.ourRecommend);
         wx.setStorageSync("foreignData", this.data.foreign);

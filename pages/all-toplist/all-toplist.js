@@ -26,11 +26,13 @@ Page({
         image: "/images/cover/finishedmusic.jpg", 
         song: [
           BillboardList[0].title,
-          BillboardList[1].title
+          BillboardList[1].title,
+          BillboardList[2].title
         ],
         singer: [
           BillboardList[0].nickname +" (Cover " + BillboardList[0].artist + ")",
-          BillboardList[1].nickname + " (Cover " + BillboardList[1].artist + ")"
+          BillboardList[1].nickname + " (Cover " + BillboardList[1].artist + ")",
+          BillboardList[2].nickname + " (Cover " + BillboardList[2].artist + ")"
         ],
         category: "完结" 
       },
