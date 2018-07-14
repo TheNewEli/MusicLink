@@ -20,8 +20,8 @@ Page({
     swipperPost:{},
 
     subfieldList:[
-      { subfieldIndex: 0, image: "/images/icon/together_icon.png", text: "合唱" },
-      { subfieldIndex: 1, image: "/images/icon/driftbottle_icon.png", text: "漂流瓶" },
+      { subfieldIndex: 0, image: "/images/icon/together_icon.png", text: "大合唱" },
+      { subfieldIndex: 1, image: "/images/icon/bloom_icon.png", text: "发现" },
       { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "完结" },
       { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
     ],
@@ -210,12 +210,20 @@ Page({
     switch(idx){
       case 0:
       //合唱
+        wx.showToast({
+          title: '功能暂时未开放',
+          icon:"none",
+        })
         break;
       case 1:
       //漂流瓶
-        wx.navigateTo({
-          url: '../drift-bottle/drift-bottle',
-        });
+        // wx.navigateTo({
+        //   url: '../drift-bottle/drift-bottle',
+        // });
+        wx.showToast({
+          title: '功能暂时未开放',
+          icon:"none",
+        })
         break;
       case 2:
       //完结歌曲榜单
