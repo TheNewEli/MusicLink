@@ -72,12 +72,12 @@ Page({
       song: [
         foreignSongs[0].title,
         foreignSongs[1].title,
-        foreign[2].title
+        foreignSongs[2].title,
       ],
       singer: [
         foreignSongs[0].singer,
         foreignSongs[1].singer,
-        foreign[2].singer
+        foreignSongs[2].singer,
       ],
       category: "外语"
       }
