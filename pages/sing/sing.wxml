@@ -15,15 +15,16 @@
   <!-- <view style='padding-top:{{Comp.statusBarHeight+45}}px'></view> -->
 </block>
 
-<view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}">
-  <!-- <view class="progress-bar" hidden="{{true}}"> -->
+ <view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}"> 
+    <!-- <view class="progress-bar" hidden="{{true}}">   -->
   <canvas class="circleBar" canvas-id="canvasArc"></canvas>
   <view class='cc'>加载中</view>
   <view class="title">{{propt_motto}}</view>
   <!-- <view class="title">这是一个测试</view> -->
 </view>
 
-<view class="dialog" hidden="{{!showDialog}}">
+ <view class="dialog-score" hidden="{{!showDialog_Score}}">
+  <!-- <view class="dialog" hidden="{{false}}"> -->
   <template is="dialogTpl" data="{{score:score, progress: currentProgress,stars:starsArray,reaminedClipCnt:totalChoosedClipsCount- completedClipsNum}}" ></template>
 </view>
 

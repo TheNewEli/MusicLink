@@ -108,7 +108,7 @@ Page({
     compatibility: app.globalData.compatibility,
 
     //显示消息弹窗
-    showDialog:false,
+    showDialog_Score:false,
   },
 
   onLoad: function (options) {
@@ -354,7 +354,7 @@ Page({
 
       //让被唱的那一段的前一段，跳转到顶部，达到让被唱段搂在中部的目的，
       //若要让被唱段跳转到顶部，"ClipCount" + (currentClipNum - 1) 就行
-      var toCurrentView = "ClipCount" + (currentClipNum - 1);
+      var toCurrentView = "ClipCount" + (currentClipNum-1);
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
 
       var hasCompleted = false;
@@ -1448,7 +1448,7 @@ Page({
                 that.setData({
                   hasUploaded:true,
                   score:res.data.score,
-                  showDialog:true,
+                  showDialog_Score:true,
                   starsArray:util.convertToStarsArray(res.data.score/1000),
                 });
 
@@ -1732,10 +1732,9 @@ Page({
     cxt_arc.stroke();//对当前路径进行描边
 
     var gradient = cxt_arc.createLinearGradient(200, 100, 100, 200);
-    gradient.addColorStop("0", "#2661DD");
-    gradient.addColorStop("0.5", "#40ED94");
-    gradient.addColorStop("0.7", "#8d1bff");
-    gradient.addColorStop("1.0", "#5956CC");
+    gradient.addColorStop("0", "#ff3333");
+    gradient.addColorStop("0.7", "#ff9933");
+    gradient.addColorStop("1.0", "#9a0000");
 
 
     cxt_arc.setLineWidth(10);
@@ -1775,14 +1774,14 @@ Page({
     setTimeout(function () {
       
       that.play(count,that);
-    }, 1200)
+    }, 1000)
 
   },
 
   cancel:function(event){
     //console.log(event);
     this.setData({
-      showDialog:false,
+      showDialog_Score:false,
     })
   }
 
