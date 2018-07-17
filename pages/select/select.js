@@ -205,6 +205,16 @@ Page({
           songs: songs,
           clips: clips
         })
+      } else if(this.data.openId != lyrics.selected_user_openId){
+        wx:wx.showToast({
+          title: '该段已被其他用户选择',
+          icon: 'none'
+        })
+      } else if (lyrics.isSing){
+        wx: wx.showToast({
+          title: '该段已唱，无法取消',
+          icon: 'none'
+        })
       }
     }
   },
