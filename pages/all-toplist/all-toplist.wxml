@@ -23,7 +23,7 @@
   </view>
 
   <view class='container'>
-    <text class='title'>完结榜</text>
+    <text class='title'>作品榜</text>
     <view class='top-container'>
       <view class='top-item' catchtap='onCatchTop' data-idx='0'>
         <image src='{{topList[0].image}}'></image>

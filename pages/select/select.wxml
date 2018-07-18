@@ -1,3 +1,7 @@
+<view class='shader'>
+  <image class='background' src='/images/cover/bg_select.jpg'></image>
+</view>
+
 <import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
   <block wx:if="{{compatibility}}">
     <template is="navigationBarTpl" data="{{...Comp}}"></template>
@@ -18,7 +22,7 @@
     </view>
   </view>
 
-  <view class='lyrics-container'>
+  <view class='lyrics-container' style="top: {{Comp.statusBarHeight+45+95}}px;" >
     <block wx:for="{{songs.lyrics}}" wx:for-item="item" wx:for-index="index" wx:key="">
       <view class='lyrics-item' catchtap='selectLyrics' data-lyric-id='{{index}}'>
 

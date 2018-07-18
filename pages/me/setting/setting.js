@@ -38,7 +38,8 @@ Page({
         iSback: true,
         color: "#000",
         text: title,
-        background: "#fff"
+        background: "#fff",
+        iSpadding: true
       }
     })
   },

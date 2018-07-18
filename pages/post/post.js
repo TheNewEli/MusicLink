@@ -22,7 +22,7 @@ Page({
     subfieldList:[
       { subfieldIndex: 0, image: "/images/icon/together_icon.png", text: "大合唱" },
       { subfieldIndex: 1, image: "/images/icon/bloom_icon.png", text: "发现" },
-      { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "完结" },
+      { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "作品榜" },
       { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
     ],
 
@@ -229,7 +229,7 @@ Page({
       //完结歌曲榜单
         wx.setStorageSync("BillboardListData", this.data.BillboardList);
         wx.navigateTo({
-          url: '../toplist/toplist?category=' + "完结",
+          url: '../toplist/toplist?category=' + "作品",
         });
         break;
       case 3:
