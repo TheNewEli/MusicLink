@@ -12,10 +12,10 @@
     "pages/player/player",
     "pages/toplist/toplist",
     "pages/all-toplist/all-toplist",
-    "pages/drift-bottle/drift-bottle",
     "pages/navigationBar-tpl/navigationBar-tpl",
     "pages/publish/publish",
-    "pages/dialog-oprated/dialog-oprated"
+    "pages/dialog-oprated/dialog-oprated",
+    "pages/balloon/balloon"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",

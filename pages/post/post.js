@@ -217,13 +217,13 @@ Page({
         break;
       case 1:
       //漂流瓶
-        // wx.navigateTo({
-        //   url: '../drift-bottle/drift-bottle',
-        // });
-        wx.showToast({
-          title: '功能暂时未开放',
-          icon:"none",
-        })
+        wx.navigateTo({
+          url: '../balloon/balloon',
+        });
+        // wx.showToast({
+        //   title: '功能暂时未开放',
+        //   icon:"none",
+        // })
         break;
       case 2:
       //完结歌曲榜单
