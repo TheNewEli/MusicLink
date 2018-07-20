@@ -99,12 +99,13 @@ page{
 .upload-btn{
  width: 110rpx;
  height: 110rpx;
- margin-top: 140%;
+ /* margin-top: 140%; */
+ bottom: 200rpx;
  z-index: 10;
  position: fixed;
  border-radius: 50%;
  opacity: 0.9;
- 
+
 }
 
 .upload-click{
