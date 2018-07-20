@@ -11,6 +11,10 @@
   z-index: 10;
 }
 
+.swiper-image{
+  width: 750rpx;
+}
+
 .nav-container .image-back{
   width: 15px;
   height: 15px;

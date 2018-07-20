@@ -111,7 +111,6 @@ Page({
         console.log("请求失败");
       })
     }
-
   },
 
   setAllData: function (songs) {
