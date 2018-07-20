@@ -11,7 +11,7 @@
     margin-top: 40px;
     width: 400rpx;
     background-color: #8dc21f;
-    color: #767575;
+    color: #fff;
 
     border-radius: 50px;
     font-size: 13px;
@@ -23,7 +23,7 @@
     margin-top: 20px;
     width: 400rpx;
     background-color: #8dc21f;
-    color: #767575;
+    color: #fff;
 
     border-radius: 50px;
     font-size: 13px;
@@ -45,10 +45,9 @@
 
 .setting-img{
   align-items: center;
-  margin-top: 10%;
+  margin-top: 15%;
   width: 80%;
   height: 400rpx;
-  /* margin-right: 5%; */
 }
 
 .button-hover{
