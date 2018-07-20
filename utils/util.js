@@ -29,20 +29,28 @@ function getDiffTime(recordTime, yearFlag) {
     var hourC = diff / hour;
     var minC = diff / minute;
     if (weekR > 1) {
-      var formate = "MM-dd hh:mm";
+      var formate = "MM-dd";
       if (yearFlag)
-        formate = 'yyyy-MM-dd hh:mm'
+        formate = 'yyyy-MM-dd'
       return recordTime.format(formate);
+      // var formate = "MM-dd hh:mm";
+      // if (yearFlag)
+      //   formate = 'yyyy-MM-dd hh:mm'
+      // return recordTime.format(formate);
     }
     else if (dayC == 1 || (hourC < 24 && recordTime.getDate() != now.getDate())) {
       result = '昨天' + recordTime.format("hh:mm");
       return result;
     }
     else if (dayC > 1) {
-      var formate = 'MM-dd hh:mm';
+      var formate = 'MM-dd';
       if (yearFlag) {
-        formate = "yyyy-MM-dd hh:mm"
+        formate = "yyyy-MM-dd"
       }
+      // var formate = 'MM-dd hh:mm';
+      // if (yearFlag) {
+      //   formate = "yyyy-MM-dd hh:mm"
+      // }
       return recordTime.format(formate);
     }
 

@@ -64,6 +64,8 @@
 .about{
   display: flex;
   flex-direction: column;
+  line-height: 28px;
+  padding-bottom: 50px;
 }
 
 .about image{
@@ -75,7 +77,7 @@
   color: #808080;
   font-size: 14px;
   font-family: Microsoft YaHei;
-  padding: 15px 25px 0px 25px;
+  padding: 10px 25px 0px 25px;
   text-align: left;
 }
 

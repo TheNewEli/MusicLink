@@ -13,7 +13,9 @@
       <text class='text-back-false' style='color:{{color}}' >{{text}}</text>
     </block> 
   </view>
-  <view style='padding-top:{{statusBarHeight+45}}px'></view>
+  <block wx:if="{{iSpadding}}">
+    <view style='padding-top:{{statusBarHeight+45}}px'></view>
+  </block> 
 </template>    
 
 

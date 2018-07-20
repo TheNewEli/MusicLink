@@ -1,9 +1,10 @@
 var util = require('../../utils/util');
+var app = getApp();
 
 const CATEGROY_MOD_1 = "热门";
 const CATEGROY_MOD_2 = "推荐";
 const CATEGROY_MOD_3 = "外语";
-const CATEGROY_MOD_4 = "完结";
+const CATEGROY_MOD_4 = "作品";
 
  
 Page({
@@ -16,7 +17,16 @@ Page({
             "/images/icon/second.png",
             "/images/icon/third.png"],
     category:null,
-    toplist:null
+    toplist:null,
+    compatibility: app.globalData.compatibility,
+    Comp: {
+      statusBarHeight: app.globalData.statusBarHeight,
+      iSback: true,
+      color: "#fff",
+      text: "返回",
+      background: "",
+      iSpadding:false
+    }
   },
 
   /**
@@ -55,10 +65,10 @@ Page({
 
       var toplist={
         songs: songs,
-        categoryTitle: "完结"
+        categoryTitle: "作品"
       };
       
-      navigationText = "连音符·完结榜";
+      navigationText = "连音符·作品榜";
     } else{
       console.log("err:Toplist 传参错误");
     }
@@ -69,6 +79,12 @@ Page({
     })
     wx.setNavigationBarTitle({
       title: navigationText,
+    })
+  },
+
+  onBackTap: function () {
+    wx.navigateBack({
+      delta: 1
     })
   },
 

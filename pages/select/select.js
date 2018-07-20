@@ -17,7 +17,8 @@ Page({
       iSback: true,
       color: "#fff",
       text: "选择歌词",
-      background: "#010102"
+      background: "",
+      iSpadding: true
     }
   },
 
@@ -204,6 +205,16 @@ Page({
         this.setData({
           songs: songs,
           clips: clips
+        })
+      } else if(this.data.openId != lyrics.selected_user_openId){
+        wx:wx.showToast({
+          title: '该段已被其他用户选择',
+          icon: 'none'
+        })
+      } else if (lyrics.isSing){
+        wx: wx.showToast({
+          title: '该段已唱，无法取消',
+          icon: 'none'
         })
       }
     }

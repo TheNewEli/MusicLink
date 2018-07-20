@@ -45,6 +45,23 @@
                     <image class='icon' src='/images/icon/grade.png'></image>
                     <text class='detail-box-text'>{{item.song_score}}分</text>
                   </view>
+
+
+                  <!--参与者头像-->
+                   <scroll-view scroll-x class='avatar-box'>
+                    <block wx:for="{{item.Paticipants}}" wx:for-item="itm">
+                      <image src='{{itm.avatar_url}}'></image>
+                    </block>
+                  </scroll-view> 
+
+
+
+                  <!--参与者昵称-->
+                  <view class='nickName-box'>
+                    <text class='nickName-before'>{{item.nickNameString}}</text>
+                    <text class='nickName-after'>{{item.nickNameString_after}}</text>
+                  </view>
+
                 </view>
               </view>
 

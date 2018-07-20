@@ -1,4 +1,6 @@
- page{
+@import "../navigationBar-tpl/navigationBar-tpl.wxss";
+
+page{
    height: 100%;
    background-color: #fff;
  }

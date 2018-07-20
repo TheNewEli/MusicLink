@@ -189,7 +189,8 @@ Page({
         iSback: true,
         color: "#fff",
         text: title,
-        background: "#dd1d10"
+        background: "#dd1d10",
+        iSpadding: false
       }
     });
 

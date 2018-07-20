@@ -48,7 +48,8 @@ Page({
         iSback: true,
         color: "#fff",
         text: navigationText,
-        background: "#de4137"
+        background: "#de4137",
+        iSpadding:true
       }
     })
   },

@@ -2,17 +2,7 @@
 <import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
 <import src="../dialog-tpl/dialog.wxml"></import>
 <block wx:if="{{compatibility}}">
-  <!-- <template is="navigationBarTpl" data="{{...Comp}}"></template> -->
-  <view class='nav-container' style=' background:{{Comp.background}}; padding-top:{{Comp.statusBarHeight}}px'>
-    <block wx:if="{{Comp.iSback}}">
-      <image class='image-back' catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
-      <text class='text-back-true' style='color:{{Comp.color}}'>{{Comp.text}}</text>
-    </block>
-    <block wx:else>
-      <text class='text-back-false' style='color:{{Comp.color}}'>{{Comp.text}}</text>
-    </block>
-  </view>
-  <!-- <view style='padding-top:{{Comp.statusBarHeight+45}}px'></view> -->
+   <template is="navigationBarTpl" data="{{...Comp}}"></template> 
 </block>
 <view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}">
   <!-- <view class="progress-bar" hidden="{{true}}"> -->

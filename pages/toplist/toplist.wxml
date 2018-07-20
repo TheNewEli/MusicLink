@@ -1,3 +1,8 @@
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+  <block wx:if="{{compatibility}}">
+    <template is="navigationBarTpl" data="{{...Comp}}"></template>
+  </block>
+
 <view class='container'>
   <view class='Top'>
     <image class='cover' src='{{toplist.songs[0].coverageUrl}}'></image>

@@ -1,5 +1,3 @@
-/* #A4B6CF  淡蓝色 */
-/* 3  #CBEFEB */
 page{
   /* background-color: #A4B6CF; */
 }
@@ -101,11 +99,11 @@ page{
   position: fixed;
   bottom: 8%;
   border: 1px solid #fff; 
-  width: 220rpx;
+  width: 300rpx;
   border-radius: 50px; 
-  font-size: 12px;
-  height: 30px;
-  line-height: 30px; 
+  font-size: 35rpx;
+  height: 40px;
+  line-height: 40px; 
   background:none;  
   color:#fff; 
 }

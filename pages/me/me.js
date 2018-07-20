@@ -22,7 +22,8 @@ Page({
         iSback:false,
         color: "#000",
         text:"个人中心",
-        background:"#fff"
+        background: "#fff",
+        iSpadding: true
       }
     },
 

@@ -11,7 +11,8 @@ Page({
       iSback: true,
       color: "#000",
       text: "排行榜",
-      background: "#de4137"
+      background: "#de4137",
+      iSpadding: true
     }
   },
 
@@ -34,7 +35,7 @@ Page({
           BillboardList[1].nickname + " (Cover " + BillboardList[1].artist + ")",
           BillboardList[2].nickname + " (Cover " + BillboardList[2].artist + ")"
         ],
-        category: "完结" 
+        category: "作品" 
       },
       {
         toplistIndex: 1,

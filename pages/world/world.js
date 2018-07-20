@@ -1,6 +1,5 @@
 var util = require('../../utils/util');
 var app=getApp();
-
 Page({
 
   data: {
@@ -131,6 +130,40 @@ Page({
     for (var i in songs) {
       var song = songs[i];
       var create_time_read = util.getDiffTime(song.song_created_time / 1000, true);
+      var nickNameString="";
+      var nickNameString_after="";
+      var Paticipants=[];
+
+      for (var x in song.paticipants) {
+        if(x==0){
+          Paticipants.push(song.paticipants[x]);
+        }else{
+          var temp=true;
+          for (var y in Paticipants){
+            if (song.paticipants[x].avatar_url == Paticipants[y].avatar_url){
+              temp =false;
+              break;
+            }
+          }
+          if(temp){
+            Paticipants.push(song.paticipants[x]);
+          }
+        }
+      }
+
+
+      for (var x in Paticipants){
+        if(x!=0)
+          nickNameString += "、";
+        if(x<10){
+          nickNameString += Paticipants[x].nickname;
+        }else{
+          break;
+        }
+      }
+
+      nickNameString_after = "等" + Paticipants.length +"人参与了合唱";
+
       var temp = {
         ids: {
           created_song_id: song.created_song_id,
@@ -143,6 +176,10 @@ Page({
         comment: song.post_message,
         listened_time: song.listened_time,
         song_score: song.song_score,
+        paticipants: song.paticipants,
+        nickNameString: nickNameString,
+        nickNameString_after: nickNameString_after,
+        Paticipants: Paticipants,
         music: {
           coverImg: song.cover_url,
           singer: song.artist,
