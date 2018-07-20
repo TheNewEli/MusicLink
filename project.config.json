@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 10,
 			"list": [
 				{
 					"id": 1,
@@ -100,53 +100,6 @@
 					"name": "dialog-oprated",
 					"pathName": "pages/dialog-oprated/dialog-oprated",
 					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": "",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "publish",
-					"pathName": "pages/balloon/balloon",
-					"query": "",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": "",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": "",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "balloon",
-					"pathName": "pages/balloon/balloon",
-					"query": "",
-					"scene": "1007"
 				},
 				{
 					"id": -1,

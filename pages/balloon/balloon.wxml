@@ -31,7 +31,7 @@
   <textarea bindinput="inputChange" wx:if="{{display_throw}}" style="height: 80px" placeholder='说些什么吧！' placeholder-style="font-size: 15px; color: #6a6a6a;" maxlength='200' cursor-spacing="77" show-confirm-bar="" />
 
   <text class='center-text' wx:if="{{display_throw}}" >点击选择一首歌曲：</text>
-  <text class='center-text' wx:elif="{{display_pick}}" style="margin-top:10%">{{discovery_message}}</text>
+  <text class='center-text' wx:elif="{{display_pick}}" style="margin-top:50px; border:1px solid #cdcdcd; height: 120px;">{{discovery_message}}</text>
    <text class='center-text' wx:elif="{{display_mine}}" style="margin-top:10%">我所有的参与歌曲</text>
 
   <scroll-view  scroll-y class='list-container' wx:if="{{display_throw}}" style="height:200px">
@@ -62,7 +62,7 @@
       </view>
     </block>
   </scroll-view>
-  <scroll-view  scroll-y class='list-container' wx:elif="{{display_pick}}" style="height:50%; margin-top:10%;">
+  <scroll-view  scroll-y class='list-container' wx:elif="{{display_pick}}" style="height:100px; margin-top:30px;">
    <block wx:for="{{ListItem}}" wx:for-item="item" >
       <view catchtap='onTapToDetail' data-created-song-id='{{item.created_song_id}}' data-song-id='{{item.song_id}}'>
           <view class="list-item-other {{currentSong==item.created_song_id ? 'on' : ''}}"> 
