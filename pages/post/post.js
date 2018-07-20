@@ -20,7 +20,6 @@ Page({
     swipperPost:{},
 
     subfieldList:[
-      { subfieldIndex: 0, image: "/images/icon/together_icon.png", text: "大合唱" },
       { subfieldIndex: 1, image: "/images/icon/bloom_icon.png", text: "发现" },
       { subfieldIndex: 2, image: "/images/icon/finishedSong_icon.png", text: "作品榜" },
       { subfieldIndex: 3, image: "/images/icon/topList_icon.png", text: "排行榜" }
@@ -208,14 +207,14 @@ Page({
   onSubfieldTap: function(event){
     var idx = event.currentTarget.dataset.subfieldid;
     switch(idx){
+      // case 0:
+      // //合唱
+      //   wx.showToast({
+      //     title: '功能暂时未开放',
+      //     icon:"none",
+      //   })
+      //   break;
       case 0:
-      //合唱
-        wx.showToast({
-          title: '功能暂时未开放',
-          icon:"none",
-        })
-        break;
-      case 1:
       //漂流瓶
         wx.navigateTo({
           url: '../balloon/balloon',
@@ -225,14 +224,14 @@ Page({
         //   icon:"none",
         // })
         break;
-      case 2:
+      case 1:
       //完结歌曲榜单
         wx.setStorageSync("BillboardListData", this.data.BillboardList);
         wx.navigateTo({
           url: '../toplist/toplist?category=' + "作品",
         });
         break;
-      case 3:
+      case 2:
       //排行榜（总）
       //将所有歌曲信息存到缓存中，方便后面获取。
         wx.setStorageSync("BillboardListData", this.data.BillboardList);

@@ -122,6 +122,7 @@ swiper
   align-items: center;
   padding: 0 15rpx 0 15rpx;
   border-bottom: 1px solid #f8f8f8;
+  margin-left: 10%;
 }
 
 .subfield-item{
@@ -130,6 +131,7 @@ swiper
   width: 80rpx;
   padding: 40rpx 50rpx 20rpx 50rpx;
   align-items: center; 
+  margin-right: 5%;
 }
 
 .subfield-item image{
