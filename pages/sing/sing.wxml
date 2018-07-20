@@ -14,28 +14,39 @@
   </view>
   <!-- <view style='padding-top:{{Comp.statusBarHeight+45}}px'></view> -->
 </block>
-
- <view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}"> 
-    <!-- <view class="progress-bar" hidden="{{true}}">   -->
+<view class="progress-bar" hidden="{{!isDownloading&&!isUploading}}">
+  <!-- <view class="progress-bar" hidden="{{true}}"> -->
   <canvas class="circleBar" canvas-id="canvasArc"></canvas>
   <view class='cc'>加载中</view>
   <view class="title">{{propt_motto}}</view>
   <!-- <view class="title">这是一个测试</view> -->
 </view>
-
- <view class="dialog-score" hidden="{{!showDialog_Score}}">
+<view class="dialog-score" hidden="{{!showDialog_Score}}">
   <!-- <view class="dialog" hidden="{{false}}"> -->
-  <template is="dialogTpl" data="{{score:score, progress: currentProgress,stars:starsArray,reaminedClipCnt:totalChoosedClipsCount- completedClipsNum}}" ></template>
+  <template is="dialogTpl" data="{{score:score, progress: currentProgress,stars:starsArray,reaminedClipCnt:totalChoosedClipsCount- completedClipsNum}}"></template>
 </view>
 
-<view class="sing-container" >
+<view class="tutorial" hidden="{{tutorailHidden_sing}}">
+  <view class='mask'></view>
+  <view class="swiper-box">
+    <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{1000}}" bindchange='change' bindanimationfinish="animationEnd">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" mode="aspectFit" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>
+
+<view class="sing-container">
   <view class="lyric-box">
     <view class="countDown" hidden="{{isReadying}}">
       <template is="countDownTpl" data="{{remainedTime}}"></template>
     </view>
     <view class="upload-btn" hidden="{{hasUploaded}}">
-      <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png" catchtap="checkFilesToUpload" class="upload-click"/>
-      <image animation="{{animation_wave}}" src="/images/icon/circle_icon.png" class="upload-wave"/>
+      <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png" catchtap="checkFilesToUpload" class="upload-click" />
+      <image animation="{{animation_wave}}" src="/images/icon/circle_icon.png" class="upload-wave" />
     </view>
     <scroll-view scroll-y="true" scroll-with-animation="true" style="height: {{systemInfo.windowHeight-75-45}}px;margin-top:{{Comp.statusBarHeight+45}}px" scroll-into-view="{{toCurrentView}}">
       <block wx:for="{{clipsIndex}}" wx:for-item="clipsIndex" wx:for-index="idx" wx:key="">
@@ -54,7 +65,6 @@
                   </block>
                 </view>
               </block>
-
               <block wx:else>
                 <view class="lyric">
                   <text>{{item.lyric}}</text>
@@ -67,7 +77,6 @@
       </block>
     </scroll-view>
   </view>
-
   <view class="control-box">
     <image wx:if="{{!hasOriginSinger}}" animation="{{animationDatas['origin'].animationData}}" class="image-other" catchtap="playWithOriginalSinger" src="/images/icon/originalsinger_icon.png">
       原唱
