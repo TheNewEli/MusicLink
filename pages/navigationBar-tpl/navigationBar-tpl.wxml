@@ -7,7 +7,7 @@
         <block wx:else>
           <image class='image-back' catchtap='onBackTap' src='/images/icon/back_icon.png'></image>
         </block> 
-      <text class='text-back-true' style='color:{{color}}' >{{text}}</text>
+      <text class='text-back-true' catchtap='onBackTap' style='color:{{color}}' >{{text}}</text>
     </block>
     <block wx:else>
       <text class='text-back-false' style='color:{{color}}' >{{text}}</text>
