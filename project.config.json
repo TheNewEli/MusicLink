@@ -136,11 +136,6 @@
 				},
 				{
 					"id": -1,
-<<<<<<< HEAD
-					"name": "dialog-oprated",
-					"pathName": "pages/dialog-oprated/dialog-oprated",
-					"query": ""
-=======
 					"name": "balloon",
 					"pathName": "pages/balloon/balloon",
 					"query": "",
@@ -152,7 +147,13 @@
 					"pathName": "pages/balloon/balloon",
 					"query": "",
 					"scene": "1007"
->>>>>>> fc05f22496954a194fe6b764508f502ee124a94d
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
 				}
 			]
 		}
