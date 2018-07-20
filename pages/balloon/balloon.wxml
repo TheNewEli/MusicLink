@@ -4,29 +4,29 @@
   </block>
 
 <view class="balloon-box">
-   <image class="bck-img" src="/images/sky_bck.jpg" mode="aspectFill" /> 
-  <image hidden='{{balloon_hidden}}' animation="{{animationData_balloon_up}}" mode='aspectFit' class="balloon-img" src="/images/balloon.png" />
+   <image class="bck-img" src="https://oss.caoyu.online/basic/Discovery/sky_bck.jpg" mode="aspectFill" /> 
+  <image hidden='{{balloon_hidden}}' animation="{{animationData_balloon_up}}" mode='aspectFit' class="balloon-img" src="/images/icon/balloon.png" />
   <view class='boom-box'>
-    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img" src="/images/boom.png" />
-    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img1" src="/images/boom.png" />
-    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img2" src="/images/boom-y.png" />
-    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img3" src="/images/boom-y.png" />
-    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img4" src="/images/boom.png" />
-    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img5" src="/images/boom.png" />
-    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img6" src="/images/boom-g.png" />
-    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img7" src="/images/boom.png" />
-    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img8" src="/images/boom-g.png" />
-    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img9" src="/images/boom-y.png" />
-    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img0" src="/images/boom.png" />
-    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img01" src="/images/boom-g.png" />
-    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img02" src="/images/boom-y.png" />
+    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img" src="/images/icon/boom.png" />
+    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img1" src="/images/icon/boom.png" />
+    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img2" src="/images/icon/boom-y.png" />
+    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img3" src="/images/icon/boom-y.png" />
+    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img4" src="/images/icon/boom.png" />
+    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img5" src="/images/icon/boom.png" />
+    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img6" src="/images/icon/boom-g.png" />
+    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img7" src="/images/icon/boom.png" />
+    <image hidden='{{boom2_hidden}}' animation="{{animationData_boom2}}" class="boom-img8" src="/images/icon/boom-g.png" />
+    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img9" src="/images/icon/boom-y.png" />
+    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img0" src="/images/icon/boom.png" />
+    <image hidden='{{boom0_hidden}}' animation="{{animationData_boom0}}" class="boom-img01" src="/images/icon/boom-g.png" />
+    <image hidden='{{boom1_hidden}}' animation="{{animationData_boom1}}" class="boom-img02" src="/images/icon/boom-y.png" />
   </view>
 </view>
 
 
 
 <view class='center' hidden="{{!display_throw&&!display_pick&&!display_mine}}">
-  <image class='page-bac' src='/images/cover/page.png'></image>
+  <image class='page-bac' src='https://oss.caoyu.online/basic/Discovery/page.png'></image>
 
   <textarea bindinput="inputChange" wx:if="{{display_throw}}" style="height: 80px" placeholder='说些什么吧！' placeholder-style="font-size: 15px; color: #6a6a6a;" maxlength='200' cursor-spacing="77" show-confirm-bar="" />
 

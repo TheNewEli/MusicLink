@@ -1,11 +1,10 @@
 <!--顶部导航栏-自定义-->
 <block wx:if="{{compatibility}}">
   <view class="swiper-tab" style='padding-top:{{statusBarHeight}}px'>
-    <view class="tab-item {{currentTab==0 ? 'on' : ''}}" style='margin-left:25%'  data-current="0" bindtap="swichNav">动态</view>
-    <view class="tab-item {{currentTab==1 ? 'on' : ''}}" style='margin-right:25%'  data-current="1" bindtap="swichNav">世界</view>
+    <view class="tab-item {{currentTab==0 ? 'on' : ''}}" style='margin-left:25%'  data-current="0" bindtap="swichNav">欣赏</view>
+    <view class="tab-item {{currentTab==1 ? 'on' : ''}}" style='margin-right:25%'  data-current="1" bindtap="swichNav">合唱</view>
   </view>
 </block>
-
 
 <!--内容主体-->
   <swiper class="swiper" current="{{currentTab}}" style='margin-top:{{statusBarHeight+40}}px;  height: {{windowHeight-statusBarHeight-40}}px' duration="200" bindchange="swiperChange">
