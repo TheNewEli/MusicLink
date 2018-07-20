@@ -51,6 +51,19 @@
   </view>
 </view>
 
+<view class="tutorial" hidden="{{tutorailHidden_select}}">
+  <view class='mask'></view>
+  <view class="swiper-box">
+    <swiper class="swiper" indicator-active-color="red" indicator-color="gray" indicator-dots="{{true}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{1000}}" bindchange='change' bindanimationfinish="animationEnd">
+      <block wx:for="{{imgUrls}}">
+        <swiper-item>
+          <image src="{{item}}" class="slide-image" mode="aspectFit" />
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>
+
 
 <view class='select-box' data-entrance="lock">
   <view class='lock' catchtap='lock'>

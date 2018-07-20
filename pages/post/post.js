@@ -30,13 +30,23 @@ Page({
     showSearchResult:false,
     showNoResult:false,
     //兼容
-    compatibility: app.globalData.compatibility,
+    compatibility: false,
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
       color: "#000",
       text: "点歌",
       background: "#de4137"
-    }
+    },
+
+     //控制功能导航页
+     tutorailHidden_post: false,
+     hasChanged: false,
+ 
+     //所有导航页
+     imgUrls: [
+       "https://oss.caoyu.online/basic/Guidance/main1.PNG",
+       "https://oss.caoyu.online/basic/Guidance/main2.PNG",
+     ]
   },
 
   /**
@@ -44,17 +54,31 @@ Page({
    */
   onLoad: function (options) {
     
-    // var imgUrls=this.data.imgUrls;
+    var tutorailHidden_post = wx.getStorageSync("tutorailHidden_post");
 
-    // this.setData({
-    //   imgUrls:imgUrls,
-    // });
+    if (tutorailHidden_post === undefined)
+      tutorailHidden_post = false;
+
+    this.setData({
+      tutorailHidden_post:tutorailHidden_post,
+    })
+
+    if(tutorailHidden_post){
+      this.setData({
+        compatibility:app.globalData.compatibility,
+      })
+    }else{
+      wx.hideTabBar();
+    }
+   
+
     this.getSongsListData("GetSongs", "foreign", "外语", { requestType: "GetSongs", category: "外语" });
     this.getSongsListData("GetSongs","inThreaten","热门",{requestType: "GetSongs",category:"热门" });
     this.getSongsListData("GetSongs","ourRecommend","推荐",{requestType: "GetSongs",category:"推荐" });
     this.getSongsListData("GetSongs","swipperPost","海报",{requestType: "GetSongs",category:"海报" });
 
     this.getFinishedData();
+
   },
 
   getSongsListData:function(servelet, settedKey,categoryTitle,data){  
@@ -299,5 +323,51 @@ Page({
       searchResult: searchResult,
       showNoResult: showNoResult
     })
+  },
+
+  change: function (e) {
+    if (this.data.tutorailHidden_post)
+      return;
+
+    console.log(e.detail.current);
+
+    if(e.detail.current == this.data.imgUrls.length-1)
+      wx.showToast({
+        title:"继续右滑结束导航",
+        icon:"none"
+      })
+
+    this.setData({
+      hasChanged: true,
+    })
+
+
+  },
+  animationEnd: function (e) {
+
+    if (this.data.tutorailHidden_post)
+      return;
+    console.log(e.detail.current);
+
+    if (!this.data.hasChanged && e.detail.current == this.data.imgUrls.length-1) {
+      this.setData({
+        tutorailHidden_post: true,
+        compatibility:app.globalData.compatibility,
+      })
+      // wx.showToast({
+      //   title: '导航结束',
+      //   icon: "none",
+      //   duration: 1500,
+      //   mask: "false",
+      // })
+
+      wx.setStorageSync("tutorailHidden_post", true);
+      wx.showTabBar();
+    }
+
+    this.setData({
+      hasChanged: false,
+    })
   }
+
 })

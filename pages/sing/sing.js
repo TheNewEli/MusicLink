@@ -105,7 +105,7 @@ Page({
     isCorrected: false,
 
     // //兼容设置
-    compatibility: app.globalData.compatibility,
+    compatibility: false,
 
     //显示消息弹窗
     showDialog_Score: false,
@@ -116,11 +116,9 @@ Page({
 
     //所有导航页
     imgUrls: [
-      "https://oss.caoyu.online/basic/guidance/sing_start.jpg",
-      "https://oss.caoyu.online/basic/guidance/sing_originalSinger.jpg",
-      "https://oss.caoyu.online/basic/guidance/sing_skip.jpg",
-      "https://oss.caoyu.online/basic/guidance/sing_resume.jpg",
-      "https://oss.caoyu.online/basic/guidance/sing_upload.jpg",
+      "https://oss.caoyu.online/basic/Guidance/sing1.PNG",
+      "https://oss.caoyu.online/basic/Guidance/sing2.PNG",
+      "https://oss.caoyu.online/basic/Guidance/sing3.PNG",
     ]
 
   },
@@ -150,30 +148,30 @@ Page({
     });
 
     var prompt_start = wx.getStorageSync("prompt_start");
-    if (!prompt_start) {
-      wx.showModal({
-        title: "导航",
-        content: "欢迎来到我们的大合唱界面，在这里你可以充分展示你美妙的歌声，唱完后你可选择分享给你的小伙伴，让他们共同完成这一首歌喔",
-        cancelText: "不再提示",
-        confirmText: "知道了",
-        success: function (res) {
-          if (res.cancel) {
-            wx.setStorageSync("prompt_start", true);
-          }
-          wx.showModal({
-            title: "导航",
-            content: "如果你不是很熟悉这首歌，我们为你准备了原唱，唱歌过程中建议插着耳机喔，录音过程中是不能切换原唱和伴奏的喔！",
-            cancelText: "不再提示",
-            confirmText: "知道了",
-            success: function (res) {
-              if (res.cancel) {
-                wx.setStorageSync("prompt_start", true);
-              }
-            }
-          });
-        }
-      });
-    }
+    // if (!prompt_start) {
+    //   wx.showModal({
+    //     title: "导航",
+    //     content: "欢迎来到我们的大合唱界面，在这里你可以充分展示你美妙的歌声，唱完后你可选择分享给你的小伙伴，让他们共同完成这一首歌喔",
+    //     cancelText: "不再提示",
+    //     confirmText: "知道了",
+    //     success: function (res) {
+    //       if (res.cancel) {
+    //         wx.setStorageSync("prompt_start", true);
+    //       }
+    //       wx.showModal({
+    //         title: "导航",
+    //         content: "如果你不是很熟悉这首歌，我们为你准备了原唱，唱歌过程中建议插着耳机喔，录音过程中是不能切换原唱和伴奏的喔！",
+    //         cancelText: "不再提示",
+    //         confirmText: "知道了",
+    //         success: function (res) {
+    //           if (res.cancel) {
+    //             wx.setStorageSync("prompt_start", true);
+    //           }
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
 
     this.drawProgresCircleBar(100);
   },
@@ -265,12 +263,17 @@ Page({
 
     var ER = wx.getStorageSync("ER");
 
+    if(tutorailHidden_sing){
+      this.setData({
+        compatibility:app.globalData.compatibility});
+    }
+
     if (ER == "" || ER.songId != that.data.songId) {
       that.setData({
         BCK_url: selectedData.allOriginData.bg_url,
         Org_url: selectedData.allOriginData.origin_url,
       })
-      if (!that.data.isDownloading) {
+      if (!that.data.isDownloading&&tutorailHidden_sing) {
         that.downloadFiles();
       }
 
@@ -1810,6 +1813,12 @@ Page({
 
     console.log(e.detail.current);
 
+    if(e.detail.current == this.data.imgUrls.length-1)
+      wx.showToast({
+        title:"继续右滑结束导航",
+        icon:"none"
+      })
+
     this.setData({
       hasChanged: true,
     })
@@ -1822,18 +1831,21 @@ Page({
       return;
     console.log(e.detail.current);
 
-    if (!this.data.hasChanged && e.detail.current == 4) {
+    if (!this.data.hasChanged && e.detail.current == this.data.imgUrls.length-1) {
       this.setData({
         tutorailHidden_sing: true,
+        compatibility:app.globalData.compatibility,
       })
-      wx.showToast({
-        title: '导航结束',
-        icon: "none",
-        duration: 1500,
-        mask: "false",
-      })
+      // wx.showToast({
+      //   title: '导航结束',
+      //   icon: "none",
+      //   duration: 1500,
+      //   mask: "false",
+      // })
 
       wx.setStorageSync("tutorailHidden_sing", true);
+
+      this.downloadFiles();
     }
 
     this.setData({

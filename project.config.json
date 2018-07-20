@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 17,
 			"list": [
 				{
 					"id": 1,
@@ -123,6 +123,13 @@
 				{
 					"id": -1,
 					"name": "publish",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "balloon",
 					"pathName": "pages/balloon/balloon",
 					"query": "",
 					"scene": "1007"

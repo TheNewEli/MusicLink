@@ -88,7 +88,7 @@ Page({
 
       util.requestFromServer("GetDiscoveryPosted", data).then((res) => {
         wx.hideLoading();
-        console.log(res.data.discovery_song);
+        console.log(res);
         var songs = [];
         songs.push(res.data.discovery_song);
         that.setAllData(songs);

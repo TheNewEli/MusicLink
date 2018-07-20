@@ -19,7 +19,7 @@
 <view class="tutorial" hidden="{{tutorailHidden_sing}}">
   <view class='mask'></view>
   <view class="swiper-box">
-    <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{1000}}" bindchange='change' bindanimationfinish="animationEnd">
+    <swiper class="swiper" indicator-active-color="red" indicator-color="gray" indicator-dots="{{true}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{1000}}" bindchange='change' bindanimationfinish="animationEnd">
       <block wx:for="{{imgUrls}}">
         <swiper-item>
           <image src="{{item}}" class="slide-image" mode="aspectFit" />

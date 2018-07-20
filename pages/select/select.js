@@ -10,7 +10,7 @@ Page({
     clips: [],
     createdSongId: "",
     allOriginData: [],
-    compatibility: app.globalData.compatibility,
+    compatibility: false,
     windowHeight: app.globalData.windowHeight,
     Comp: {
       statusBarHeight: app.globalData.statusBarHeight,
@@ -19,7 +19,16 @@ Page({
       text: "选择歌词",
       background: "",
       iSpadding: true
-    }
+    },
+    //控制功能导航页
+    tutorailHidden_select: false,
+    hasChanged: false,
+
+    //所有导航页
+    imgUrls: [
+      "https://oss.caoyu.online/basic/guidance/select1.PNG",
+      "https://oss.caoyu.online/basic/guidance/select2.PNG",
+    ]
   },
 
   onLoad: function (options) {
@@ -36,6 +45,20 @@ Page({
     var createdSongId = options.created_song_id;
     var songId = options.song_id;
     var that = this;
+
+    var tutorailHidden_select = wx.getStorageSync("tutorailHidden_select");
+
+    if (tutorailHidden_select === undefined)
+    tutorailHidden_select = false;
+
+    this.setData({
+      tutorailHidden_select:tutorailHidden_select,
+    })
+
+    if(tutorailHidden_select)
+      this.setData({
+        compatibility:app.globalData.compatibility,
+      })
 
     //console.log(options);
     this.setData({
@@ -364,6 +387,50 @@ Page({
       return true;
     }
   },
+
+  change: function (e) {
+    if (this.data.tutorailHidden_select)
+      return;
+
+    console.log(e.detail.current);
+    
+    if(e.detail.current == this.data.imgUrls.length-1)
+      wx.showToast({
+        title:"继续右滑结束导航",
+        icon:"none"
+      })
+
+    this.setData({
+      hasChanged: true,
+    })
+
+
+  },
+  animationEnd: function (e) {
+
+    if (this.data.tutorailHidden_select)
+      return;
+    console.log(e.detail.current);
+
+    if (!this.data.hasChanged && e.detail.current == this.data.imgUrls.length-1) {
+      this.setData({
+        tutorailHidden_select: true,
+        compatibility:app.globalData.compatibility,
+      })
+      // wx.showToast({
+      //   title: '导航结束',
+      //   icon: "none",
+      //   duration: 1500,
+      //   mask: "false",
+      // })
+
+      wx.setStorageSync("tutorailHidden_select", true);
+    }
+
+    this.setData({
+      hasChanged: false,
+    })
+  }
 
 })
 
