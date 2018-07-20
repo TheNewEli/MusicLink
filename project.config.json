@@ -70,43 +70,11 @@
 					"scene": "1007"
 				},
 				{
-					"id": 5,
-					"name": "create",
-					"pathName": "pages/create/create",
-					"query": "songId=7",
-					"scene": "1007"
-				},
-				{
 					"id": 6,
 					"name": "toplist",
 					"pathName": "pages/toplist/toplist",
 					"query": "category=热门",
 					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "post",
-					"pathName": "pages/post/post",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "all-toplist",
-					"pathName": "pages/all-toplist/all-toplist",
-					"query": ""
-				},
-				{
-					"id": -1,
-					"name": "drift-bottle",
-					"pathName": "pages/drift-bottle/drift-bottle",
-					"query": "",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
-					"name": "navigationBar-tpl",
-					"pathName": "pages/navigationBar-tpl/navigationBar-tpl",
-					"query": ""
 				},
 				{
 					"id": -1,
@@ -122,13 +90,6 @@
 				},
 				{
 					"id": -1,
-					"name": "list-item",
-					"pathName": "pages/me/list-item/list-item",
-					"query": "id=2",
-					"scene": "1007"
-				},
-				{
-					"id": -1,
 					"name": "publish",
 					"pathName": "pages/publish/publish",
 					"query": "",
@@ -139,6 +100,59 @@
 					"name": "dialog-oprated",
 					"pathName": "pages/dialog-oprated/dialog-oprated",
 					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "publish",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+<<<<<<< HEAD
+					"name": "dialog-oprated",
+					"pathName": "pages/dialog-oprated/dialog-oprated",
+					"query": ""
+=======
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+				},
+				{
+					"id": -1,
+					"name": "balloon",
+					"pathName": "pages/balloon/balloon",
+					"query": "",
+					"scene": "1007"
+>>>>>>> fc05f22496954a194fe6b764508f502ee124a94d
 				}
 			]
 		}

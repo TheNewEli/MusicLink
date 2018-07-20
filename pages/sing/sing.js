@@ -64,17 +64,17 @@ Page({
     isDownloading: false,
     isUploading: false,
     cxt_arc: "",
-    score:0,
-    completedClipsNum:0,
-    totalChoosedClipsCount:0,
-    starsArray:[],
-    currentProgress:0,
+    score: 0,
+    completedClipsNum: 0,
+    totalChoosedClipsCount: 0,
+    starsArray: [],
+    currentProgress: 0,
 
     //延迟修正
     hasModified: false,
 
     //记录是否上传
-    hasUploaded:true,
+    hasUploaded: true,
 
 
     //记录跳转时间
@@ -108,7 +108,21 @@ Page({
     compatibility: app.globalData.compatibility,
 
     //显示消息弹窗
-    showDialog_Score:false,
+    showDialog_Score: false,
+
+    //控制功能导航页
+    tutorailHidden_sing: false,
+    hasChanged: false,
+
+    //所有导航页
+    imgUrls: [
+      "https://oss.caoyu.online/basic/guidance/sing_start.jpg",
+      "https://oss.caoyu.online/basic/guidance/sing_originalSinger.jpg",
+      "https://oss.caoyu.online/basic/guidance/sing_skip.jpg",
+      "https://oss.caoyu.online/basic/guidance/sing_resume.jpg",
+      "https://oss.caoyu.online/basic/guidance/sing_upload.jpg",
+    ]
+
   },
 
   onLoad: function (options) {
@@ -232,18 +246,21 @@ Page({
     var totalClipsCount = songs.lyrics[songs.lyrics.length - 1].clipCount;
     var toView = [];
     var clipsIndex = []; //wxml中用来在循环中顺序输出每段歌词
+    var tutorailHidden_sing = wx.getStorageSync("tutorailHidden_sing");
 
+    if (tutorailHidden_sing === undefined)
+      tutorailHidden_sing = false;
 
     for (var i = 0; i < totalClipsCount; i++) {
       toView.push("ClipCount" + i);
       clipsIndex.push(i);
 
-      var temp_Record_File={
+      var temp_Record_File = {
         createdSongId: -1,
-        clipCount:-1,
+        clipCount: -1,
         temp_path: "",
       }
-      that.data.all_Rec_Temp_File[i]=temp_Record_File;
+      that.data.all_Rec_Temp_File[i] = temp_Record_File;
     }
 
     var ER = wx.getStorageSync("ER");
@@ -254,7 +271,7 @@ Page({
         Org_url: selectedData.allOriginData.origin_url,
       })
       if (!that.data.isDownloading) {
-     that.downloadFiles();
+        that.downloadFiles();
       }
 
     }
@@ -309,7 +326,8 @@ Page({
       toCurrentView: toView[0],
       title: songs.music.title,
       hasModified: false,
-      totalChoosedClipsCount:selectedData.clips.length,
+      totalChoosedClipsCount: selectedData.clips.length,
+      tutorailHidden_sing: tutorailHidden_sing,
     })
 
     that.getPlayInfoDataFromServer();
@@ -355,7 +373,7 @@ Page({
 
       //让被唱的那一段的前一段，跳转到顶部，达到让被唱段搂在中部的目的，
       //若要让被唱段跳转到顶部，"ClipCount" + (currentClipNum - 1) 就行
-      var toCurrentView = "ClipCount" + (currentClipNum-1);
+      var toCurrentView = "ClipCount" + (currentClipNum - 1);
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
 
       var hasCompleted = false;
@@ -421,7 +439,7 @@ Page({
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
       var hasCompleted = false;
 
-      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path!="")
+      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path != "")
         hasCompleted = true;
       that.setData({
         currentLineNum: currentLineNum,
@@ -554,7 +572,7 @@ Page({
         tryListeningClickAmount: 0,
       });
       if (!that.data.isDownloading) {
-     that.downloadFiles();
+        that.downloadFiles();
       }
 
     });
@@ -586,11 +604,11 @@ Page({
           that.data.currentRec_IAC.stop();
         that.setData({
           hasCompleted: true,
-          hasUploaded:false,
+          hasUploaded: false,
         });
         //that.playAnimaton("wave");
         wx.getRecorderManager().stop();
-        that.play(3,that);
+        that.play(3, that);
         return;
       }
 
@@ -665,7 +683,7 @@ Page({
         mask: true,
       });
       if (!that.data.isDownloading) {
-     that.downloadFiles();
+        that.downloadFiles();
         thats.setData({
           startRecordClickAmount: 0,
           tryListeningClickAmount: 0,
@@ -822,7 +840,7 @@ Page({
     currentRec_IAC.onPlay(() => {
       console.log("合成音轨开始播放");
       //currentRec_IAC.seek(0.0);
-     // currentRec_IAC.offPlay();
+      // currentRec_IAC.offPlay();
     });
 
     currentRec_IAC.onWaiting(() => {
@@ -929,7 +947,7 @@ Page({
       currentBCK_IAC.volume = 0;
       //currentRec_IAC.volume = 0;
       currentBCK_IAC.play();
-      currentRec_IAC.startTime=0;
+      currentRec_IAC.startTime = 0;
       currentRec_IAC.play();
     }
   },
@@ -974,7 +992,7 @@ Page({
       remainedTime: 0,
       hasModified: false,
       recordTimeLate: 0,
-      hasUploaded:true,
+      hasUploaded: true,
     })
   },
   // 该段原唱播放 
@@ -988,12 +1006,12 @@ Page({
     console.log(nowClickTime);
 
     //防止频繁点击
-    if (nowClickTime-this.data.lastClickTime<1000){
+    if (nowClickTime - this.data.lastClickTime < 1000) {
       wx.showToast({
         title: '太快了，受不了',
         icon: '/images/icon/running_icon.png',
         duration: 2000,
-        mask:true,
+        mask: true,
       });
       return;
     }
@@ -1088,7 +1106,7 @@ Page({
     if (that.data.file_length_OnError != 0)
       setTimeout(function () {
         console.log("等待文件删除中");
-     that.downloadFiles();
+        that.downloadFiles();
       }, 500);
 
     that.setData({
@@ -1155,7 +1173,7 @@ Page({
                               wx.removeSavedFile({
                                 filePath: res.fileList[i].filePath,
                                 success: function () {
-                               that.downloadFiles();
+                                  that.downloadFiles();
                                 },
                                 complete: function (res) {
                                 }
@@ -1206,7 +1224,7 @@ Page({
                 }
 
                 that.drawProgresCircleBar(res.progress / 2 + 50);
-                console.log("下载任务二进度:"+(res.progress/2+50));
+                console.log("下载任务二进度:" + (res.progress / 2 + 50));
 
                 if (res.progress % 40 < 20) {
                   that.setData({
@@ -1236,7 +1254,7 @@ Page({
       },
       fail: function (err) {
         console.log(err);
-     that.downloadFiles();
+        that.downloadFiles();
       }
     });
     downloadTask1.onProgressUpdate((res) => {
@@ -1245,7 +1263,7 @@ Page({
       });
 
       that.drawProgresCircleBar(res.progress / 2);
-      console.log("下载任务一进度:"+res.progress/2);
+      console.log("下载任务一进度:" + res.progress / 2);
 
       if (res.progress % 40 < 20) {
         that.setData({
@@ -1348,7 +1366,7 @@ Page({
 
   checkFilesToUpload: function () {
 
-    this.play(3,this);
+    this.play(3, this);
 
 
     if (!this.data.hasCompleted) {
@@ -1363,7 +1381,7 @@ Page({
     var all_RecordFiles = that.data.all_Rec_Temp_File;
     var temp_path = all_RecordFiles[that.data.currentClipNum - 1].temp_path;
 
-    if (temp_path === undefined||temp_path =="")
+    if (temp_path === undefined || temp_path == "")
       return;
 
     that.playAnimaton("upload");
@@ -1447,10 +1465,10 @@ Page({
 
 
                 that.setData({
-                  hasUploaded:true,
-                  score:res.data.score,
-                  showDialog_Score:true,
-                  starsArray:util.convertToStarsArray(res.data.score/1000),
+                  hasUploaded: true,
+                  score: res.data.score,
+                  showDialog_Score: true,
+                  starsArray: util.convertToStarsArray(res.data.score / 1000),
                 });
 
               }).catch((err) => {
@@ -1663,10 +1681,10 @@ Page({
         var completedClipsNum = that.data.completedClipsNum;
         var currentProgress;
 
-          
-        if(that.data.all_Rec_Temp_File[that.data.currentClipNum-1].temp_path==""){
-            completedClipsNum++;
-            currentProgress=parseInt(completedClipsNum/that.data.totalChoosedClipsCount*100);
+
+        if (that.data.all_Rec_Temp_File[that.data.currentClipNum - 1].temp_path == "") {
+          completedClipsNum++;
+          currentProgress = parseInt(completedClipsNum / that.data.totalChoosedClipsCount * 100);
         }
 
         console.log("Recorder stop", res);
@@ -1706,8 +1724,8 @@ Page({
           isCorrected: false,
           disableSkip: false,
           isRecording: false,
-          completedClipsNum:completedClipsNum,
-          currentProgress:currentProgress,
+          completedClipsNum: completedClipsNum,
+          currentProgress: currentProgress,
         });
       });
 
@@ -1752,7 +1770,7 @@ Page({
   },
 
   //播放上传波纹动画
-  play: function (count,that) {
+  play: function (count, that) {
 
     if (count < 0) {
       console.log("播放结束");
@@ -1760,29 +1778,66 @@ Page({
     }
     console.log("点击中");
 
-      //波纹放大,淡出动画
-      var animation = wx.createAnimation({
-        timingFunction: "ease-in-out",
-      });
-      animation.opacity(0).scale(2, 2).step();//修改透明度,放大
-      animation.scale(1, 1).opacity(1).step({ duration: 700 });//修改透明度,放大
+    //波纹放大,淡出动画
+    var animation = wx.createAnimation({
+      timingFunction: "ease-in-out",
+    });
+    animation.opacity(0).scale(2, 2).step();//修改透明度,放大
+    animation.scale(1, 1).opacity(1).step({ duration: 700 });//修改透明度,放大
 
-      that.setData({
-        animation_wave: animation.export()
-      });
-      count--;
+    that.setData({
+      animation_wave: animation.export()
+    });
+    count--;
 
     setTimeout(function () {
-      
-      that.play(count,that);
+
+      that.play(count, that);
     }, 1000)
 
   },
 
-  cancel:function(event){
+  cancel: function (event) {
     //console.log(event);
     this.setData({
-      showDialog_Score:false,
+      showDialog_Score: false,
+    })
+  },
+
+  change: function (e) {
+    if (this.data.tutorailHidden_sing)
+      return;
+
+    console.log(e.detail.current);
+
+    this.setData({
+      hasChanged: true,
+    })
+
+
+  },
+  animationEnd: function (e) {
+
+    if (this.data.tutorailHidden_sing)
+      return;
+    console.log(e.detail.current);
+
+    if (!this.data.hasChanged && e.detail.current == 4) {
+      this.setData({
+        tutorailHidden_sing: true,
+      })
+      wx.showToast({
+        title: '导航结束',
+        icon: "none",
+        duration: 1500,
+        mask: "false",
+      })
+
+      wx.setStorageSync("tutorailHidden_sing", true);
+    }
+
+    this.setData({
+      hasChanged: false,
     })
   }
 
