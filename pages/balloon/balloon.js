@@ -69,6 +69,16 @@ Page({
       })
 
       util.requestFromServer("GetMyCreated", data).then((res) => {
+
+        if(res.data.songs.length==0){
+          wx.showToast({
+            title:"您还没有发起过任何歌曲",
+            icon:"none",
+          });
+
+          return;
+        }
+         
         that.setAllData(res.data.songs);
         wx.hideLoading();
       }).catch((err) => {
@@ -359,6 +369,7 @@ Page({
 
     if (!this.data.playStopped)
       return;
+
 
     this.setData({
       display_throw:true,
