@@ -21,7 +21,7 @@ Page({
       iSpadding: true
     },
     //控制功能导航页
-    tutorailHidden_select: false,
+    tutorailHidden_select: true,
     hasChanged: false,
 
     //所有导航页
@@ -50,6 +50,10 @@ Page({
 
     if (tutorailHidden_select === undefined)
     tutorailHidden_select = false;
+
+    this.setData({
+      tutorailHidden_select:tutorailHidden_select
+    })
 
     this.setData({
       tutorailHidden_select:tutorailHidden_select,

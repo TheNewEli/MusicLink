@@ -176,8 +176,8 @@ Page({
     var clipIndex = this.data.clipIndex;
     var clipInfo=this.data.clipInfo;
     for(var i in clipInfo){
-      var begin_time = clipInfo[i].begin_time + clipInfo[i].delay/10;
-      var end_time = clipInfo[i].end_time + clipInfo[i].delay / 10;
+      var begin_time = clipInfo[i].begin_time + (clipInfo[i].delay)/10;
+      var end_time = clipInfo[i].end_time + (clipInfo[i].delay) / 10;
       if (currentTime > begin_time && currentTime < end_time){
         //当前片段还在播放时间段
         if (clipIndex==i){

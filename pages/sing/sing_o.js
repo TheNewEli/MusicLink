@@ -8,7 +8,6 @@ const options = {
   format: 'mp3',
   frameSize: 50
 };
-
 var util = require('../../utils/util');
 
 var app = getApp();
@@ -149,6 +148,30 @@ Page({
     });
 
     var prompt_start = wx.getStorageSync("prompt_start");
+    // if (!prompt_start) {
+    //   wx.showModal({
+    //     title: "导航",
+    //     content: "欢迎来到我们的大合唱界面，在这里你可以充分展示你美妙的歌声，唱完后你可选择分享给你的小伙伴，让他们共同完成这一首歌喔",
+    //     cancelText: "不再提示",
+    //     confirmText: "知道了",
+    //     success: function (res) {
+    //       if (res.cancel) {
+    //         wx.setStorageSync("prompt_start", true);
+    //       }
+    //       wx.showModal({
+    //         title: "导航",
+    //         content: "如果你不是很熟悉这首歌，我们为你准备了原唱，唱歌过程中建议插着耳机喔，录音过程中是不能切换原唱和伴奏的喔！",
+    //         cancelText: "不再提示",
+    //         confirmText: "知道了",
+    //         success: function (res) {
+    //           if (res.cancel) {
+    //             wx.setStorageSync("prompt_start", true);
+    //           }
+    //         }
+    //       });
+    //     }
+    //   });
+    // }
 
     this.drawProgresCircleBar(100);
   },
@@ -181,16 +204,18 @@ Page({
       this.data.currentOrg_IAC.stop();
 
     wx.getRecorderManager().stop();
+
+    wx.getSavedFileList({
+      success: function (res) {
+        console.log(res.fileList)
+      }
+    });
   },
 
   onUnload: function () {
-    var that = this;
-    if (that.data.currentBCK_IAC != "")
-      that.data.currentBCK_IAC.destroy();
-    if (that.data.currentOrg_IAC != "")
-      that.data.currentOrg_IAC.destroy();
-    if (thatd.data.currentRec_IAC != "")
-      that.data.currentRec_IAC.destroy();
+    this.data.currentBCK_IAC.destroy();
+    this.data.currentRec_IAC.destroy();
+    this.data.currentOrg_IAC.destroy();
     wx.getRecorderManager().stop();
 
     wx.getSavedFileList({
@@ -224,7 +249,7 @@ Page({
     if (tutorailHidden_sing === undefined)
       tutorailHidden_sing = false;
     this.setData({
-      tutorailHidden_sing: tutorailHidden_sing
+      tutorailHidden_sing:tutorailHidden_sing
     })
 
     for (var i = 0; i < totalClipsCount; i++) {
@@ -282,12 +307,19 @@ Page({
       }
     }
 
+    var currentBCK_IAC = wx.createInnerAudioContext(),
+      currentRec_IAC = wx.createInnerAudioContext(),
+      currentOrg_IAC = wx.createInnerAudioContext();
+
     //初始话进度条
 
     that.setData({
       currentLineNum: currentLineNum,
       currentClipNum: currentClipNum,
       currentClip: selectedData.allOriginData.songs[currentClipNum - 1],
+      currentBCK_IAC: currentBCK_IAC,
+      currentRec_IAC: currentRec_IAC,
+      currentOrg_IAC: currentOrg_IAC,
       clips: selectedData.clips,
       created_songId: created_songId,
       clipsIndex: clipsIndex,
@@ -313,13 +345,8 @@ Page({
   skipToLastClips: function () {
 
     var that = this;
-
-    if(that.data.currentBCK_IAC==""||that.data.currentOrg_IAC=="")
-    {
-      
-    }
     //如果录音已经开始，按键失效
-    else if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused || that.data.isDownloading
+    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused || that.data.isDownloading
       || that.data.disableSkip)
       return;
 
@@ -353,17 +380,14 @@ Page({
 
       //让被唱的那一段的前一段，跳转到顶部，达到让被唱段搂在中部的目的，
       //若要让被唱段跳转到顶部，"ClipCount" + (currentClipNum - 1) 就行
-      var toCurrentView = "ClipCount" + (currentClipNum-1);
+      var toCurrentView = "ClipCount" + (currentClipNum - 1);
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
 
       var hasCompleted = false;
-      var hasUploaded = true;
 
-      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path != ""){
+      if (that.data.all_Rec_Temp_File[currentClipNum - 1] != undefined &&
+        that.data.all_Rec_Temp_File[currentClipNum - 1] != null)
         hasCompleted = true;
-        hasUploaded = false;
-      }
-        
       that.setData({
         currentLineNum: currentLineNum,
         currentClipNum: clips[index],
@@ -375,7 +399,6 @@ Page({
         startRecordClickAmount: 0,
         tryListeningClickAmount: 0,
         currentClip: currentClip,
-        hasUploaded: hasUploaded,
       })
     }
 
@@ -385,12 +408,8 @@ Page({
 
     var that = this;
 
-    if(that.data.currentBCK_IAC==""||that.data.currentOrg_IAC=="")
-    {
-      //Do Nothing
-    }
     //如果录音已经开始，按键失效
-    else if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused || that.data.isDownloading ||
+    if (!that.data.currentBCK_IAC.paused || !that.data.currentRec_IAC.paused || that.data.isDownloading ||
       that.data.disableSkip)
       return;
 
@@ -415,7 +434,7 @@ Page({
     }
     if (index < clips.length) {
       var currentClipNum = clips[index];
-      var toCurrentView = "ClipCount" + (currentClipNum-1);
+      var toCurrentView = "ClipCount" + (currentClipNum - 1);
 
       for (var i in that.data.songs.lyrics) {
         var lyric = that.data.songs.lyrics[i];
@@ -426,12 +445,9 @@ Page({
       }
       var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
       var hasCompleted = false;
-      var hasUploaded = true;
 
-      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path != ""){
+      if (that.data.all_Rec_Temp_File[currentClipNum - 1].temp_path != "")
         hasCompleted = true;
-        hasUploaded = false;
-      }
       that.setData({
         currentLineNum: currentLineNum,
         currentClipNum: currentClipNum,
@@ -443,13 +459,12 @@ Page({
         startRecordClickAmount: 0,
         tryListeningClickAmount: 0,
         currentClip: currentClip,
-        hasUploaded:hasUploaded, 
       })
     }
   },
 
   //开始录制 
-  readyToRecord: function () {
+  startRecord: function () {
 
     if (!this.data.isGetRecord) {
       wx.showModal({
@@ -482,48 +497,190 @@ Page({
       return;
     }
 
-    that.setData({
-      BCK_url: that.data.selectedData.allOriginData.bg_url,
-      Org_url: that.data.selectedData.allOriginData.origin_url,
+
+    const currentBCK_IAC = this.data.currentBCK_IAC;
+    const currentRec_IAC = this.data.currentRec_IAC;
+    const currentOrg_IAC = this.data.currentOrg_IAC;
+
+    currentRec_IAC.offError();
+    currentRec_IAC.offPlay();
+    currentRec_IAC.offTimeUpdate();
+    currentRec_IAC.offWaiting();
+    currentRec_IAC.offSeeked();
+    currentRec_IAC.offEnded();
+
+    currentBCK_IAC.offPlay();
+    currentBCK_IAC.offError();
+    currentBCK_IAC.offStop();
+    currentBCK_IAC.offSeeked();
+    currentBCK_IAC.offWaiting();
+    currentBCK_IAC.offTimeUpdate();
+
+    currentBCK_IAC.onSeeked((res) => {
+      console.log("BCK::Seeked");
+      //currentBCK_IAC.pause();
+      console.log("重置后伴奏音轨当前位置:" + currentBCK_IAC.currentTime);
+      if (!that.data.hasOriginSinger) {
+        that.data.currentBCK_IAC.volume = 0.7;
+        that.data.currentOrg_IAC.volume = 0;
+      }
+      else {
+        that.data.currentBCK_IAC.volume = 0;
+        that.data.currentOrg_IAC.volume = 0.7;
+      }
+
+
+      //wx.getRecorderManager().resume();
+      wx.showToast({
+        title: "开始",
+        image: "/images/icon/sing_icon.png",
+        duration: 1500,
+        mask: true,
+      })
+
+      that.setData({
+        isRecording: true,
+      })
+
+      //that.data.currentOrg_IAC.volume=0.7;
+      //currentBCK_IAC.play();
     });
 
-    if (that.data.currentBCK_IAC != "")
-      that.data.currentBCK_IAC.destroy();
-    if (that.data.currentOrg_IAC != "")
-      that.data.currentOrg_IAC.destroy();
+    // currentOrg_IAC.onSeeked((res) => {
+    //   console.log("ORG::Seeked");
+    //   console.log("重置后伴奏音轨当前位置:" + currentOrg_IAC.currentTime);
+    //   //that.data.currentBCK_IAC.volume = 0.7;
+    //   // if(that.data.hasOriginSinger){
+    //   //   that.data.currentOrg_IAC.volume=0.7;
+    //   //   that.data.currentBCK_IAC.volume=0;
+    //   // }
+    //   // else{
+    //   //   that.data.currentOrg_IAC.volume=0;
+    //   //   that.data.currentBCK_IAC.volume=0.7;
+    //   // }
+    //   // that.data.currentBCK_IAC.play();
 
-    const currentBCK_IAC = wx.createInnerAudioContext();
-    const currentOrg_IAC = wx.createInnerAudioContext();
-    const currentRec_IAC = wx.createInnerAudioContext();
 
-    that.setData({
-      currentBCK_IAC: currentBCK_IAC,
-      currentOrg_IAC: currentOrg_IAC,
-      currentRec_IAC: currentRec_IAC,
-      isRecording: true,
-    })
+    //   //currentBCK_IAC.play();
+    // })
 
-    that.startRecord();
+    currentBCK_IAC.onError((err) => {
+      wx.showToast({
+        title: "文件丢失",
+        image: "/images/icon/error_icon.png",
+        mask: true,
+      });
+      wx.getRecorderManager().stop();
+      wx.removeStorageSync('ER');
+      that.setData({
+        currentBCK_FilePath: "",
+        currentOrg_FilePath: "",
+        startRecordClickAmount: 0,
+        tryListeningClickAmount: 0,
+      });
+      if (!that.data.isDownloading) {
+        that.downloadFiles();
+      }
+
+    });
+
+    currentBCK_IAC.onWaiting(() => {
+      console.log("伴奏轨道加载中");
+    });
+
+    currentBCK_IAC.onStop(() => {
+      if (!that.data.currentRec_IAC.paused)
+        that.data.currentRec_IAC.stop();
+    });
+
+    currentBCK_IAC.onTimeUpdate((res) => {
+
+      if (!that.data.isRecording)
+        wx.getRecorderManager().start(options);
+
+      var currentLineNum = that.data.currentLineNum;
+      console.log("BCK:", currentBCK_IAC.currentTime, "Rec:", that.data.currentRec_IAC.currentTime,
+        "Org:", that.data.currentOrg_IAC.currentTime);
+
+      if (currentBCK_IAC.currentTime >= that.data.currentClip.end_time / 1000) {
+        //console.log('该段结束');
+        currentBCK_IAC.offTimeUpdate();
+        currentBCK_IAC.stop();
+        that.data.currentOrg_IAC.stop();
+        if (!that.data.currentRec_IAC.paused)
+          that.data.currentRec_IAC.stop();
+        that.setData({
+          hasCompleted: true,
+          hasUploaded: false,
+        });
+        //that.playAnimaton("wave");
+        wx.getRecorderManager().stop();
+        that.play(3, that);
+        return;
+      }
+
+      if (currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
+        //console.log("Update row num：",that.data.currentLineNum);
+        currentLineNum += 1;
+        that.setData({
+          currentLineNum: currentLineNum,
+        });
+        //console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
+      }
+    });
+
+    currentBCK_IAC.onPlay(() => {
+
+      if (Math.abs(currentBCK_IAC.currentTime - currentBCK_IAC.startTime) > 1) {
+        //currentBCK_IAC.stop();
+        if (!that.data.isCorrected) {
+          var diffTime = 0;
+          if (!currentOrg_IAC.paused)
+            diffTime = currentBCK_IAC.currentTime - currentOrg_IAC.currentTime;
+          currentBCK_IAC.seek(currentBCK_IAC.startTime);
+          currentOrg_IAC.seek(currentBCK_IAC.startTime + diffTime);
+          //wx.getRecorderManager().pause();
+          that.data.isCorrected = true;
+        }
+        return;
+      }
+      //currentBCK_IAC.seek(currentClip.begin_time / 1000);
+      if (!that.data.hasOriginSinger) {
+        that.data.currentBCK_IAC.volume = 0.7;
+        that.data.currentOrg_IAC.volume = 0;
+      }
+      else {
+        that.data.currentBCK_IAC.volume = 0;
+        that.data.currentOrg_IAC.volume = 0.7;
+      }
+
+    });
+
+    that.readyToRecord();
 
   },
 
-  startRecord: function () {
+  readyToRecord: function () {
 
     //this.reloadAudioObject();
     //this.registerAllCallBack(0);
     if (this.data.currentClip == {})
       return;
-
     var that = this;
 
-    var remainedTime = 3;
+    var remainedTime = 4;
 
     var currentBCK_IAC = that.data.currentBCK_IAC,
       currentOrg_IAC = that.data.currentOrg_IAC;
 
+    that.setData({
+      BCK_url: that.data.selectedData.allOriginData.bg_url,
+      Org_url: that.data.selectedData.allOriginData.origin_url,
+    });
+
     if (that.data.currentBCK_FilePath != "" && that.data.currentOrg_FilePath != "") {
       // currentBCK_IAC.src = that.data.currentBCK_FilePath;
-      currentBCK_IAC.src = that.data.currentBCK_FilePath;
+      currentBCK_IAC.src = that.data.currentOrg_FilePath;
       currentOrg_IAC.src = that.data.currentOrg_FilePath;
     }
     else {
@@ -535,7 +692,7 @@ Page({
       });
       if (!that.data.isDownloading) {
         that.downloadFiles();
-        that.setData({
+        thats.setData({
           startRecordClickAmount: 0,
           tryListeningClickAmount: 0,
           progress: 0,
@@ -545,6 +702,11 @@ Page({
       return;
     }
 
+    if (that.data.hasOriginSinger == true) {
+      currentBCK_IAC.volume = 0;
+      currentOrg_IAC.volume = 1;
+    }
+
     //重新计算当前clip
     var currentClipNum = that.data.currentClipNum;
     var currentClip = that.data.selectedData.allOriginData.songs[currentClipNum - 1];
@@ -552,15 +714,16 @@ Page({
 
     currentBCK_IAC.startTime = currentClip.begin_time / 1000;
     currentOrg_IAC.startTime = currentClip.begin_time / 1000;
-
-    that.myFukingCustomnSeek(currentBCK_IAC, currentBCK_IAC.startTime);
-    that.myFukingCustomnSeek(currentOrg_IAC, currentBCK_IAC.startTime)
+    //that.myOwnSeek(currentBCK_IAC.startTime, currentBCK_IAC);
+    ///console.log("伴奏音轨时间：", currentBCK_IAC.currentTime);
 
     that.setData({
       startRecordClickAmount: 1,
       currentClip: currentClip,
       currentLineNum: currentLineNum,
       isReadying: false,
+      currentBCK_IAC: currentBCK_IAC,
+      currentOrg_IAC: currentOrg_IAC,
       endTime: currentClip.end_time / 1000,
       startTime: currentBCK_IAC.startTime,
       hasModified: false,
@@ -569,92 +732,6 @@ Page({
     });
 
     timer.countDown(that, remainedTime);
-    setTimeout(function () {
-
-      if (!that.data.hasOriginSinger) {
-        currentBCK_IAC.volume = 1;
-        currentOrg_IAC.volume = 0;
-      }
-      else {
-        currentBCK_IAC.volume = 0;
-        currentOrg_IAC.volume = 1;
-
-      }
-
-      currentBCK_IAC.onPlay(() => {
-
-        wx.showToast({
-          title: "开始",
-          image: "/images/icon/sing_icon.png",
-          duration: 1500,
-          mask: true,
-        })
-      });
-
-      currentBCK_IAC.onError((err) => {
-        wx.showToast({
-          title: "文件丢失",
-          image: "/images/icon/error_icon.png",
-          mask: true,
-        });
-        wx.getRecorderManager().stop();
-        wx.removeStorageSync('ER');
-        that.setData({
-          currentBCK_FilePath: "",
-          currentOrg_FilePath: "",
-          startRecordClickAmount: 0,
-          tryListeningClickAmount: 0,
-        });
-        if (!that.data.isDownloading) {
-          that.downloadFiles();
-        }
-        wx.getRecorderManager().stop();
-
-      });
-
-      currentBCK_IAC.onStop(() => {
-        if (!that.data.currentRec_IAC.paused)
-          that.data.currentRec_IAC.stop();
-      });
-
-      currentBCK_IAC.onTimeUpdate((res) => {
-
-        var currentLineNum = that.data.currentLineNum;
-        console.log("BCK:", currentBCK_IAC.currentTime, "Rec:", that.data.currentRec_IAC.currentTime,
-          "Org:", that.data.currentOrg_IAC.currentTime);
-
-        if (currentBCK_IAC.currentTime >= that.data.currentClip.end_time / 1000) {
-          //console.log('该段结束');
-          currentBCK_IAC.offTimeUpdate();
-          currentBCK_IAC.stop();
-          that.data.currentOrg_IAC.stop();
-          if (!that.data.currentRec_IAC.paused)
-            that.data.currentRec_IAC.stop();
-          that.setData({
-            hasCompleted: true,
-            hasUploaded: false,
-          });
-          //that.playAnimaton("wave");
-          wx.getRecorderManager().stop();
-          that.play(3, that);
-          return;
-        }
-
-        if (currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
-          //console.log("Update row num：",that.data.currentLineNum);
-          currentLineNum += 1;
-          that.setData({
-            currentLineNum: currentLineNum,
-          });
-          //console.log("更新后的行数是：",that.data.currentLineNum,"当前时间", currentBCK_IAC.currentTime);
-        }
-      });
-
-      wx.getRecorderManager().start(options);
-      currentOrg_IAC.play();
-      currentBCK_IAC.play();
-      that.data.disableOrg = false;
-    }, 3000)
 
   },
 
@@ -663,7 +740,9 @@ Page({
 
 
     var that = this;
+
     that.playAnimaton("TL");
+
     if (!that.data.hasCompleted) {
       wx.showToast({
         title: "未完成，无法试听",
@@ -683,108 +762,202 @@ Page({
       return;
     }
 
-    that.data.currentBCK_IAC.destroy();
-    that.data.currentRec_IAC.destroy();
-    var currentBCK_IAC = wx.createInnerAudioContext();
-    var currentRec_IAC = wx.createInnerAudioContext();
+
+    var currentBCK_IAC = that.data.currentBCK_IAC;
+    var currentRec_IAC = that.data.currentRec_IAC;
+    //console.log("伴奏路径",currentBCK_IAC.src);
 
     currentBCK_IAC.src = that.data.currentBCK_FilePath;
     currentBCK_IAC.startTime = that.data.currentClip.begin_time / 1000;
-    currentRec_IAC.src = that.data.all_Rec_Temp_File[that.data.currentClipNum - 1].temp_path;
 
+    if (that.data.hasCompleted) {
+      currentRec_IAC.src = that.data.all_Rec_Temp_File[that.data.currentClipNum - 1].temp_path;
+      //console.log(that.data.all_Rec_Temp_File[that.data.currentClipNum-1].temp_path);
+    }
+
+
+    //console.log("试听->伴奏音轨时间",currentBCK_IAC.currentTime);
+
+    //console.log("原唱路径",that.data.currentBCK_IAC.src);
+    // console.log("起点",currentBCK_IAC.startTime,"理论时间",that.data.currentClip.begin_time/1000);
 
     that.setData({
       currentBCK_IAC: currentBCK_IAC,
       isCorrected: false,
     });
 
-    that.myFukingCustomnSeek(currentBCK_IAC, currentBCK_IAC.startTime);
-
-    setTimeout(function () {
-      that.setData({
-        startRecordClickAmount: 0,
-        tryListeningClickAmount: 1,
-        currentLineNum: that.getCurrentClipFirstLyricIndex(),
-        currentBCK_IAC: currentBCK_IAC,
-        currentRec_IAC: currentRec_IAC,
-        isCorrected: false,
+    if (!currentBCK_IAC.paused || !currentRec_IAC.paused) {
+      wx.showToast({
+        title: "播放中喔",
+        image: "/images/icon/running_icon.png",
+        mask: true,
+        duration: 2000,
       });
+      return;
+    }
 
-      currentRec_IAC.onEnded(() => {
-        //console.log("录音轨道结束");
-        currentBCK_IAC.stop();
+    currentBCK_IAC.stop();
+    currentRec_IAC.stop();
 
-        var prompt_next_or_last = wx.getStorageSync("prompt_next_or_last");
-        if (!prompt_next_or_last) {
-          wx.showModal({
-            title: "导航",
-            content: "试听结束，点击上一段或下一段继续你的演唱吧！",
-            cancelText: "不再提示",
-            confirmText: "知道了",
-            success: function (res) {
-              if (res.cancel) {
-                wx.setStorageSync("prompt_next_or_last", true);
-              }
+    //console.log("试听中");
+
+    that.setData({
+      startRecordClickAmount: 0,
+      tryListeningClickAmount: 1,
+      currentLineNum: that.getCurrentClipFirstLyricIndex(),
+    });
+
+    currentBCK_IAC.volume = 0;
+    currentRec_IAC.volume = 1;
+
+    currentRec_IAC.offError();
+    currentRec_IAC.offPlay();
+    currentRec_IAC.offTimeUpdate();
+    currentRec_IAC.offWaiting();
+    currentRec_IAC.offSeeked();
+    currentRec_IAC.offEnded();
+
+    currentBCK_IAC.offPlay();
+    currentBCK_IAC.offError();
+    currentBCK_IAC.offStop();
+    currentBCK_IAC.offSeeked();
+    currentBCK_IAC.offWaiting();
+    currentBCK_IAC.offTimeUpdate();
+
+    currentRec_IAC.onEnded(() => {
+      //console.log("录音轨道结束");
+      currentBCK_IAC.stop();
+
+      var prompt_next_or_last = wx.getStorageSync("prompt_next_or_last");
+      if (!prompt_next_or_last) {
+        wx.showModal({
+          title: "导航",
+          content: "试听结束，点击上一段或下一段继续你的演唱吧！",
+          cancelText: "不再提示",
+          confirmText: "知道了",
+          success: function (res) {
+            if (res.cancel) {
+              wx.setStorageSync("prompt_next_or_last", true);
             }
-          })
-        }
+          }
+        })
+      }
 
+    })
+
+    currentRec_IAC.onPlay(() => {
+      console.log("合成音轨开始播放");
+      //currentRec_IAC.seek(0.0);
+      // currentRec_IAC.offPlay();
+    });
+
+    currentRec_IAC.onWaiting(() => {
+      console.log("录音轨道缓冲中");
+    });
+
+    currentRec_IAC.onError((err) => {
+      console.log(err);
+      wx.showToast({
+        title: "录音播放错误",
+        iamge: "/images/icon/error_icon.png"
+      });
+      if (!that.data.currentRec_IAC.paused)
+        that.data.currentBCK_IAC.stop();
+      if (!that.data.currentBCK_IAC.paused)
+        that.data.currentBCK_IAC.stop();
+      that.setData({
+        hasCompleted: false,
+      })
+      wx.getRecorderManager().stop();
+    });
+
+    currentRec_IAC.onTimeUpdate((res) => {
+      //更新歌词
+      var currentLineNum = that.data.currentLineNum;
+      console.log("CurrnetLine: ", currentLineNum, "BCK: ", that.data.currentBCK_IAC.currentTime,
+        "Rec: ", that.data.currentRec_IAC.currentTime);
+
+      if (that.data.currentBCK_IAC.currentTime >= that.data.currentClip.end_time / 1000)
+        return;
+
+      if (that.data.currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
+        currentLineNum += 1;
+        that.setData({
+          currentLineNum: currentLineNum,
+        });
+      }
+    });
+
+    currentBCK_IAC.onTimeUpdate((res) => {
+
+      //console.log("BCK:", currentBCK_IAC.currentTime,
+      //  "CURRENT:", that.data.currentClip.end_time / 1000);
+      if (currentBCK_IAC.currentTime > that.data.currentClip.end_time / 1000) {
+        currentBCK_IAC.stop();
+      }
+    })
+
+
+    if (!that.data.hasModified) {
+      var recordTimeLate = that.data.recordTimeLate;
+      // if (recordTimeLate < -1 || recordTimeLate > 1) {
+      //   wx.showModal({
+      //     title: "录音延迟过高，重置数据中",
+      //     icon: "none",
+      //     showCancel: false,
+      //   });
+      //   that.data.recordTimeLate = 0;
+      //   that.data.currentBCK_IAC.volume = 0;
+      //   that.data.currentBCK_IAC.offStop();
+      //   that.data.currentBCK_IAC.offPlay();
+      //   that.data.currentBCK_IAC.play();
+      //   console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
+      //   that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
+      //   that.data.currentBCK_IAC.onSeeked(() => {
+      //     console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
+      //     that.data.currentBCK_IAC.stop();
+      //     that.data.currentRec_IAC.destroy();
+      //     that.data.currentRec_IAC = wx.createInnerAudioContext();
+      //     that.ensemble();
+      //   });
+      //   return;
+      // }
+
+      that.setData({
+        recordTimeLate: recordTimeLate,
       })
 
-      currentRec_IAC.onPlay(() => {
-        console.log("合成音轨开始播放");
-      });
-
-      currentRec_IAC.onWaiting(() => {
-        console.log("录音轨道缓冲中");
-      });
-
-      currentRec_IAC.onError((err) => {
-        console.log(err);
-        wx.showToast({
-          title: "录音播放错误",
-          iamge: "/images/icon/error_icon.png"
-        });
-        if (!that.data.currentRec_IAC.paused)
-          that.data.currentBCK_IAC.stop();
-        if (!that.data.currentBCK_IAC.paused)
-          that.data.currentBCK_IAC.stop();
-        that.setData({
-          hasCompleted: false,
-        })
-        wx.getRecorderManager().stop();
-      });
-
-      currentRec_IAC.onTimeUpdate((res) => {
-        //更新歌词
-        var currentLineNum = that.data.currentLineNum;
-        console.log("CurrnetLine: ", currentLineNum, "BCK: ", that.data.currentBCK_IAC.currentTime,
-          "Rec: ", that.data.currentRec_IAC.currentTime);
-
-        if (that.data.currentBCK_IAC.currentTime >= that.data.currentClip.end_time / 1000)
-          return;
-
-        if (that.data.currentBCK_IAC.currentTime >= that.data.Lyrics[currentLineNum].endTime) {
-          currentLineNum += 1;
-          that.setData({
-            currentLineNum: currentLineNum,
-          });
-        }
-      });
-
+      if (recordTimeLate > 0) {
+        currentBCK_IAC.startTime = currentBCK_IAC.startTime + recordTimeLate;
+        console.log("伴奏轨道向后延迟修正:", recordTimeLate);
+      }
+      else {
+        currentRec_IAC.startTime = -recordTimeLate;
+        console.log("人声轨道向后延迟修正:", recordTimeLate)
+      }
       that.setData({
         hasModified: true,
         startTime: currentBCK_IAC.startTime,
         isRecording: false,
         isReadying: true,
       })
+    }
 
-      currentBCK_IAC.volume = 0.3;
-      currentRec_IAC.volume = 1;
+    if (currentBCK_IAC.paused) {
+      currentBCK_IAC.onPlay(() => {
+        currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
+      });
+      currentBCK_IAC.offSeeked();
+      currentBCK_IAC.onSeeked((res) => {
+        currentBCK_IAC.volume = 0.5;
+        console.log("设置成功");
+      });
+      currentBCK_IAC.volume = 0;
+      //currentRec_IAC.volume = 0;
       currentBCK_IAC.play();
+      currentRec_IAC.startTime = 0;
       currentRec_IAC.play();
-    }, 2000)
-
+    }
   },
   // 重唱该段
   ensemble: function () {
@@ -794,10 +967,29 @@ Page({
     if (!that.data.hasCompleted)
       return;
 
-    that.data.currentBCK_IAC.destroy();
-    that.data.currentOrg_IAC.destroy();
-    that.data.currentRec_IAC.destroy();
 
+    that.data.currentRec_IAC.offTimeUpdate();
+
+    if (!that.data.currentBCK_IAC.paused) {
+      that.data.currentBCK_IAC.offPlay();
+      that.data.currentBCK_IAC.offStop();
+      that.data.currentBCK_IAC.stop();
+    }
+
+    if (!that.data.currentRec_IAC.paused) {
+      that.data.currentRec_IAC.stop();
+      that.data.currentRec_IAC.startTime = 0;
+    }
+    that.playAnimaton("ensemble");
+
+    if (that.data.hasOriginSinger) {
+      that.data.currentBCK_IAC.volume = 0;
+      that.data.hasOriginSinger = 0.7
+    }
+    else {
+      that.data.currentBCK_IAC.volume = 0.7;
+      that.data.hasOriginSinger = 0;
+    }
 
     that.setData({
       startRecordClickAmount: 0,
@@ -810,8 +1002,6 @@ Page({
       recordTimeLate: 0,
       hasUploaded: true,
     })
-
-    that.readyToRecord();
   },
   // 该段原唱播放 
   playWithOriginalSinger: function () {
@@ -819,13 +1009,12 @@ Page({
     if (this.data.disableOrg) {
       return;
     }
-    this.playAnimaton("origin");
 
     var nowClickTime = new Date().getTime();
     console.log(nowClickTime);
 
     //防止频繁点击
-    if (nowClickTime - this.data.lastClickTime < 800) {
+    if (nowClickTime - this.data.lastClickTime < 1000) {
       wx.showToast({
         title: '太快了，受不了',
         icon: '/images/icon/running_icon.png',
@@ -835,11 +1024,6 @@ Page({
       return;
     }
 
-
-    this.setData({
-      hasOriginSinger: !this.data.hasOriginSinger,
-      lastClickTime: nowClickTime,
-    });
 
     if (this.data.tryListeningClickAmount == 1 || !this.data.currentRec_IAC.paused) {
       wx.showToast({
@@ -851,19 +1035,47 @@ Page({
       return;
     }
 
-    if(this.data.currentBCK_IAC!=""){
-      if (this.data.hasOriginSinger) {
-        this.data.currentBCK_IAC.volume = 0;
-        this.data.currentOrg_IAC.volume = 0.7;
-      }
-      else {
-        this.data.currentBCK_IAC.volume = 0.7;
-        this.data.currentOrg_IAC.volume = 0;
-      }
-  
+    this.setData({
+      hasOriginSinger: !this.data.hasOriginSinger,
+      lastClickTime: nowClickTime,
+    });
+
+    if (this.data.hasOriginSinger) {
+      this.data.currentBCK_IAC.volume = 0;
+      this.data.currentOrg_IAC.volume = 0.7;
+    }
+    else {
+      this.data.currentBCK_IAC.volume = 0.7;
+      this.data.currentOrg_IAC.volume = 0;
     }
 
-  
+    // var currentBCK_IAC = this.data.currentBCK_IAC;
+
+    // currentBCK_IAC.offStop();
+
+    // currentBCK_IAC.onPause(()=>{
+    //   console.log("切换原唱并停止伴奏音轨");
+    //   var currentTime = currentBCK_IAC.currentTime;
+    //   if(that.data.hasOriginSinger)
+    //     currentBCK_IAC.src=that.data.currentOrg_FilePath;
+    //   else
+    //     currentBCK_IAC.src=that.data.currentBCK_FilePath;
+    //   // currentBCK_IAC.offPlay();
+    //   // currentBCK_IAC.onPlay(()=>{
+    //   //   console.log("开始播放并重定位");
+    //   //   console.log(currentTime);
+    //   //   currentBCK_IAC.seek(currentTime);
+    //   // });
+    //   // currentBCK_IAC.volume=0;
+    //   currentBCK_IAC.play();
+    //   currentBCK_IAC.seek(currentTime);
+    // })
+
+    //currentBCK_IAC.pause();
+
+
+    var that = this;
+    that.playAnimaton("origin");
   },
 
   diffTime: function (now, last) {
@@ -903,7 +1115,7 @@ Page({
       setTimeout(function () {
         console.log("等待文件删除中");
         that.downloadFiles();
-      }.bind(this), 500);
+      }, 500);
 
     that.setData({
       isDownloading: true,
@@ -1182,7 +1394,37 @@ Page({
 
     that.playAnimaton("upload");
 
+    // if (that.data.recordTimeLate < -1 || that.data.recordTimeLate > 1) {
+    //   wx.showModal({
+    //     title: "录音延迟过高，即将重置",
+    //     icon: "none",
+    //     showCancel: false,
+    //   });
+    //   that.setData({
+    //     recordTimeLate: 0,
+    //   })
+    //   that.data.currentBCK_IAC.volume = 0;
+    //   that.data.currentBCK_IAC.offStop();
+    //   that.data.currentBCK_IAC.offPlay();
+    //   that.data.currentBCK_IAC.play();
+    //   console.log("异常->当前开始时间是: ", that.data.currentClip.begin_time / 1000);
+    //   that.data.currentBCK_IAC.seek(that.data.currentClip.begin_time / 1000);
+    //   that.data.currentBCK_IAC.onSeeked(() => {
 
+    //     console.log("重定位完成,伴奏音轨目前位置：", that.data.currentBCK_IAC.currentTime);
+    //     that.data.currentBCK_IAC.stop();
+    //     that.data.currentRec_IAC.destroy();
+    //     that.data.currentRec_IAC = wx.createInnerAudioContext();
+    //     wx.showToast({
+    //       title: "重置成功",
+    //     });
+    //     that.ensemble();
+    //   });
+    //   setTimeout(function () {
+    //     console.log("修复中");
+    //   }, 2000);
+    //   return;
+    // }
 
     wx.showModal({
       title: '提示',
@@ -1406,13 +1648,46 @@ Page({
 
     const recorderManager = wx.getRecorderManager();
     if (firstTime) {
+      // recorderManager.onStart((res) => {
+      //   console.log("录音开始");
+      //   console.log("暂停前时间", that.data.currentBCK_IAC.currentTime);
+      //   that.data.currentBCK_IAC.pause();
+      //   console.log("暂停后时间", that.data.currentBCK_IAC.currentTime);
+      //   var recordStartTime = that.data.currentBCK_IAC.currentTime;
+      //   that.setData({
+      //     recordStartTime: recordStartTime,
+      //     isRecording: true,
+      //     hasModified: false,
+      //   });
+      //   console.log("录音开始时伴奏音轨时刻：", that.data.recordStartTime);
+      //   console.log(that.data.recordStartTime - that.data.currentBCK_IAC.startTime);
+      //   var recordTimeLate = that.data.recordStartTime - that.data.currentBCK_IAC.startTime;
+      //   that.setData({
+      //     recordTimeLate: recordTimeLate,
+      //   });
+      //   if (Math.abs(recordTimeLate) > 1) {
+      //     that.data.currentBCK_IAC.stop();
+      //     wx.getRecorderManager().stop();
+      //     console.log("伴奏音轨起点异常，重置！");
+      //     that.setData({
+      //       isRecording: false,
+      //       hasModified: false,
+      //       startRecordClickAmount: 0,
+      //     });
+      //     return;
+      //   }
+      //   that.data.currentBCK_IAC.offPlay();
+      //   that.data.currentBCK_IAC.play();
+
+      // })
+
       recorderManager.onStop((res) => {
 
         if (!that.data.hasCompleted)
           return;
 
         var completedClipsNum = that.data.completedClipsNum;
-        var currentProgress = 0;
+        var currentProgress;
 
 
         if (that.data.all_Rec_Temp_File[that.data.currentClipNum - 1].temp_path == "") {
@@ -1581,36 +1856,6 @@ Page({
     this.setData({
       hasChanged: false,
     })
-  },
-
-  //自定义seek函数
-  myFukingCustomnSeek: function (currentIAC, time) {
-    setTimeout(function () {
-      wx.showLoading({
-        title: '加载中',
-      });
-
-      var volume = currentIAC.volume;
-      currentIAC.volume = 0;
-      currentIAC.offPlay();
-
-      currentIAC.onPlay(() => {
-        currentIAC.seek(time);
-      });
-
-      currentIAC.onSeeked((res) => {
-        console.log("定位成功")
-        currentIAC.offPlay();
-        currentIAC.pause();
-        currentIAC.volume = 0.7;
-        wx.hideLoading();
-      })
-      if (currentIAC.paused)
-        currentIAC.play();
-    }.bind(this), 250);
-
-  },
-
-
+  }
 
 })

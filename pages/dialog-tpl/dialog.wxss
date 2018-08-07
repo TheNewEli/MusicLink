@@ -159,7 +159,7 @@ page {
 }
 
 .cancel-btn {
-  margin-top: 140%;
+bottom:20%;
   margin-left: 45%;
   height: 80rpx;
   width: 80rpx;
