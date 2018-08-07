@@ -16,7 +16,8 @@
     "pages/publish/publish",
     "pages/dialog-oprated/dialog-oprated",
     "pages/balloon/balloon",
-    "pages/finished/finished"
+    "pages/finished/finished",
+    "pages/appreciate/appreciate"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",

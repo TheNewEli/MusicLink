@@ -1,0 +1,59 @@
+
+<view class='shader'>
+  <image class='background' src='{{coverageUrl}}'></image>
+</view>
+  
+<view class='container'>
+  <view class='top-background'>
+    <button class='cancel' catchtap='onBackTap' plain="true" style='margin-top:{{statusBarHeight+10}}px;  border: 0px;' >取消</button>
+<view class='row'>
+  <view class="main">发起者</view>
+  <scroll-view  class='avatar-box' scroll-x>
+      <image src='{{Paticipants[0]}}'></image>
+  </scroll-view> 
+</view>
+
+<view class='row'>
+  <view class="main">参与者</view>
+  <scroll-view  class='avatar-box' scroll-x>
+    <block wx:for="{{Paticipants}}" wx:for-item="itm">
+      <image src='{{itm}}'></image>
+    </block>
+  </scroll-view> 
+</view>
+
+
+
+    <view class="currentLyricContainer">成都带不走的只有你</view>
+
+    <view class='control'>
+      <view class='play' catchtap='OnTapToPlay'>
+        <image class='icon' src='/images/icon/play.png'></image>
+      </view>
+
+      <view class="progress-container-box">
+        <text class="time time-l">00:00</text>
+        <view class="progress-container">
+          <slider bindchange="slider_change" block-size='16' step="1" max='235' min='0' backgroundColor='#65605f' activeColor='#f04f43' block-color='#f04f43' />
+        </view>
+        <text class="time time-r">03:25</text>
+      </view>
+    </view>
+
+
+
+    <view class="currentLyricContainer" style='text-align:left;margin-left:40rpx;' >整首歌完成历时3天，共15位参与者共同完成</view>
+    <view class="currentLyricContainer" style='text-align:right;margin-right:40rpx;' >经过了12次漂流</view>
+    <view class="currentLyricContainer">已被120人聆听</view>
+    <view class="currentLyricContainer" style='text-align:left;margin-left:40rpx;' >获得了4500的高分成绩</view>
+
+
+  </view>
+
+
+
+
+  <button class='publish' catchtap='onTaptoCreate' hover-class="button-hover">分 享</button>
+
+</view>
+

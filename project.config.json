@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 12,
 			"list": [
 				{
 					"id": 1,
@@ -113,6 +113,13 @@
 					"name": "finished",
 					"pathName": "pages/finished/finished",
 					"query": "title=成都",
+					"scene": "1007"
+				},
+				{
+					"id": 12,
+					"name": "appreciate",
+					"pathName": "pages/appreciate/appreciate",
+					"query": "",
 					"scene": "1007"
 				}
 			]

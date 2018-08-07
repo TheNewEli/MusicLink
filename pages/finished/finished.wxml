@@ -1,0 +1,70 @@
+<import src="../navigationBar-tpl/navigationBar-tpl.wxml"></import>
+
+<block wx:if="{{compatibility}}">
+   <template is="navigationBarTpl" data="{{...Comp}}"></template> 
+</block>
+
+<view class='control'>
+  <view class='play' catchtap='OnTapToPlay'>
+    <image class='icon' src='/images/icon/play.png'></image>
+  </view>
+
+  <view class="progress-container-box">
+    <!-- <text class="time time-l">{{currentTime_format}}</text> -->
+    <view class="progress-container">
+     <slider bindchange="slider_change" block-size='16' step="1" max='235' min='0' backgroundColor='#65605f' activeColor='#f04f43' block-color='#f04f43' />
+    </view>
+    <text class="time time-r">{{duration_print}}</text>
+  </view>
+
+</view>
+
+<view class='evaluate'>
+  <text class='title-d'>该段得分：</text>
+  <text class='score'>4200</text>
+  <view class='text-progress'>
+        <text class='title-remain'>你还有</text>
+        <text class='remained-num'>5</text>
+        <text class='title-remain'>段未完成</text>
+  </view>
+</view>
+
+<view class='adjust'>
+
+  <view class='row' style='margin-top:10px;'>
+    <text style='width:170rpx;margin-left:30rpx;color:#999999'>人声对齐</text>
+    <view class="progress-container-box" style='width:520rpx;margin-right:30rpx;'>
+      <!-- <text class="time time-l" style='color:#cdcdcd'>-10</text> -->
+      <view class="progress-container">
+        <slider bindchange="slider_change" block-size='16' step="1" max='10' min='-10' backgroundColor='#494949' value='0' activeColor='#494949' block-color='#f04f43' show-value="true" />
+      </view>
+      <!-- <text class="time time-r"  style='color:#cdcdcd'>10</text> -->
+    </view>
+  </view>
+
+  <view class='row'>
+    <text style='width:170rpx;margin-left:30rpx;color:#999999'>人声音量</text>
+    <view class="progress-container-box" style='width:520rpx;margin-right:30rpx;'>
+      <view class="progress-container">
+      <slider bindchange="slider_change" block-size='16' step="1" max='100' min='0' backgroundColor='#494949' value='50' activeColor='#f04f43' block-color='#f04f43' show-value="true" />
+      </view>
+    </view>
+  </view>
+
+  <view class='row'>
+    <text style='width:170rpx;margin-left:30rpx;color:#999999'>伴奏音量</text>
+    <view class="progress-container-box" style='width:520rpx;margin-right:30rpx;'>
+      <view class="progress-container">
+      <slider bindchange="slider_change" block-size='16' step="1" max='100' min='0' backgroundColor='#494949' value='50' activeColor='#f04f43' block-color='#f04f43' show-value="true" />
+      </view>
+    </view>
+  </view>
+
+</view>
+
+
+<view class='bottom'>
+  <view class='button-other' catchtap='OnTapToCancel'>取消</view>
+  <button class='updata'  catchtap='OnTapToUpdata'>上 传</button>
+  <view class='button-other' catchtap='OnTapToRestart'>重唱</view>
+</view>
