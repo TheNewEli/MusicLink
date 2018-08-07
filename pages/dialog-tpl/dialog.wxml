@@ -1,10 +1,10 @@
 <import src="../post/post-item-tpl/tpl-wxml/stars-tpl.wxml"></import>
 <template name="dialogTpl">
-  <view class="score-box">
+  <!-- <view class="score-box">
     <view class="bck-bottom">
-      <!-- <image src='/images/cover/bck.jpg' mode='scaleToFill'></image> -->
+      <image src='/images/cover/bck.jpg' mode='scaleToFill'></image>
       <view class='display-area'></view>
-    </view>
+    </view> -->
     <view class='messageBox'>
       <text class='title-d'>该段得分：</text>
       <text class='score'>{{score}}</text>
@@ -18,8 +18,8 @@
         <text class='title-remain'>段未完成</text>
       </view>
     </view>
-    <view class='cancel-btn' catchtap='cancel'>
+    <!-- <view class='cancel-btn' catchtap='cancel'>
       <image class='cancel-img' src="/images/icon/cancel_icon.png"></image>
     </view>
-  </view>
+  </view> -->
 </template>
