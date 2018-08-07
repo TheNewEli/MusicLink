@@ -79,7 +79,7 @@
     <image animation="{{animationDatas['last'].animationData}}" class="image-other" catchtap="skipToLastClips" src="/images/icon/lastClips_icon.png">
       上一段
     </image>
-    <image animation="{{animationDatas['play'].animationData}}" wx:if="{{!hasCompleted}}" class="image-main" catchtap="startRecord" src="/images/icon/start_icon.png">
+    <image animation="{{animationDatas['play'].animationData}}" wx:if="{{!hasCompleted}}" class="image-main" catchtap="readyToRecord" src="/images/icon/start_icon.png">
       开始
     </image>
     <image animation="{{animationDatas['TL'].animationData}}" wx:else class="image-main" catchtap="tryListening" src="/images/icon/try_listening_icon.png">

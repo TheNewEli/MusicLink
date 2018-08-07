@@ -39,7 +39,7 @@ Page({
     },
 
      //控制功能导航页
-     tutorailHidden_post: false,
+     tutorailHidden_post: true,
      hasChanged: false,
  
      //所有导航页

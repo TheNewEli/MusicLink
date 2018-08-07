@@ -440,7 +440,7 @@ Page({
 
   scanMySongs:function(){
 
-    if(this.data.display_throw||this.data.display_pick)
+    if(this.data.display_throw||this.data.display_pick||!this.data.playStopped)
       return;
 
     var that = this;
@@ -454,6 +454,14 @@ Page({
     util.requestFromServer("GetMyParticipated", data).then((res) => {
         wx.hideLoading();
         console.log(res);
+
+        if(res.data.songs.length==0){
+          wx.showToast({
+            title:"你还没有参与任何歌曲",
+            icon:"none",
+          })
+          return;
+        }
         that.setAllData(res.data.songs);
         that.setData({
           display_mine:true,
