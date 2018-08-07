@@ -15,7 +15,8 @@
     "pages/navigationBar-tpl/navigationBar-tpl",
     "pages/publish/publish",
     "pages/dialog-oprated/dialog-oprated",
-    "pages/balloon/balloon"
+    "pages/balloon/balloon",
+    "pages/finished/finished"
   ],
   "window": {
     "navigationBarBackgroundColor": "#8aaed7",

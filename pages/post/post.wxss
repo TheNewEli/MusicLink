@@ -1,8 +1,9 @@
 /* pages/post.wxss */
 @import "post-item-tpl/tpl-wxss/song-list-tpl.wxss";
 
+
 .nav-container{
-  width: 100%;
+  width: 750rpx;
   height: 45px;  
   display: flex;
   flex-direction: row;
@@ -101,11 +102,12 @@ swiper
   
  swiper image
 {
-  width: 100%;
+  width: 750rpx;
   height: 500rpx;
 }
 
 .container{
+  width: 750rpx;
   background: #fff;
   display: flex;
   flex-direction: column;

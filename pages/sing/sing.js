@@ -1552,8 +1552,6 @@ Page({
     this.setData({
       hasChanged: true,
     })
-
-
   },
   animationEnd: function (e) {
 

@@ -14,7 +14,7 @@
     </block> 
   </view>
   <block wx:if="{{iSpadding}}">
-    <view style='padding-top:{{statusBarHeight+45}}px'></view>
+    <view style='padding-top:{{statusBarHeight+45}}px;width:750rpx'></view>
   </block> 
 </template>    
 

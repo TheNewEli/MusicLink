@@ -1,6 +1,6 @@
 
 .nav-container{
-  width: 100%;
+  width: 750rpx;
   height: 45px;  
   display: flex;
   flex-direction: row;
