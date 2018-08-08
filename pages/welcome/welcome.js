@@ -41,7 +41,6 @@ Page({
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
-<<<<<<< HEAD
         })
       }
     }
@@ -66,8 +65,6 @@ Page({
       } else {
         wx.switchTab({
           url: '../post/post',
-=======
->>>>>>> d62db4c002452ac84384ebe59a0da5e144b1fcc2
         })
       }
     }
