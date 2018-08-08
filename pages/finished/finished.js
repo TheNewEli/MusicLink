@@ -170,16 +170,7 @@ Page({
     });
 
     currentBCK_IAC.onTimeUpdate((res) => {
-      // var progress = parseInt(currentBCK_IAC.currentTime / that.data.duration * 100);
-      // console.log("CurrentTime:",currentBCK_IAC.currentTime, "Duration", that.data.duration)
 
-      // console.log("进度：" + progress);
-
-      // var progress_format = that.timeFormat(parseInt(currentBCK_IAC.currentTime));
-      // that.setData({
-      //   progress: progress,
-      //   progress_format: progress_format,
-      // })
     })
 
     currentRec_IAC.onPlay(() => {
@@ -203,6 +194,7 @@ Page({
    
     currentRec_IAC.onEnded(() => {
       currentBCK_IAC.stop();
+      currentRec_IAC.offTimeUpdate();
       that.setData({
         isPlaying: false,
         progress: 0,
@@ -215,6 +207,7 @@ Page({
     })
     currentBCK_IAC.volume = that.data.volume_bck;
     currentRec_IAC.volume = that.data.volume_vocal;
+
     currentBCK_IAC.play();
     currentRec_IAC.play();
 
