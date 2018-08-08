@@ -36,7 +36,7 @@
     </view>
     
     <view class="upload-btn" hidden="{{hasUploaded}}">
-      <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/upload_icon.png" catchtap="checkFilesToUpload" class="upload-click" />
+      <image animation="{{animationDatas['upload'].animationData}}" src="/images/icon/modify_icon.png" catchtap="checkFilesToUpload" class="upload-click" />
       <image animation="{{animation_wave}}" src="/images/icon/circle_icon.png" class="upload-wave" />
     </view>
 

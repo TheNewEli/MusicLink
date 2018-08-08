@@ -41,6 +41,7 @@ Page({
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
+<<<<<<< HEAD
         })
       }
     }
@@ -65,14 +66,40 @@ Page({
       } else {
         wx.switchTab({
           url: '../post/post',
+=======
+>>>>>>> d62db4c002452ac84384ebe59a0da5e144b1fcc2
         })
       }
-    } else {
-      wx.switchTab({
-        url: '../post/post',
-      })
     }
   },
+
+  // OnTapToStart:function(){
+  //   if (this.data.firstIn) {
+  //     this.setData({
+  //       firstIn: false
+  //     })
+      
+  //     //判断是否是通过分享链接转化来的用户，如果是直接跳到设了category相应界面
+  //     if (this.data.isShare) {
+  //       var created_song_id = this.data.created_song_id;
+  //       var song_id = this.data.song_id;
+  //       var category = this.data.category;
+  //       if (category == "Select") {
+  //         wx.navigateTo({
+  //           url: '../select/select?created_song_id=' + created_song_id + '&song_id=' + song_id + '&isShare=' + 'true',
+  //         })
+  //       }
+  //     } else {
+  //       wx.switchTab({
+  //         url: '../post/post',
+  //       })
+  //     }
+  //   } else {
+  //     wx.switchTab({
+  //       url: '../post/post',
+  //     })
+  //   }
+  // },
 
   getAllAuthorized: function (e) {
     if(this.data.firstIn){
