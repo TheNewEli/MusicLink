@@ -25,7 +25,10 @@
   <block wx:if="{{true}}">
     <button class="start-btn-cmpa" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
     <!-- <button class="start-btn-cmpa" open-type="getUserInfo" catchtap='OnTapToStart' > -->
+<<<<<<< HEAD
     <!-- <button class="start-btn-cmpa" catchtap='OnTapToStart' > -->
+=======
+>>>>>>> 8cbdb9a583f38b0992558e1c33144e811209c725
       开启音乐之旅
     </button>
   </block>

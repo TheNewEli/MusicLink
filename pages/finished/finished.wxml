@@ -41,7 +41,7 @@
     <view class="progress-container-box" style='width:520rpx;margin-right:30rpx;'>
       <!-- <text class="time time-l" style='color:#cdcdcd'>-10</text> -->
       <view class="progress-container">
-        <slider bindchange="onDelayJustified" block-size='16' step="20" max='500' min='-500' backgroundColor='#494949' value='0' activeColor='#494949' block-color='#f04f43' show-value="true" />
+        <slider bindchange="onDelayJustified" block-size='16' step="20" max='500' min='-500' backgroundColor='#494949' value='{{delay_manual}}' activeColor='#494949' block-color='#f04f43' show-value="true" />
       </view>
       <!-- <text class="time time-r"  style='color:#cdcdcd'>10</text> -->
     </view>
@@ -69,8 +69,8 @@
 
 
 <view class='bottom'>
-  <view class='button-other' catchtap='OnTapToCancel'>取消</view>
+  <view class='button-other' catchtap='onTapToEnsemble'>重唱</view>
   <button wx:if="{{hasModified}}" class='updata'  catchtap="applicate" >应用</button>
   <button wx:else class='updata'  catchtap='submit'>保存</button>
-  <view class='button-other' catchtap='OnTapToRestart'>重唱</view>
+  <view class='button-other' catchtap='onTapToReset'>重置</view>
 </view>
