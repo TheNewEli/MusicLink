@@ -1,32 +1,32 @@
 
-<view class='shader'>
-  <image class='background' src='{{coverageUrl}}'></image>
+<view class='shader' style='height:{{statusBarHeight+250}}px;'>
+  <image class='background' style='height:{{statusBarHeight+250}}px;' src='{{FinishedSong.music.coverImg}}'></image>
 </view>
   
 <view class='container'>
   <view class='top-background'>
-    <button class='cancel' catchtap='onBackTap' plain="true" style='margin-top:{{statusBarHeight+10}}px;  border: 0px;' >取消</button>
-<view class='row'>
-  <view class="main">发起者</view>
-  <scroll-view  class='avatar-box' scroll-x>
-      <image src='{{Paticipants[0]}}'></image>
-  </scroll-view> 
-</view>
+    <button class='cancel' catchtap='onBackTap' plain="true" style='margin-top:{{statusBarHeight}}px;  border: 0px; color: #ffffff;' >取消</button>
 
-<view class='row'>
-  <view class="main">参与者</view>
-  <scroll-view  class='avatar-box' scroll-x>
-    <block wx:for="{{Paticipants}}" wx:for-item="itm">
-      <image src='{{itm}}'></image>
-    </block>
-  </scroll-view> 
-</view>
+    <view class='row' style='margin-top:{{statusBarHeight+30}}px'>
+      <view class="main">发起者</view>
+      <scroll-view  class='avatar-box' scroll-x>
+        <image src='{{FinishedSong.avatar}}'></image>
+      </scroll-view> 
+    </view>
 
-
+    <view class='row'>
+      <view class="main">参与者</view>
+      <scroll-view  class='avatar-box' scroll-x>
+        <block wx:for="{{FinishedSong.Paticipants}}" wx:for-item="itm">
+          <image src='{{itm.avatar_url}}'></image>
+        </block>
+      </scroll-view> 
+    </view>
 
     <view class="currentLyricContainer">成都带不走的只有你</view>
 
     <view class='control'>
+
       <view class='play' catchtap='OnTapToPlay'>
         <image class='icon' src='/images/icon/play.png'></image>
       </view>
@@ -38,22 +38,23 @@
         </view>
         <text class="time time-r">03:25</text>
       </view>
+
     </view>
 
 
-
-    <view class="currentLyricContainer" style='text-align:left;margin-left:40rpx;' >整首歌完成历时3天，共15位参与者共同完成</view>
-    <view class="currentLyricContainer" style='text-align:right;margin-right:40rpx;' >经过了12次漂流</view>
-    <view class="currentLyricContainer">已被120人聆听</view>
-    <view class="currentLyricContainer" style='text-align:left;margin-left:40rpx;' >获得了4500的高分成绩</view>
-
-
+   <view style='text-align:left;width:710rpx;padding-left:40rpx;padding-top:40rpx;font-size:18px;color:#999;font-weight:600'>点 滴:</view> 
+    <view class="History" style='text-align:left;margin-left:40rpx;margin-top:10px' >整首歌完成历时<span>3</span>天，由<span>{{FinishedSong.Paticipants.length}}</span>位参与者共同完成</view>
+    <view class="History" style='text-align:right;margin-right:40rpx;' >经过了<span>12</span>次漂流</view>
+    <view class="History">已被<span>{{FinishedSong.listened_time}}</span>人聆听</view>
+    <view class="History" style='text-align:left;margin-left:40rpx;' >获得了<span>{{FinishedSong.song_score}}</span>的总评分</view>
+    <view class="History" style='text-align:center;' >其中得分最高的是<span>{{max.Max_user}}</span>，平均每段获得了<span>{{max.clip_score}}</span>的高分</view>
+    
   </view>
-
-
-
-
-  <button class='publish' catchtap='onTaptoCreate' hover-class="button-hover">分 享</button>
-
 </view>
 
+
+  <view class='Bottom'>
+    <button class='publish' catchtap='onTapToPlay'  hover-class="button-hover">欣 赏</button>
+
+  <button class='publish' open-type="share"  hover-class="button-hover">分 享</button>
+</view>

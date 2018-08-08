@@ -206,8 +206,12 @@ Page({
   onTapToPlay(event) {
     var ids = event.currentTarget.dataset.ids;
     wx.setStorageSync("MyFinishedSongs", this.data.FinishedList);
+    // wx.navigateTo({
+    //   url: '../player/player?isShare=false' + '&created_song_id=' + ids.created_song_id,
+    // })
+
     wx.navigateTo({
-      url: '../player/player?isShare=false' + '&created_song_id=' + ids.created_song_id,
+      url: '../appreciate/appreciate?isShare=false' + '&created_song_id=' + ids.created_song_id,
     })
   },
 

@@ -23,8 +23,8 @@
   </view>  
 
   <block wx:if="{{true}}">
-    <!-- <button class="start-btn-cmpa" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized"> -->
-    <button class="start-btn-cmpa" catchtap='OnTapToStart' >
+    <button class="start-btn-cmpa" open-type="getUserInfo" bindgetuserinfo="getAllAuthorized">
+    <!-- <button class="start-btn-cmpa" open-type="getUserInfo" catchtap='OnTapToStart' > -->
       开启音乐之旅
     </button>
   </block>
