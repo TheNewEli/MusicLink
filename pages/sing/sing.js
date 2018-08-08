@@ -54,7 +54,7 @@ Page({
     remainedTime: 4,
 
     //记录录音时长
-    rec_duration:0,
+    rec_duration: 0,
 
     isReadying: true,
     isRecording: false,
@@ -124,7 +124,7 @@ Page({
     ]
   },
 
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.checkRecord();
     var songId = options.songId;
     this.setData({
@@ -134,26 +134,44 @@ Page({
     this.setAnimation();
   },
 
-  onShow: function() {
-    this.checkRecord();
-    var currentClipNum = this.data.currentClipNum;
-    var toView = this.data.toView;
-    this.setData({
-      toCurrentView: toView[currentClipNum - 1],
-      remainedTime: 0,
-      hasCompleted: false,
-      isReadying: true,
-      isRecording: false,
-      startRecordClickAmount: 0,
-      tryListeningClickAmount: 0
-    });
+  onShow: function () {
 
-    var prompt_start = wx.getStorageSync("prompt_start");
+    if (wx.getStorageSync("corrected") == undefined) {
+      this.checkRecord();
+      var currentClipNum = this.data.currentClipNum;
+      var toView = this.data.toView;
+      this.setData({
+        toCurrentView: toView[currentClipNum - 1],
+        remainedTime: 0,
+        hasCompleted: false,
+        isReadying: true,
+        isRecording: false,
+        startRecordClickAmount: 0,
+        tryListeningClickAmount: 0
+      });
 
-    this.drawProgresCircleBar(100);
+      var prompt_start = wx.getStorageSync("prompt_start");
+
+      this.drawProgresCircleBar(100);
+    }else if(wx.getStorageSync("corrected"))
+    {
+      this.setData({
+        startRecordClickAmount: 0,
+        tryListeningClickAmount: 0,
+        hasCompleted: false,
+        isReadying: true,
+        isRecording: false,
+        remainedTime: 0,
+        hasModified: false,
+        recordTimeLate: 0,
+        hasUploaded: true
+      })
+    }
+
+
   },
 
-  onReady: function() {
+  onReady: function () {
     var title = this.data.title;
     wx.setNavigationBarTitle({
       title: title
@@ -170,7 +188,7 @@ Page({
     });
   },
 
-  onHide: function() {
+  onHide: function () {
     if (!this.data.currentBCK_IAC.paused) this.data.currentBCK_IAC.stop();
     if (!this.data.currentRec_IAC.paused) this.data.currentRec_IAC.stop();
     if (!this.data.currentOrg_IAC.paused) this.data.currentOrg_IAC.stop();
@@ -178,7 +196,7 @@ Page({
     wx.getRecorderManager().stop();
   },
 
-  onUnload: function() {
+  onUnload: function () {
     var that = this;
     if (that.data.currentBCK_IAC != "") that.data.currentBCK_IAC.destroy();
     if (that.data.currentOrg_IAC != "") that.data.currentOrg_IAC.destroy();
@@ -186,13 +204,13 @@ Page({
     wx.getRecorderManager().stop();
 
     wx.getSavedFileList({
-      success: function(res) {
+      success: function (res) {
         //console.log(res.fileList)
       }
     });
   },
 
-  onBackTap: function() {
+  onBackTap: function () {
     wx.navigateBack({
       delta: 1
     });
@@ -201,7 +219,7 @@ Page({
   /*由于页面每次被重新打开需要重新设置数据，
   **所以将onLoad的所有东西抽出来
   */
-  init: function() {
+  init: function () {
     var that = this;
 
     var selectedData = wx.getStorageSync("selectedData");
@@ -254,7 +272,7 @@ Page({
 
     //获取手机的信息，设定scroll-view可视区域大小
     wx.getSystemInfo({
-      success: function(res) {
+      success: function (res) {
         that.setData({
           systemInfo: res
         });
@@ -297,7 +315,7 @@ Page({
     that.registerAllCallBack(1);
   },
 
-  skipToLastClips: function() {
+  skipToLastClips: function () {
     var that = this;
 
     if (that.data.currentBCK_IAC == "" || that.data.currentOrg_IAC == "") {
@@ -368,7 +386,7 @@ Page({
     }
   },
 
-  skipToNextClips: function() {
+  skipToNextClips: function () {
     var that = this;
 
     if (that.data.currentBCK_IAC == "" || that.data.currentOrg_IAC == "") {
@@ -436,7 +454,7 @@ Page({
   },
 
   //开始录制
-  readyToRecord: function() {
+  readyToRecord: function () {
     if (!this.data.isGetRecord) {
       wx.showModal({
         title: "提示",
@@ -444,7 +462,7 @@ Page({
         showCancel: true,
         confirmText: "前往",
         confirmColor: "#52a2d8",
-        success: function(res) {
+        success: function (res) {
           //确认打开设置界面进行授权
           if (res.confirm) {
             wx.switchTab({
@@ -490,7 +508,7 @@ Page({
     that.startRecord();
   },
 
-  startRecord: function() {
+  startRecord: function () {
     //this.reloadAudioObject();
     //this.registerAllCallBack(0);
     if (this.data.currentClip == {}) return;
@@ -553,7 +571,7 @@ Page({
     });
 
     timer.countDown(that, remainedTime);
-    setTimeout(function() {
+    setTimeout(function () {
       if (!that.data.hasOriginSinger) {
         currentBCK_IAC.volume = 1;
         currentOrg_IAC.volume = 0;
@@ -637,7 +655,7 @@ Page({
       });
     }, 2000);
 
-    setTimeout(function() {
+    setTimeout(function () {
       currentOrg_IAC.play();
       currentBCK_IAC.play();
       wx.getRecorderManager().start(options);
@@ -646,7 +664,7 @@ Page({
   },
 
   //试听唱过的部分
-  tryListening: function() {
+  tryListening: function () {
     var that = this;
     that.playAnimaton("TL");
     if (!that.data.hasCompleted) {
@@ -685,7 +703,7 @@ Page({
 
     that.myFukingCustomnSeek(currentBCK_IAC, currentBCK_IAC.startTime);
 
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         startRecordClickAmount: 0,
         tryListeningClickAmount: 1,
@@ -706,7 +724,7 @@ Page({
             content: "试听结束，点击上一段或下一段继续你的演唱吧！",
             cancelText: "不再提示",
             confirmText: "知道了",
-            success: function(res) {
+            success: function (res) {
               if (res.cancel) {
                 wx.setStorageSync("prompt_next_or_last", true);
               }
@@ -780,7 +798,7 @@ Page({
     }, 2000);
   },
   // 重唱该段
-  ensemble: function() {
+  ensemble: function () {
     var that = this;
 
     if (!that.data.hasCompleted) return;
@@ -804,7 +822,7 @@ Page({
     that.readyToRecord();
   },
   // 该段原唱播放
-  playWithOriginalSinger: function() {
+  playWithOriginalSinger: function () {
     if (this.data.disableOrg) {
       return;
     }
@@ -853,38 +871,38 @@ Page({
     }
   },
 
-  diffTime: function(now, last) {
+  diffTime: function (now, last) {
     if (now - last > 500) return true;
     else return false;
   },
 
-  downloadFiles: function() {
+  downloadFiles: function () {
     var that = this;
 
     wx.getSavedFileList({
-      success: function(res) {
+      success: function (res) {
         that.data.file_length_OnError = res.fileList.length;
         for (var i in res.fileList) {
           console.log("删除文件" + i);
           wx.removeSavedFile({
             filePath: res.fileList[i].filePath,
-            success: function() {
+            success: function () {
               that.setData({
                 file_length_OnError: that.data.file_length_OnError - 1
               });
             },
-            complete: function(res) {}
+            complete: function (res) { }
           });
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log(err);
       }
     });
 
     if (that.data.file_length_OnError != 0)
       setTimeout(
-        function() {
+        function () {
           console.log("等待文件删除中");
           that.downloadFiles();
         }.bind(this),
@@ -905,22 +923,22 @@ Page({
 
     const downloadTask1 = wx.downloadFile({
       url: that.data.BCK_url,
-      success: function(res) {
+      success: function (res) {
         if (res.statusCode === 200) {
           wx.saveFile({
             tempFilePath: res.tempFilePath,
-            success: function(res) {
+            success: function (res) {
               currentBCK_FilePath = res.savedFilePath;
               that.setData({
                 currentBCK_FilePath: currentBCK_FilePath
               });
               const downloadTask2 = wx.downloadFile({
                 url: that.data.Org_url,
-                success: function(res) {
+                success: function (res) {
                   if (res.statusCode === 200) {
                     wx.saveFile({
                       tempFilePath: res.tempFilePath,
-                      success: function(res) {
+                      success: function (res) {
                         currentOrg_FilePath = res.savedFilePath;
 
                         that.setData({
@@ -942,25 +960,25 @@ Page({
                         //   mask: true,
                         // });
                       },
-                      fail: function(err) {
+                      fail: function (err) {
                         console.log(err);
                         wx.showToast({
                           title: "存储错误"
                         });
                         wx.getSavedFileList({
-                          success: function(res) {
+                          success: function (res) {
                             for (var i in res.fileList) {
                               console.log("删除文件" + i);
                               wx.removeSavedFile({
                                 filePath: res.fileList[i].filePath,
-                                success: function() {
+                                success: function () {
                                   that.downloadFiles();
                                 },
-                                complete: function(res) {}
+                                complete: function (res) { }
                               });
                             }
                           },
-                          fail: function(err) {
+                          fail: function (err) {
                             console.log(err);
                           }
                         });
@@ -968,21 +986,21 @@ Page({
                     });
                   }
                 },
-                fail: function(err) {
+                fail: function (err) {
                   console.log("下载失败");
                   console.log(err);
                   wx.getSavedFileList({
-                    success: function(res) {
+                    success: function (res) {
                       for (var i in res.fileList) {
                         wx.removeSavedFile({
                           filePath: res.fileList[i].filePath,
-                          complete: function(res) {
+                          complete: function (res) {
                             console.log("删除文件" + i);
                           }
                         });
                       }
                     },
-                    fail: function(err) {
+                    fail: function (err) {
                       console.log(err);
                     }
                   });
@@ -1016,7 +1034,7 @@ Page({
                 }
               });
             },
-            fail: function(err) {
+            fail: function (err) {
               console.log(err);
               wx.showToast({
                 title: "存储错误"
@@ -1025,7 +1043,7 @@ Page({
           });
         }
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log(err);
         that.downloadFiles();
       }
@@ -1051,7 +1069,7 @@ Page({
     });
   },
 
-  handleLyric: function() {
+  handleLyric: function () {
     //var currentLineNum = that.data.currentLineNum;  //当前唱到的歌词行
 
     var that = this;
@@ -1075,7 +1093,7 @@ Page({
   },
 
   // lyrics 时间解析
-  analysisTime: function(time) {
+  analysisTime: function (time) {
     var Time = time.split(":");
     var analysisTime = 0;
     parseFloat(Time[0]);
@@ -1083,7 +1101,7 @@ Page({
     return analysisTime * 1000;
   },
 
-  getCurrentClipFirstLyricIndex: function() {
+  getCurrentClipFirstLyricIndex: function () {
     var that = this;
     var index = 0;
     for (var i in that.data.selectedData.allOriginData.songs) {
@@ -1099,7 +1117,7 @@ Page({
     return index;
   },
 
-  getCurrentClipLastLyricIndex: function() {
+  getCurrentClipLastLyricIndex: function () {
     var that = this;
     var index = 0;
     for (var i in that.data.selectedData.allOriginData.songs) {
@@ -1114,7 +1132,7 @@ Page({
   },
 
   //获取带有开始和结束时间的歌词数据
-  getPlayInfoDataFromServer: function() {
+  getPlayInfoDataFromServer: function () {
     var that = this;
 
     var data = {
@@ -1135,9 +1153,9 @@ Page({
       });
   },
 
-  checkFilesToUpload: function() {
+  checkFilesToUpload: function () {
     this.playAnimaton("upload");
-    
+
     if (!this.data.hasCompleted) {
       wx.showToast({
         title: "未完成录音",
@@ -1153,7 +1171,7 @@ Page({
     if (temp_path === undefined || temp_path == "") return;
 
     that.setData({
-      isUploading: true
+      isUploading: false
     });
 
     const uploadTask = wx.uploadFile({
@@ -1175,23 +1193,23 @@ Page({
         success_action_status: "200",
         signature: "Peiz2ohiIFqIhvR8oxgSkwidmWw="
       },
-      success: function(res) {
+      success: function (res) {
         console.log("上传成功", res);
 
         var record_info = {
           startTime: that.data.startTime,
           duration: that.data.rec_duration,
-          created_sond_id: that.data.created_songId,
+          created_song_id: that.data.created_songId,
           clip_count: that.data.currentClipNum,
           url: "https://oss.caoyu.online/" +
-          "s" +
-          that.data.created_songId +
-          "c" +
-          that.data.currentClipNum +
-          ".mp3"
+            "s" +
+            that.data.created_songId +
+            "c" +
+            that.data.currentClipNum +
+            ".mp3"
         }
 
-        wx.setStorageSync("record_info",record_info);
+        wx.setStorageSync("record_info", record_info);
 
         that.setData({
           isUploading: false
@@ -1224,7 +1242,7 @@ Page({
         //   console.log("上传时通知服务器失败", err);
         // })
       },
-      fail: function(err) {
+      fail: function (err) {
         console.log("上传失败".err);
       }
     });
@@ -1232,14 +1250,14 @@ Page({
     uploadTask.onProgressUpdate(res => {
       that.setData({
         progress: res.progress,
-        propt_motto: "上传中..."
+        propt_motto: "准备中..."
       });
 
       that.drawProgresCircleBar(res.progress);
     });
   },
 
-  setAnimation: function() {
+  setAnimation: function () {
     var that = this;
 
     var animaton = wx.createAnimation({
@@ -1249,7 +1267,7 @@ Page({
     that.animation = animaton;
   },
 
-  playAnimaton: function(key) {
+  playAnimaton: function (key) {
     var that = this;
     var animationDatas = {};
 
@@ -1264,7 +1282,7 @@ Page({
       });
 
       setTimeout(
-        function() {
+        function () {
           that.animation.scale(1).step();
           animationDatas[key] = {
             animationData: that.animation.export()
@@ -1296,7 +1314,7 @@ Page({
       });
 
       setTimeout(
-        function() {
+        function () {
           that.animation.scale(1).step();
           animationDatas[key] = {
             animationData: that.animation.export()
@@ -1311,10 +1329,10 @@ Page({
   },
 
   //检查录音授权信息
-  checkRecord: function() {
+  checkRecord: function () {
     var that = this;
     wx.getSetting({
-      success: function(res) {
+      success: function (res) {
         console.log(res);
         if (!res.authSetting["scope.record"]) {
           that.setData({
@@ -1329,7 +1347,7 @@ Page({
     });
   },
 
-  onShareAppMessage: function(res) {
+  onShareAppMessage: function (res) {
     var isShare = true;
     var category = "Select";
     var userInfo = app.globalData.userInfo;
@@ -1351,7 +1369,7 @@ Page({
     };
   },
 
-  checkSongisCompeleted: function() {
+  checkSongisCompeleted: function () {
     var clips = this.data.clips;
     var all_Rec_Temp_File = this.data.all_Rec_Temp_File;
 
@@ -1373,7 +1391,7 @@ Page({
           wx.showModal({
             title: "提示",
             content: "经过你的努力，这首歌由你最后完成了，是否前往试听",
-            success: function(res) {
+            success: function (res) {
               if (res.confirm)
                 wx.redirectTo({
                   url:
@@ -1390,7 +1408,7 @@ Page({
   },
 
   //注册所有回调函数
-  registerAllCallBack: function(firstTime) {
+  registerAllCallBack: function (firstTime) {
     var that = this;
 
     const recorderManager = wx.getRecorderManager();
@@ -1430,7 +1448,7 @@ Page({
             content: "恭喜你唱完了这段，去点击试听按钮播放你美妙的歌声吧",
             cancelText: "不再提示",
             confirmText: "知道了",
-            success: function(res) {
+            success: function (res) {
               if (res.cancel) {
                 wx.setStorageSync("prompt_finished", true);
               }
@@ -1453,14 +1471,14 @@ Page({
           isRecording: false,
           completedClipsNum: completedClipsNum,
           currentProgress: currentProgress,
-          rec_duration:rec_duration,
+          rec_duration: rec_duration,
         });
       });
     }
   },
 
   //绘制圆形进度条
-  drawProgresCircleBar: function(progress) {
+  drawProgresCircleBar: function (progress) {
     if (progress % 10 != 0) return;
 
     //计算终止弧度
@@ -1492,7 +1510,7 @@ Page({
   },
 
   //播放上传波纹动画
-  play: function(count, that) {
+  play: function (count, that) {
     if (count < 0) {
       console.log("播放结束");
       return;
@@ -1517,19 +1535,19 @@ Page({
     });
     count--;
 
-    setTimeout(function() {
+    setTimeout(function () {
       that.play(count, that);
     }, 1000);
   },
 
-  cancel: function(event) {
+  cancel: function (event) {
     //console.log(event);
     this.setData({
       showDialog_Score: false
     });
   },
 
-  change: function(e) {
+  change: function (e) {
     if (this.data.tutorailHidden_sing) return;
 
     console.log(e.detail.current);
@@ -1544,7 +1562,7 @@ Page({
       hasChanged: true
     });
   },
-  animationEnd: function(e) {
+  animationEnd: function (e) {
     if (this.data.tutorailHidden_sing) return;
     console.log(e.detail.current);
 
@@ -1574,9 +1592,9 @@ Page({
   },
 
   //自定义seek函数
-  myFukingCustomnSeek: function(currentIAC, time) {
+  myFukingCustomnSeek: function (currentIAC, time) {
     setTimeout(
-      function() {
+      function () {
         wx.showLoading({
           title: "加载中"
         });

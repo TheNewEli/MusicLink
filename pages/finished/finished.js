@@ -18,7 +18,7 @@ Page({
     //手动修正对其时间
     delay_manual: 0,
     //该段分数
-    score: 9000,
+    score: 0,
     //未完成段数
     clipsToBeSong: 5,
     //歌曲进度
@@ -28,6 +28,7 @@ Page({
     duration: 0,
 
     startTime: 0,
+    startTime_backup: 0,
 
     isPlaying: false,
 
@@ -39,8 +40,8 @@ Page({
 
     hasModified: false,
 
-    created_song_id:-1,
-    clip_count:-1,
+    created_song_id: -1,
+    clip_count: -1,
   },
 
   /**
@@ -62,11 +63,8 @@ Page({
   },
 
   onShow: function () {
-
-
     var ER = wx.getStorageSync("ER");
     var currentBCK_FilePath = ER.currentBCK_FilePath;
-    //var currentBCK_FilePath = "http://other.web.rf01.sycdn.kuwo.cn/resource/n1/77/17/2299001074.mp3";
     var record_info = wx.getStorageSync("record_info");
     console.log(record_info);
 
@@ -79,6 +77,8 @@ Page({
       title: "加载中",
     })
 
+    var that = this;
+
     wx.downloadFile({
       url: record_info.url,
       success: function (res) {
@@ -86,26 +86,25 @@ Page({
         if (res.statusCode === 200) {
 
           currentBCK_IAC.src = currentBCK_FilePath;
-          //currentBCK_IAC.src= res.tempFilePath;
-         
           currentRec_IAC.src = res.tempFilePath;
-          var duration = record_info.duration/1000;
-          //var duration = 5;
-          var startTime = record_info.startTime;
-          //var startTime = 17;
-
+          var duration = record_info.duration / 1000;
+          var startTime_backup = record_info.startTime;
           that.setData({
             record_tempFilePath: res.tempFilePath,
             currentBCK_IAC: currentBCK_IAC,
             currentRec_IAC: currentRec_IAC,
             duration: duration,
-            startTime: startTime,
-            
+            startTime_backup: startTime_backup,
+            startTime: startTime_backup,
+            created_song_id: record_info.created_song_id,
+            clip_count:record_info.clip_count,
           })
 
           wx.showToast({
             title: '加载成功',
           });
+
+          that.submit();
         }
       }
     });
@@ -139,12 +138,12 @@ Page({
   onDelayJustified: function (e) {
     var delay = e.detail.value;
 
-    var startTime = this.data.startTime;
+    var startTime = this.data.startTime_backup;
 
-    if (startTime + delay/1000 < 0)
+    if (startTime + delay / 1000 < 0)
       startTime = 0;
     else
-      startTime += delay/1000;
+      startTime += delay / 1000;
     this.setData({
       delay_manual: delay,
       startTime: startTime,
@@ -155,29 +154,39 @@ Page({
   play: function () {
     var currentBCK_IAC = this.data.currentBCK_IAC;
     var currentRec_IAC = this.data.currentRec_IAC;
+
     var progress = this.data.progress;
     var duration = this.data.duration;
     var startTime = this.data.startTime;
-
     var current_pos = duration * progress / 100;
 
     var that = this;
 
     currentBCK_IAC.onPlay(() => {
       console.log("伴奏播放");
-      currentBCK_IAC.seek(current_pos+startTime);
+      currentBCK_IAC.seek(current_pos + startTime);
       currentBCK_IAC.offPlay();
     });
+
+    currentBCK_IAC.onSeeked(() => {
+      currentBCK_IAC.volume = that.data.volume_bck;
+    })
 
     currentBCK_IAC.onTimeUpdate((res) => {
 
     })
+
+
 
     currentRec_IAC.onPlay(() => {
       console.log("录音播放");
       currentRec_IAC.seek(current_pos);
       currentRec_IAC.offPlay();
     });
+
+    currentRec_IAC.onSeeked(() => {
+      currentRec_IAC.volume = that.data.volume_vocal;
+    })
 
     currentRec_IAC.onTimeUpdate((res) => {
       var progress = parseInt(currentRec_IAC.currentTime / that.data.duration * 100);
@@ -191,7 +200,7 @@ Page({
         progress_format: progress_format,
       })
     })
-   
+
     currentRec_IAC.onEnded(() => {
       currentBCK_IAC.stop();
       currentRec_IAC.offTimeUpdate();
@@ -205,8 +214,10 @@ Page({
     that.setData({
       isPlaying: true,
     })
-    currentBCK_IAC.volume = that.data.volume_bck;
-    currentRec_IAC.volume = that.data.volume_vocal;
+    // // currentBCK_IAC.volume = that.data.volume_bck;
+    // // currentRec_IAC.volume = that.data.volume_vocal;
+    currentBCK_IAC.volume = 0;
+    currentRec_IAC.volume = 0;
 
     currentBCK_IAC.play();
     currentRec_IAC.play();
@@ -231,55 +242,59 @@ Page({
       this.data.currentRec_IAC.stop();
     }
 
-    // this.myFukingCustomnSeek(this.data.currentBCK_IAC, this.data.startTime);
-    //this.myFukingCustomnSeek(this.data.currentBCK_IAC, 0);
     var currentBCK_IAC = wx.createInnerAudioContext();
     var currentRec_IAC = wx.createInnerAudioContext();
     currentBCK_IAC.src = this.data.currentBCK_IAC.src;
     currentRec_IAC.src = this.data.currentRec_IAC.src;
-    // this.data.currentBCK_IAC.destory();
-    // this.data.currentRec_IAC.destory();
+    this.data.currentBCK_IAC.destory();
+    this.data.currentRec_IAC.destory();
 
 
     this.setData({
       isPlaying: false,
       progress: 0,
       progress_format: "00:00",
-      currentBCK_IAC:currentBCK_IAC,
-      currentRec_IAC:currentRec_IAC,
+      currentBCK_IAC: currentBCK_IAC,
+      currentRec_IAC: currentRec_IAC,
     })
   },
 
   applicate: function () {
     this.setData({
       hasModified: false,
-      progress:0,
+      progress: 0,
     });
     this.play();
   },
 
   submit: function () {
 
-    return;
+    var that = this;
     var data = {
-          requestType: "SingClip",
-          created_song_id: that.data.created_song_Id,
-          clip_count: that.data.clip_count,
-          delay: that.data.delay_manual,
-        };
-        console.log(data);
+      requestType: "SingClip",
+      created_song_id: that.data.created_song_id,
+      clip_count: that.data.clip_count,
+      delay: that.data.delay_manual,
+    };
+    console.log(data);
 
-        util.requestFromServer("SingClip", data).then((res) => {
+    util.requestFromServer("SingClip", data).then((res) => {
+      console.log(res);
 
-          console.log(res);
-          that.setData({
-            hasModified:false,
-            score: res.data.score,
-          });
+      if (that.data.score == 0)
+        that.setData({
+          hasModified: false,
+          score: res.data.score,
+        });
+      else
+        that.setData({
+          hasModified: false,
+        });
 
-        }).catch((err) => {
-          console.log("上传时通知服务器失败", err);
-        })
+
+    }).catch((err) => {
+      console.log("上传时通知服务器失败", err);
+    })
   },
 
   onVocalVolumeChange: function (e) {
@@ -302,35 +317,6 @@ Page({
     })
   },
 
-  //自定义seek函数
-  myFukingCustomnSeek: function (currentIAC, time) {
-    setTimeout(function () {
-
-      //console.log(time);
-      wx.showLoading({
-        title: '加载中',
-      });
-
-      var volume = currentIAC.volume;
-      currentIAC.volume = 0;
-
-      currentIAC.onPlay(() => {
-        currentIAC.seek(time);
-      });
-
-      currentIAC.onSeeked((res) => {
-        console.log("定位成功")
-        currentIAC.offPlay();
-        currentIAC.pause();
-        currentIAC.volume = 0.7;
-        wx.hideLoading();
-      })
-
-      currentIAC.play();
-    }.bind(this), 300);
-
-  },
-
   timeFormat: function (seconds) {
     var min_part = parseInt(seconds / 60);
     var second_part = seconds % 60 + 1;
@@ -351,5 +337,52 @@ Page({
     //console.log(min_str + ":" + sec_str);
 
     return min_str + ":" + sec_str;
+  },
+
+  onBackTap: function () {
+    if (this.data.score == 0) {
+      var that = this;
+      var data = {
+        requestType: "SingClip",
+        created_song_id: that.data.created_song_id,
+        clip_count: that.data.clip_count,
+        delay: that.data.delay_manual,
+      };
+      console.log(data);
+
+      util.requestFromServer("SingClip", data).then((res) => {
+        console.log(res);
+        wx.navigateBack({
+          delta:1,
+        })
+      }).catch((err) => {
+        console.log("上传时通知服务器失败", err);
+      })
+    }
+    else{
+      wx.navigateBack({
+        delta:1,
+      })
+    }
+  },
+  onTapToEnsemble: function () {
+    wx.setStorageSync("corrected", true)
+    wx.navigateBack({
+      delta: 1
+    })
+  },
+
+  onTapToReset:function(){
+    that.setData({
+      progress: 0,
+      progress_format: "00:00",
+      volume_bck:0.6,
+      volume_vocal:1,
+      delay_manual,
+      hasModified:true,
+    })
   }
+
+
+
 })
